@@ -1,6 +1,6 @@
 {
-  "name": "mantine-next-template",
-  "version": "1.0.0",
+  "name": "Livestocx Web(v2)",
+  "version": "2.0.1m",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -17,14 +17,26 @@
     "prettier:write": "prettier --write \"**/*.{ts,tsx}\"",
     "test": "npm run prettier:check && npm run lint && npm run typecheck && npm run jest",
     "storybook": "storybook dev -p 6006",
-    "storybook:build": "storybook build"
+    "storybook:build": "storybook build",
+    "create-sdk": "cd core/scripts && bash create-sdk.sh",
+    "update-sdk": "cd core/scripts && bash update-sdk.sh"
   },
   "dependencies": {
     "@mantine/core": "7.17.2",
+    "@mantine/dates": "^7.17.4",
+    "@mantine/dropzone": "^7.17.4",
+    "@mantine/form": "^7.17.4",
     "@mantine/hooks": "7.17.2",
+    "@mantine/modals": "^7.17.4",
+    "@mantine/notifications": "^7.17.4",
+    "@mantine/nprogress": "^7.17.4",
     "@next/bundle-analyzer": "^15.2.3",
     "@tabler/icons-react": "^3.31.0",
+    "@tanstack/react-query": "^5.72.2",
+    "axios": "^1.8.4",
+    "dayjs": "^1.11.13",
     "next": "15.2.3",
+    "ngx-fluent-ui-icons": "^1.0.2",
     "react": "19.0.0",
     "react-dom": "19.0.0"
   },

@@ -1,12 +1,18 @@
-import '@mantine/core/styles.css';
-
 import React from 'react';
+
+import '@mantine/core/styles.css';
+import '@mantine/dates/styles.css';
+import '@mantine/dropzone/styles.css';
+import '@mantine/nprogress/styles.css';
+import '@mantine/notifications/styles.css';
+import { theme } from '@/core/themes';
+
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
-import { theme } from '../theme';
+import { ClientLayout } from '@/core/components/layout/clientLayout';
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'Livestocx',
+  description: 'Best deals, anything Livestock.',
 };
 
 export default function RootLayout({ children }: { children: any }) {
@@ -14,14 +20,16 @@ export default function RootLayout({ children }: { children: any }) {
     <html lang="en" {...mantineHtmlProps}>
       <head>
         <ColorSchemeScript />
-        <link rel="shortcut icon" href="/favicon.svg" />
+        <link rel="shortcut icon" href="/favicon.ico" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme}>
+          <ClientLayout>{children}</ClientLayout>
+        </MantineProvider>
       </body>
     </html>
   );

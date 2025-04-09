@@ -1,0 +1,184 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Paper,
+  PasswordInput,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { showNotification } from '@mantine/notifications';
+import { TestimonialCard } from '@/core/components/cards/testimonial-card';
+import { useAppContext } from '@/core/context';
+import useLoginMutation from '@/core/hooks/auth/useLoginMutation';
+import useGetProductUploadSubscriptionPlanQuery from '@/core/hooks/public/useGetProductUploadSubscriptionPlanQuery';
+import useGetTestimonialsQuery from '@/core/hooks/public/useGetTestimonialsQuery';
+import { priceFormatter } from '@/core/middlewares';
+import { SigninDTO } from '@/core/sdk/auth';
+import { TestimonialInfo } from '@/core/sdk/communication';
+import { validateSignInForm } from '@/core/validations/auth.validations';
+
+const Signin = () => {
+  useGetTestimonialsQuery();
+  useGetProductUploadSubscriptionPlanQuery();
+
+  const { isPending, mutate } = useLoginMutation();
+
+  const { testimonials, productUploadSubscriptionPlan } = useAppContext();
+
+  const form = useForm({
+    mode: 'uncontrolled',
+    initialValues: {
+      email: '',
+      password: '',
+    },
+  });
+
+  const [currentTestimonial, setCurrentTestimonial] = useState<TestimonialInfo | null>(null);
+
+  const shuffleTestimonials = () => {
+    if (testimonials.length === 0) {
+      setCurrentTestimonial(null);
+      return;
+    }
+
+    if (!currentTestimonial) {
+      setCurrentTestimonial(testimonials[0]);
+    }
+
+    return setInterval(() => {}, 7000);
+  };
+
+  useEffect(() => {
+    const intervalId = shuffleTestimonials();
+
+    return () => {
+      if (intervalId) {
+        clearInterval(intervalId);
+      }
+    };
+  }, [testimonials]);
+
+  const submitHandler = (payload: SigninDTO) => {
+    const message = validateSignInForm(payload);
+
+    console.log('[SIGNIN-MESSAGE] :: ', message);
+
+    if (message !== '') {
+      showNotification({
+        message,
+        color: 'red',
+        title: 'Error',
+        autoClose: 3000,
+      });
+      return;
+    }
+
+    mutate(payload);
+  };
+
+  return (
+    <Box
+      style={{
+        display: 'flex',
+        minHeight: '100vh',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        background:
+          'linear-gradient(180deg, var(--mantine-color-gray-1) 30%, var(--mantine-color-gray-1) 5%)',
+      }}
+    >
+      <Title order={3} mb={40}>
+        Sign In
+      </Title>
+      <Paper
+        shadow="lg"
+        p={{ base: 'md', sm: 'md', md: 'xl' }}
+        w={{ base: '90%', sm: '70%', md: '40%' }}
+      >
+        <form
+          onSubmit={form.onSubmit((values) => {
+            submitHandler(values);
+          })}
+        >
+          <Stack gap={10}>
+            <Flex direction="column" align="center" justify="center">
+              <Title order={5} style={{ textAlign: 'center' }}>
+                Sellers pay{' '}
+                {productUploadSubscriptionPlan &&
+                  priceFormatter(productUploadSubscriptionPlan.price)}{' '}
+                to start posting!
+              </Title>
+            </Flex>
+            <TextInput
+              size="lg"
+              radius="lg"
+              withAsterisk
+              label="Email"
+              styles={{
+                label: { fontSize: '16px' },
+                root: { fontSize: '14px' },
+                input: { fontSize: '14px' },
+              }}
+              // key={form.key('email')}
+              placeholder="tunde@gmail.com"
+              {...form.getInputProps('email')}
+            />
+            <PasswordInput
+              size="lg"
+              radius="lg"
+              withAsterisk
+              label="Password"
+              placeholder="********"
+              styles={{
+                label: { fontSize: '16px' },
+                root: { fontSize: '14px' },
+                input: { fontSize: '14px' },
+              }}
+              // key={form.key('password')}
+              {...form.getInputProps('password')}
+            />
+            <Flex justify="end">
+              <Link href="#" style={{ textDecoration: 'none' }}>
+                <Text size="sm" c="black">
+                  Forgot password?
+                </Text>
+              </Link>
+            </Flex>
+
+            <Button radius="lg" h={50} variant="filled" mt={10} type="submit" loading={isPending}>
+              Submit
+            </Button>
+
+            <Flex align="center" justify="space-between">
+              <Divider w="45%" /> <Text>Or</Text> <Divider w="45%" />
+            </Flex>
+
+            <Button
+              h={50}
+              radius="lg"
+              variant="default"
+              leftSection={<Image src="/icons/icon_google.svg" alt="" width={25} height={25} />}
+            >
+              Continue with Google
+            </Button>
+
+            {currentTestimonial && <TestimonialCard testimonial={currentTestimonial} />}
+          </Stack>
+        </form>
+      </Paper>
+    </Box>
+  );
+};
+
+export default Signin;
