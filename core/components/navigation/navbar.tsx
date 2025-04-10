@@ -5,7 +5,7 @@ import { Box, Burger, Button, Container, Drawer, Group, Image, rem, Stack } from
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { AccountButton } from '../buttons/account_button';
 import { ChatConversationsButton } from '../buttons/chat_conversations_button';
-import classes from './Navbar.module.css';
+import classes from './navbar.module.css';
 
 const links = [
   { link: '/', label: 'Home' },
