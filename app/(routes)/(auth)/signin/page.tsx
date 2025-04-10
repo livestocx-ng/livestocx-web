@@ -3,6 +3,8 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import {
   Box,
   Button,
@@ -31,9 +33,11 @@ const Signin = () => {
   useGetTestimonialsQuery();
   useGetProductUploadSubscriptionPlanQuery();
 
+  const router = useRouter();
+
   const { isPending, mutate } = useLoginMutation();
 
-  const { testimonials, productUploadSubscriptionPlan } = useAppContext();
+  const { authToken, testimonials, productUploadSubscriptionPlan } = useAppContext();
 
   const form = useForm({
     mode: 'uncontrolled',
@@ -43,6 +47,7 @@ const Signin = () => {
     },
   });
 
+  const [_currentIndex, setCurrentIndex] = useState<number>(0);
   const [currentTestimonial, setCurrentTestimonial] = useState<TestimonialInfo | null>(null);
 
   const shuffleTestimonials = () => {
@@ -55,7 +60,13 @@ const Signin = () => {
       setCurrentTestimonial(testimonials[0]);
     }
 
-    return setInterval(() => {}, 7000);
+    return setInterval(() => {
+      setCurrentIndex((prevIndex) => {
+        const nextIndex = (prevIndex + 1) % testimonials.length;
+        setCurrentTestimonial(testimonials[nextIndex]);
+        return nextIndex;
+      });
+    }, 7000);
   };
 
   useEffect(() => {
@@ -68,10 +79,14 @@ const Signin = () => {
     };
   }, [testimonials]);
 
+  useEffect(() => {
+    if (authToken) {
+      router.push('/');
+    }
+  }, [authToken]);
+
   const submitHandler = (payload: SigninDTO) => {
     const message = validateSignInForm(payload);
-
-    console.log('[SIGNIN-MESSAGE] :: ', message);
 
     if (message !== '') {
       showNotification({
@@ -149,7 +164,7 @@ const Signin = () => {
               {...form.getInputProps('password')}
             />
             <Flex justify="end">
-              <Link href="#" style={{ textDecoration: 'none' }}>
+              <Link href="/forgot-password" style={{ textDecoration: 'none' }}>
                 <Text size="sm" c="black">
                   Forgot password?
                 </Text>
@@ -167,6 +182,11 @@ const Signin = () => {
             <Button
               h={50}
               radius="lg"
+              onClick={() => {
+                signIn('google', {
+                  callbackUrl: '/',
+                });
+              }}
               variant="default"
               leftSection={<Image src="/icons/icon_google.svg" alt="" width={25} height={25} />}
             >

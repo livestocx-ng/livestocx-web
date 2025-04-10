@@ -9,23 +9,34 @@ import {
   IconUsers,
 } from '@tabler/icons-react';
 import { ActionIcon, Menu } from '@mantine/core';
+import { showNotification } from '@mantine/notifications';
+import { useAppContext } from '@/core/context';
 
-export const AccountButton = ({
-  isScrolling,
-  isLoggedIn = false,
-}: {
-  isScrolling: boolean;
-  isLoggedIn?: boolean;
-}) => {
+export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
   const router = useRouter();
 
+  const { authToken, setAuthToken } = useAppContext();
+
   const handleClick = () => {
-    if (!isLoggedIn) {
+    if (!authToken) {
       router.push('/signin');
     }
   };
 
-  if (!isLoggedIn) {
+  const handleLogout = () => {
+    setAuthToken('');
+
+    router.push('/');
+
+    return showNotification({
+      color: 'green',
+      autoClose: 3000,
+      title: 'Message',
+      message: 'Logged out successfully',
+    });
+  };
+
+  if (!authToken) {
     return (
       <ActionIcon
         variant="filled"
@@ -34,9 +45,13 @@ export const AccountButton = ({
         onClick={handleClick}
         styles={{
           root: {
-            backgroundColor: isScrolling ? 'var(--mantine-color-primary-0)' : 'var(--mantine-color-primary-0)',
+            backgroundColor: isScrolling
+              ? 'var(--mantine-color-primary-0)'
+              : 'var(--mantine-color-primary-0)',
             '&:hover': {
-              backgroundColor: isScrolling ? 'var(--mantine-color-primary-0)' : 'var(--mantine-color-primary-0)',
+              backgroundColor: isScrolling
+                ? 'var(--mantine-color-primary-0)'
+                : 'var(--mantine-color-primary-0)',
             },
           },
         }}
@@ -62,9 +77,13 @@ export const AccountButton = ({
           radius={100}
           styles={{
             root: {
-              backgroundColor: isScrolling ? 'var(--mantine-color-primary-0)' : 'var(--mantine-color-primary-0)',
+              backgroundColor: isScrolling
+                ? 'var(--mantine-color-primary-0)'
+                : 'var(--mantine-color-primary-0)',
               '&:hover': {
-                backgroundColor: isScrolling ? 'var(--mantine-color-primary-0)' : 'var(--mantine-color-primary-0)',
+                backgroundColor: isScrolling
+                  ? 'var(--mantine-color-primary-0)'
+                  : 'var(--mantine-color-primary-0)',
               },
             },
           }}
@@ -92,7 +111,7 @@ export const AccountButton = ({
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item color="red" leftSection={<IconLogout size={14} />}>
+        <Menu.Item color="red" onClick={handleLogout} leftSection={<IconLogout size={14} />}>
           Logout
         </Menu.Item>
       </Menu.Dropdown>
