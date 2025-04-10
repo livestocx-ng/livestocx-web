@@ -1,7 +1,8 @@
-import NextAuth from 'next-auth/next';
 import { cookies } from 'next/headers';
-import { authApi } from '@/core/api/sdk';
+import axios from 'axios';
+import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
+// import { authApi } from '@/core/api/sdk';
 import { COOKIE_MAX_AGE, COOKIE_NAME } from '@/core/constants';
 
 const handler = NextAuth({
@@ -22,11 +23,14 @@ const handler = NextAuth({
     async signIn({ account, profile }) {
       if (account?.provider === 'google') {
         try {
-			const email = profile?.email;
+          const email = profile?.email;
 
-          const { data } = await authApi.authControllerSigninOAuth({
-            email: email!,
-          });
+          const { data } = await axios.post(
+            process.env.NEXT_APP_CORE_SERVICE_HOST!.concat('/v1/auth/signin-oauth'),
+            {
+              email: email!,
+            }
+          );
 
           (await cookies()).set({
             name: COOKIE_NAME,
@@ -42,7 +46,7 @@ const handler = NextAuth({
 
           return true;
         } catch (error) {
-          // console.error('[GOOGLE-SIGN-API-ERROR]', error);
+          console.error('[GOOGLE-SIGN-API-ERROR]', error);
         }
       }
       return true;
