@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Box, Button, Flex, Paper, PinInput, Stack, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
@@ -12,7 +12,7 @@ import { validateResetPasswordVerificationForm } from '@/core/validations/auth.v
 
 const ResetPasswordVerification = () => {
   const router = useRouter();
-  const params = useSearchParams();
+  // const params = useSearchParams();
 
   const { isPending, mutate } = useResetPasswordVerificationMutation();
 
@@ -33,6 +33,8 @@ const ResetPasswordVerification = () => {
   }, [authToken]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+
     if (params?.has('email')) {
       const email = params.get('email');
 

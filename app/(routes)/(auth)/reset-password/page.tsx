@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { Box, Button, Paper, PasswordInput, Stack, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
@@ -12,7 +12,7 @@ import { validateResetPasswordForm } from '@/core/validations/auth.validations';
 
 const ResetPassword = () => {
   const router = useRouter();
-  const params = useSearchParams();
+  // const params = useSearchParams();
 
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const { isPending, mutate } = useResetPasswordMutation();
@@ -35,6 +35,8 @@ const ResetPassword = () => {
   }, [authToken]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+
     if (params?.has('passwordResetToken')) {
       const accountId = params.get('accountId');
       const passwordResetToken = params.get('passwordResetToken');
