@@ -5,7 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 // import { authApi } from '@/core/api/sdk';
 import { COOKIE_MAX_AGE, COOKIE_NAME } from '@/core/constants';
 
-const handler = NextAuth({
+export default NextAuth({
   secret: process.env.NEXT_APP_AUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -57,4 +57,3 @@ const handler = NextAuth({
   },
 });
 
-export { handler as GET, handler as POST };
