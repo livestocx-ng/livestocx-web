@@ -11,6 +11,7 @@ import {
 import { ActionIcon, Menu } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useAppContext } from '@/core/context';
+import axios from 'axios';
 
 export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
   const router = useRouter();
@@ -23,10 +24,12 @@ export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     setAuthToken('');
 
     router.push('/');
+
+    await axios.delete('/api/auth/delete-cookies');
 
     return showNotification({
       color: 'green',

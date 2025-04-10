@@ -6,6 +6,7 @@ import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { AccountButton } from '../buttons/account_button';
 import { ChatConversationsButton } from '../buttons/chat_conversations_button';
 import classes from './navbar.module.css';
+import useInitializeAuthTokenQuery from '@/core/hooks/auth/useInitializeAuthTokenQuery';
 
 const links = [
   { link: '/', label: 'Home' },
@@ -15,8 +16,10 @@ const links = [
 ];
 
 export function Navbar() {
-  const [opened, { toggle }] = useDisclosure(false);
+  useInitializeAuthTokenQuery();
+
   const [scroll] = useWindowScroll();
+  const [opened, { toggle }] = useDisclosure(false);
 
   return (
     <Box

@@ -1,11 +1,13 @@
 import { cookies } from 'next/headers';
 import axios from 'axios';
+// import axios from 'axios';
+import { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
 import GoogleProvider from 'next-auth/providers/google';
 // import { authApi } from '@/core/api/sdk';
 import { COOKIE_MAX_AGE, COOKIE_NAME } from '@/core/constants';
 
-export default NextAuth({
+const authOptions: AuthOptions = {
   secret: process.env.NEXT_APP_AUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -25,6 +27,7 @@ export default NextAuth({
         try {
           const email = profile?.email;
 
+          // const { data } = await authApi.authControllerSigninOAuth(
           const { data } = await axios.post(
             process.env.NEXT_APP_CORE_SERVICE_HOST!.concat('/v1/auth/signin-oauth'),
             {
@@ -32,17 +35,19 @@ export default NextAuth({
             }
           );
 
-          (await cookies()).set({
-            name: COOKIE_NAME,
-            value: JSON.stringify({
-              accessToken: data?.token,
-            }),
-            httpOnly: true,
-            maxAge: COOKIE_MAX_AGE,
-            path: '/',
-            sameSite: 'strict',
-            secure: process.env.NODE_ENV === 'production',
-          });
+          if (data?.token) {
+            (await cookies()).set({
+              name: COOKIE_NAME,
+              value: JSON.stringify({
+                bearerToken: data?.token,
+              }),
+              httpOnly: true,
+              maxAge: COOKIE_MAX_AGE,
+              path: '/',
+              sameSite: 'strict',
+              secure: process.env.NODE_ENV === 'production',
+            });
+          }
 
           return true;
         } catch (error) {
@@ -55,5 +60,12 @@ export default NextAuth({
       return url || baseUrl;
     },
   },
-});
+};
 
+const handler = NextAuth(authOptions);
+
+// ✅ Export handlers as named exports
+// Make sure to export the GET and POST handlers directly
+// export const GET = handler;
+// export const POST = handler;
+export {handler as GET, handler as POST}
