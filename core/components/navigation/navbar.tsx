@@ -3,10 +3,11 @@
 import Link from 'next/link';
 import { Box, Burger, Button, Container, Drawer, Group, Image, rem, Stack } from '@mantine/core';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
+import useFetchAccountInfoQuery from '@/core/hooks/account/useFetchAccountInfoQuery';
+import useInitializeAuthTokenQuery from '@/core/hooks/auth/useInitializeAuthTokenQuery';
 import { AccountButton } from '../buttons/account_button';
 import { ChatConversationsButton } from '../buttons/chat_conversations_button';
 import classes from './navbar.module.css';
-import useInitializeAuthTokenQuery from '@/core/hooks/auth/useInitializeAuthTokenQuery';
 
 const links = [
   { link: '/', label: 'Home' },
@@ -16,6 +17,7 @@ const links = [
 ];
 
 export function Navbar() {
+  useFetchAccountInfoQuery();
   useInitializeAuthTokenQuery();
 
   const [scroll] = useWindowScroll();
@@ -29,7 +31,7 @@ export function Navbar() {
         transition: 'background-color 0.3s ease',
         borderBottom: scroll.y > 0 ? '1px solid var(--mantine-color-gray-3)' : '',
         backdropFilter: scroll.y > 0 ? 'blur(5px)' : 'none',
-        backgroundColor: scroll.y > 0 ? '#ffffff60' : '#ffffff00',
+        backgroundColor: scroll.y > 0 ? '#ffffff80' : '#ffffff00',
         WebkitBackdropFilter: scroll.y > 0 ? 'blur(5px)' : 'none',
       }}
     >
@@ -37,7 +39,15 @@ export function Navbar() {
         <Group justify="space-between" align="center">
           {/* Left section: Logo and Navigation */}
           <Group>
-            <Image src="/icons/logo.svg" alt="lvx" w={30} h="auto" />
+            <Link href="/">
+              <Image
+                w={30}
+                h="auto"
+                alt="lvx"
+                src="/icons/icon_clif.jpg"
+                style={{ border: '1px solid #11111120', borderRadius: '10px' }}
+              />
+            </Link>
 
             {/* Desktop navigation */}
             <Group gap={40} visibleFrom="xs">

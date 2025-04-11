@@ -104,17 +104,17 @@ export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
 
       <Menu.Dropdown>
         <Menu.Label>Navigation</Menu.Label>
-        <Menu.Item leftSection={<IconUser size={14} />}>Account</Menu.Item>
-        <Menu.Item leftSection={<IconUsers size={14} />}>Referrals</Menu.Item>
-        <Menu.Item leftSection={<IconMessages size={14} />}>Messages</Menu.Item>
-        <Menu.Item leftSection={<IconPackage size={14} />}>Products</Menu.Item>
-        <Menu.Item leftSection={<IconChartAreaLine size={14} />}>Promotions</Menu.Item>
-        <Menu.Item leftSection={<IconBell size={14} />}>Notifications</Menu.Item>
+        <Menu.Item leftSection={<IconUser size={18} />}>Account</Menu.Item>
+        <Menu.Item leftSection={<IconUsers size={18} />}>Referrals</Menu.Item>
+        <Menu.Item leftSection={<IconMessages size={18} />}>Messages</Menu.Item>
+        <Menu.Item leftSection={<IconPackage size={18} />}>Products</Menu.Item>
+        <Menu.Item leftSection={<IconChartAreaLine size={18} />}>Promotions</Menu.Item>
+        <Menu.Item leftSection={<IconBell size={18} />}>Notifications</Menu.Item>
 
         <Menu.Divider />
 
         <Menu.Label>Danger zone</Menu.Label>
-        <Menu.Item color="red" onClick={handleLogout} leftSection={<IconLogout size={14} />}>
+        <Menu.Item color="red" onClick={handleLogout} leftSection={<IconLogout size={18} />}>
           Logout
         </Menu.Item>
       </Menu.Dropdown>

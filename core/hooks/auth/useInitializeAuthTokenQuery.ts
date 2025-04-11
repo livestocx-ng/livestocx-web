@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAppContext } from '../../context';
+import { useQuery } from '@tanstack/react-query';
 
 export default function useInitializeAuthTokenQuery() {
   const { authToken, setAuthToken } = useAppContext();

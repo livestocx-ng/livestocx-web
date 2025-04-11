@@ -1,10 +1,8 @@
-import { cookies } from 'next/headers';
 import axios from 'axios';
-// import axios from 'axios';
-import { AuthOptions } from 'next-auth';
 import NextAuth from 'next-auth/next';
+import { cookies } from 'next/headers';
+import { AuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
-// import { authApi } from '@/core/api/sdk';
 import { COOKIE_MAX_AGE, COOKIE_NAME } from '@/core/constants';
 
 const authOptions: AuthOptions = {
@@ -64,8 +62,4 @@ const authOptions: AuthOptions = {
 
 const handler = NextAuth(authOptions);
 
-// ✅ Export handlers as named exports
-// Make sure to export the GET and POST handlers directly
-// export const GET = handler;
-// export const POST = handler;
 export {handler as GET, handler as POST}
