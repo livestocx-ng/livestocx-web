@@ -1,9 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { IconBrandLinkedin, IconWallet } from '@tabler/icons-react';
-import { Anchor, Box, Card, Flex, Grid, Group, Paper, Stack, Text, Title } from '@mantine/core';
 import { platformFeatures, teamMembers } from '@/core/utilities';
+import { IconBrandLinkedin, IconWallet } from '@tabler/icons-react';
+import { Anchor, Box, Card, Flex, Group, Paper, Stack, Text, Title } from '@mantine/core';
 
 const AboutUs = () => {
   return (
@@ -24,7 +24,7 @@ const AboutUs = () => {
       </Title>
       <Stack gap={50}>
         <Box px={20}>
-          <Text>
+          <Text fz={{ base: 14, sm: 14, md: 16 }}>
             Livestocx is an AI-powered livestock marketplace connecting small-holder livestock
             farmers directly to sellers, evading middlemen and managing all their logistics while
             reducing trade inefficiencies, low customer reach, unsustainable transport services, and
