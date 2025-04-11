@@ -22,7 +22,7 @@ const AboutUs = () => {
       <Title order={3} mb={40}>
         About Us
       </Title>
-      <Flex direction="column" gap={50}>
+      <Stack gap={50}>
         <Box px={20}>
           <Text>
             Livestocx is an AI-powered livestock marketplace connecting small-holder livestock
@@ -34,6 +34,7 @@ const AboutUs = () => {
           </Text>
         </Box>
         <Flex
+          w="100%"
           py={30}
           gap={50}
           direction={{ base: 'column', sm: 'column', md: 'row' }}
@@ -45,7 +46,7 @@ const AboutUs = () => {
             c="white"
             shadow="lg"
             radius={20}
-            w={350}
+            w={{ base: 300, sm: 300, md: 350 }}
             h={230}
             p={20}
             style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}
@@ -62,8 +63,8 @@ const AboutUs = () => {
           </Paper>
 
           <Image
-            width={350}
-            height={250}
+            width={250}
+            height={200}
             src="/images/image_about_art_1.png"
             alt=""
             objectFit="cover"
@@ -71,51 +72,61 @@ const AboutUs = () => {
         </Flex>
 
         <Box>
-          <Flex justify="center" direction="column" align="center" w="100%" mb={20}>
+          <Flex justify="center" direction="column" align="center" w="100%" mb={20} px={20}>
             <Title order={3}>Key Features</Title>
             <Text fz={16} c="black" ta="center">
               We have the following key features to support local, small-holder livestock keepers
             </Text>
           </Flex>
 
-          <Box px={{ base: 20, sm: 20, md: 100 }}>
-            <Grid gutter="xl">
+          <Box>
+            <Flex
+              wrap="wrap"
+              gap="lg"
+              justify="center"
+              // align="stretch"
+              px="md"
+              py="xl"
+            >
+              {/* <Grid > */}
               {platformFeatures.map((feature) => (
-                <Grid.Col key={feature.title} span={{ base: 12, sm: 6 }}>
-                  <Card
-                    shadow="sm"
-                    radius="md"
-                    padding="lg"
-                    withBorder
-                    h={{ base: 320, sm: 320, md: 240 }}
-                  >
-                    <Group align="flex-start" mb="md">
-                      <feature.icon size={32} color="orange" />
-                    </Group>
-                    <Title order={4} c="primary" mb={10}>
-                      {feature.title}
-                    </Title>
-                    <Text size="sm" c="black" lh={2}>
-                      {feature.description}
-                    </Text>
-                  </Card>
-                </Grid.Col>
+                // <Grid.Col key={feature.title} span={{ base: 12, sm: 6 }}>
+                <Card
+                  shadow="sm"
+                  radius="md"
+                  padding="lg"
+                  withBorder
+                  key={feature.title}
+                  w={{ base: '100%', sm: '100%', md: 500 }}
+                >
+                  <Group align="flex-start" mb="md">
+                    <feature.icon size={32} color="orange" />
+                  </Group>
+                  <Title order={4} c="primary" mb={10}>
+                    {feature.title}
+                  </Title>
+                  <Text size="sm" c="black" lh={2}>
+                    {feature.description}
+                  </Text>
+                </Card>
+                // </Grid.Col>
               ))}
-            </Grid>
+              {/* </Grid> */}
+            </Flex>
           </Box>
         </Box>
 
         <Box>
           <Flex
             py={30}
-            px={{ base: 20, sm: 20, md: 100 }}
             gap={50}
+            // px={20}
             direction={{ base: 'column', sm: 'column', md: 'row' }}
             justify="center"
             align="center"
             style={{ backgroundColor: '#0EBE52' }}
           >
-            <Text c="black" fz={{ base: 14, sm: 14, md: 16 }}>
+            <Text c="black" fz={{ base: 14, sm: 14, md: 16 }} pl={20}>
               Our platform provides a centralized, transparent, and efficient marketplace where
               local livestock farmers connect with buyers from anywhere around Nigeria, carry out
               transactions, and coordinate logistics.
@@ -126,6 +137,7 @@ const AboutUs = () => {
               height={250}
               src="/images/image_about_art_3.svg"
               alt=""
+              style={{ paddingRight: '20px' }}
               objectFit="cover"
             />
           </Flex>
@@ -166,7 +178,6 @@ const AboutUs = () => {
                   </Text>
                 </Paper>
 
-                {/* Mission Box */}
                 <Paper
                   radius="md"
                   p={{ base: 20, sm: 20, md: 'lg' }}
@@ -197,7 +208,7 @@ const AboutUs = () => {
           </Box>
         </Box>
 
-        <Box py={30} px={{ base: 20, sm: 20, md: 100 }}>
+        <Box py={30}>
           <Title order={2} mb="xl" ta="center">
             Meet the Team
           </Title>
@@ -243,7 +254,7 @@ const AboutUs = () => {
             ))}
           </Flex>
         </Box>
-      </Flex>
+      </Stack>
     </Box>
   );
 };
