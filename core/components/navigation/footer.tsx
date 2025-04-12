@@ -23,12 +23,12 @@ export function Footer() {
             <Stack gap="md">
               <Flex align="center" gap="xs">
                 <Image
-                  src="/icons/logo.svg"
-                  alt="Livestocx"
-                  w={{ base: 30, sm: 20, md: 30 }}
+                  w={35}
                   h="auto"
-                  fit="contain"
-                />
+                  alt="lvx"
+                  src="/icons/icon_clif.jpg"
+                  style={{ border: '1px solid #ffffff', borderRadius: '10px' }}
+                />{' '}
                 <Title order={4} c="white">
                   Livestocx
                 </Title>

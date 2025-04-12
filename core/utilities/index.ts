@@ -6,6 +6,8 @@ export const navLinks = [
   { link: '/business', label: 'Business' },
   { link: '/about-us', label: 'About Us' },
   { link: '/contact-us', label: 'Contact Us' },
+  { link: '/privacy-policy', label: 'Privacy' },
+  { link: '/terms-of-service', label: 'Terms' },
 ];
 
 export const platformFaqs = [
