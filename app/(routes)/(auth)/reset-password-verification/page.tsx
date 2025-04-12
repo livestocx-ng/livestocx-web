@@ -33,7 +33,7 @@ const ResetPasswordVerification = () => {
   }, [authToken]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
+    const params = new URLSearchParams(window.location.search);
 
     if (params?.has('email')) {
       const email = params.get('email');
@@ -51,7 +51,7 @@ const ResetPasswordVerification = () => {
       showNotification({
         message,
         color: 'red',
-        title: 'Error',
+        title: 'Message',
         autoClose: 3000,
       });
       return;

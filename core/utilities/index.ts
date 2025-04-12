@@ -1,5 +1,13 @@
 import { IconCpu, IconLeaf, IconTruckDelivery, IconUsers } from '@tabler/icons-react';
 
+export const navLinks = [
+  { link: '/', label: 'Home' },
+  { link: '/signup', label: 'Register' },
+  { link: '/business', label: 'Business' },
+  { link: '/about-us', label: 'About Us' },
+  { link: '/contact-us', label: 'Contact Us' },
+];
+
 export const platformFaqs = [
   {
     value: 'What benefits does Livestocx offer to sellers?',
@@ -71,41 +79,151 @@ export const platformFeatures = [
 ];
 
 export const teamMembers = [
-    {
-      name: 'Oghenekevwe Emadago',
-      role: 'Co-founder/CEO',
-      bio: `Oghenekevwe has over 7 years experience in sales across agricultural and hygiene sectors and has raised over $230,000 in funding. He leads strategy, vision, and investor relations.`,
-      image: '/images/team/team_member_1.png',
-      linkedin: 'https://www.linkedin.com/in/oghenekevwe-emadago',
+  {
+    name: 'Oghenekevwe Emadago',
+    role: 'Co-founder/CEO',
+    bio: `Oghenekevwe has over 7 years experience in sales across agricultural and hygiene sectors and has raised over $230,000 in funding. He leads strategy, vision, and investor relations.`,
+    image: '/images/team/team_member_1.png',
+    linkedin: 'https://www.linkedin.com/in/oghenekevwe-emadago',
+  },
+  {
+    name: 'Idokoh Divine',
+    role: 'COO, Agriculturist and Graphic Designer',
+    bio: `With a background in Agriculture and UI/UX, Divine ensures operational excellence and leads on-the-ground engagements to drive platform growth.`,
+    image: '/images/team/team_member_2.png',
+    linkedin: 'https://www.linkedin.com/in/divine-idokoh',
+  },
+  {
+    name: 'Yada Martins',
+    role: 'Co-founder/CTO',
+    bio: `Martins is a full stack developer with 6+ years of experience in NestJS, Next.js, and Flutter. He leads the development and implementation of our tech stack.`,
+    image: '/images/team/team_member_3.jpg',
+    linkedin: 'https://linkedin.com/in/yada-martins',
+  },
+  {
+    name: 'Steve Odinkaru',
+    role: 'Co-founder/Product Architect & Lead Designer',
+    bio: `Steve is an expert in Figma and product management with 5 years of experience. He handles front-end design, UX, and social media.`,
+    image: '/images/team/team_member_4.jpeg',
+    linkedin: 'https://linkedin.com/in/steve-odinkaru',
+  },
+  {
+    name: 'Peter Asalu',
+    role: 'Co-founder/Product',
+    bio: "AI/Data Engineer: Asalu is a key contributor to Livestocx's backend infrastructure, focusing on our data collection and training our AI model on collected data. With his expertise in software architecture and database management, Asalu ensures that we can handle high volumes of transactions and data while maintaining optimal performance and reliability.",
+
+    image: '/images/team/team_member_5.jpeg',
+    linkedin: 'https://www.linkedin.com/in/asalu-peter-41300a188',
+  },
+];
+
+export const appFeatures = [
+  {
+    id: 1,
+    feature: 'Initial Cost',
+    custom: {
+      text: 'High (design, development, hosting, domain) ₦150,000 - ₦800,000',
+      positive: false,
     },
-    {
-      name: 'Idokoh Divine',
-      role: 'COO, Agriculturist and Graphic Designer',
-      bio: `With a background in Agriculture and UI/UX, Divine ensures operational excellence and leads on-the-ground engagements to drive platform growth.`,
-      image: '/images/team/team_member_2.png',
-      linkedin: 'https://www.linkedin.com/in/divine-idokoh',
+    livestocx: {
+      text: 'Low (starting at ₦10,050/year)',
+      positive: true,
     },
-    {
-      name: 'Yada Martins',
-      role: 'Co-founder/CTO',
-      bio: `Martins is a full stack developer with 6+ years of experience in NestJS, Next.js, and Flutter. He leads the development and implementation of our tech stack.`,
-      image: '/images/team/team_member_3.jpg',
-      linkedin: 'https://linkedin.com/in/yada-martins',
+  },
+  {
+    id: 2,
+    feature: 'Maintenance Cost',
+    custom: {
+      text: 'High (maintenance, hosting)',
+      positive: false,
     },
-    {
-      name: 'Steve Odinkaru',
-      role: 'Co-founder/Product Architect & Lead Designer',
-      bio: `Steve is an expert in Figma and product management with 5 years of experience. He handles front-end design, UX, and social media.`,
-      image: '/images/team/team_member_4.jpeg',
-      linkedin: 'https://linkedin.com/in/steve-odinkaru',
+    livestocx: {
+      text: 'Included in subscription',
+      positive: true,
     },
-    {
-      name: 'Peter Asalu',
-      role: 'Co-founder/Product',
-      bio: "AI/Data Engineer: Asalu is a key contributor to Livestocx's backend infrastructure, focusing on our data collection and training our AI model on collected data. With his expertise in software architecture and database management, Asalu ensures that we can handle high volumes of transactions and data while maintaining optimal performance and reliability.",
-		
-      image: '/images/team/team_member_5.jpeg',
-      linkedin: 'https://www.linkedin.com/in/asalu-peter-41300a188',
+  },
+  {
+    id: 3,
+    feature: 'Product Uploads',
+    custom: {
+      text: 'Additional setup and costs',
+      positive: false,
     },
-  ];
-  
+    livestocx: {
+      text: 'Unlimited uploads',
+      positive: true,
+    },
+  },
+  {
+    id: 4,
+    feature: 'Sales Management Tools',
+    custom: {
+      text: 'Additional cost and integration needed',
+      positive: false,
+    },
+    livestocx: {
+      text: 'Included',
+      positive: true,
+    },
+  },
+  {
+    id: 5,
+    feature: 'Customer Reach',
+    custom: {
+      text: 'Limited (depends on SEO, marketing efforts)',
+      positive: false,
+    },
+    livestocx: {
+      text: 'High (marketplace visibility)',
+      positive: true,
+    },
+  },
+  {
+    id: 6,
+    feature: 'Promotion and Marketing',
+    custom: {
+      text: 'Requires separate strategy and additional costs',
+      positive: false,
+    },
+    livestocx: {
+      text: 'Included (weekly product promotions)',
+      positive: true,
+    },
+  },
+  {
+    id: 7,
+    feature: 'Analytics and Insights',
+    custom: {
+      text: 'Requires separate setup and additional tools',
+      positive: false,
+    },
+    livestocx: {
+      text: 'Included',
+      positive: true,
+    },
+  },
+  {
+    id: 8,
+    feature: 'Security and Updates',
+    custom: {
+      text: 'Responsibility of the business owner (time and cost-intensive)',
+      positive: false,
+    },
+    livestocx: {
+      text: 'Handled by Livestocx (regular updates and security management)',
+      positive: true,
+    },
+  },
+  {
+    id: 9,
+    feature: 'Customer Support',
+    custom: {
+      text: 'Varies, generally limited to hosting provider',
+      positive: false,
+    },
+    livestocx: {
+      text: 'Included (platform support and assistance)',
+      positive: true,
+    },
+  },
+];

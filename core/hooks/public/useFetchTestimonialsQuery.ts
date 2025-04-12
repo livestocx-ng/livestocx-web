@@ -3,7 +3,7 @@ import { testimonialsApi } from '@/core/api/sdk';
 import { useAppContext } from '@/core/context';
 import { TestimonialInfo } from '@/core/sdk/communication';
 
-export default function useGetTestimonialsQuery() {
+export default function useFetchTestimonialsQuery() {
   const { testimonials, setTestimonials } = useAppContext();
 
   return useQuery({

@@ -1,4 +1,5 @@
 import {
+  CreateAccountDTO,
   ForgotPasswordDTO,
   ResetPasswordDTO,
   ResetPasswordVerificationDTO,
@@ -12,6 +13,34 @@ export const validateSignInForm = (values: SigninDTO) => {
     message = 'Invalid email address';
   } else if (values.password.length <= 0) {
     message = 'Password is required';
+  }
+
+  return message;
+};
+
+export const validateSignUpForm = (values: CreateAccountDTO, confirmPassword: string) => {
+  let message = '';
+
+  if (!RegExp(/^\S+@\S+$/).test(values.email)) {
+    message = 'Invalid email address';
+  } else if (values.firstName.length <= 0) {
+    message = 'First name is required';
+  } else if (values.lastName.length <= 0) {
+    message = 'Last name is required';
+  } else if (values.phone.length <= 10) {
+    message = 'Invalid phone number';
+  } else if (!values.state) {
+    message = 'State is required';
+  } else if (!values.city) {
+    message = 'City is required';
+  } else if (values.role === 'FARMER' && !values.businessName) {
+    message = 'Business name is required';
+  } else if (values.role === 'FARMER' && !values.businessAddress) {
+    message = 'Business address is required';
+  } else if (values.password.length <= 0) {
+    message = 'Password is required';
+  } else if (values.password !== confirmPassword) {
+    message = 'Passwords do not match';
   }
 
   return message;

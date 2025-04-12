@@ -11,7 +11,7 @@ export default function useLoginMutation() {
     mutationFn: async (values: SigninDTO) => {
       nprogress.start();
 
-      return await authApi.authControllerSigninDonor({
+      return await authApi.authControllerSignIn({
         ...values,
       });
     },

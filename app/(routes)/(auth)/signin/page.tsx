@@ -22,18 +22,20 @@ import { showNotification } from '@mantine/notifications';
 import { TestimonialCard } from '@/core/components/cards/testimonial-card';
 import { useAppContext } from '@/core/context';
 import useLoginMutation from '@/core/hooks/auth/useLoginMutation';
-import useGetProductUploadSubscriptionPlanQuery from '@/core/hooks/public/useGetProductUploadSubscriptionPlanQuery';
-import useGetTestimonialsQuery from '@/core/hooks/public/useGetTestimonialsQuery';
+import useFetchProductUploadSubscriptionPlanQuery from '@/core/hooks/public/useFetchProductUploadSubscriptionPlanQuery';
+import useFetchTestimonialsQuery from '@/core/hooks/public/useFetchTestimonialsQuery';
 import { priceFormatter } from '@/core/middlewares';
 import { SigninDTO } from '@/core/sdk/auth';
 import { TestimonialInfo } from '@/core/sdk/communication';
 import { validateSignInForm } from '@/core/validations/auth.validations';
 
 const Signin = () => {
-  useGetTestimonialsQuery();
-  useGetProductUploadSubscriptionPlanQuery();
+  useFetchTestimonialsQuery();
+  useFetchProductUploadSubscriptionPlanQuery();
 
   const router = useRouter();
+
+  const params = new URLSearchParams(window.location.search);
 
   const { isPending, mutate } = useLoginMutation();
 
@@ -80,10 +82,22 @@ const Signin = () => {
   }, [testimonials]);
 
   useEffect(() => {
-    if (authToken) {
+    if (authToken && params.get('redirect_to') === null) {
       router.push('/');
+    } else if (authToken && params.get('redirect_to') !== null) {
+      const routePath = '/'.concat(params.get('redirect_to')!);
+
+      return router.push(
+        routePath.includes('business') ? '/business?subscription_now=true' : routePath
+      );
     }
-  }, [authToken]);
+  }, [authToken, params]);
+
+  useEffect(() => {
+    if (params.get('redirect_to') !== null) {
+      localStorage.setItem('LIVESTOCX_AUTH_REDIRECT', params.get('redirect_to')!);
+    }
+  }, [params]);
 
   const submitHandler = (payload: SigninDTO) => {
     const message = validateSignInForm(payload);
@@ -92,9 +106,10 @@ const Signin = () => {
       showNotification({
         message,
         color: 'red',
-        title: 'Error',
+        title: 'Message',
         autoClose: 3000,
       });
+
       return;
     }
 
@@ -183,8 +198,12 @@ const Signin = () => {
               h={50}
               radius="lg"
               onClick={() => {
+                const routePath = '/'.concat(params.get('redirect_to')!);
+
                 signIn('google', {
-                  callbackUrl: '/',
+                  callbackUrl: routePath.includes('business')
+                    ? '/business?subscription_now=true'
+                    : routePath,
                 });
               }}
               variant="default"

@@ -14,10 +14,13 @@ const ResetPassword = () => {
   const router = useRouter();
   // const params = useSearchParams();
 
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const { authToken } = useAppContext();
+
   const { isPending, mutate } = useResetPasswordMutation();
 
-  const { authToken } = useAppContext();
+  const params = new URLSearchParams(window.location.search);
+
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const form = useForm({
     mode: 'uncontrolled',
@@ -35,8 +38,6 @@ const ResetPassword = () => {
   }, [authToken]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search)
-
     if (params?.has('passwordResetToken')) {
       const accountId = params.get('accountId');
       const passwordResetToken = params.get('passwordResetToken');
@@ -58,7 +59,7 @@ const ResetPassword = () => {
       showNotification({
         message,
         color: 'red',
-        title: 'Error',
+        title: 'Message',
         autoClose: 3000,
       });
       return;
@@ -93,34 +94,34 @@ const ResetPassword = () => {
           })}
         >
           <Stack gap={10}>
-              <PasswordInput
-                size="lg"
-                radius="lg"
-                withAsterisk
-                label="New Password"
-                placeholder="********"
-                styles={{
-                  label: { fontSize: '16px' },
-                  root: { fontSize: '14px' },
-                  input: { fontSize: '14px' },
-                }}
-                {...form.getInputProps('newPassword')}
-              />
-              <PasswordInput
-                size="lg"
-                radius="lg"
-                withAsterisk
-                placeholder="********"
-                label="Confirm Password"
-                styles={{
-                  root: { fontSize: '14px' },
-                  label: { fontSize: '16px' },
-                  input: { fontSize: '14px' },
-                }}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setConfirmPassword(e.target.value)
-                }
-              />
+            <PasswordInput
+              size="lg"
+              radius="lg"
+              withAsterisk
+              label="New Password"
+              placeholder="********"
+              styles={{
+                label: { fontSize: '16px' },
+                root: { fontSize: '14px' },
+                input: { fontSize: '14px' },
+              }}
+              {...form.getInputProps('newPassword')}
+            />
+            <PasswordInput
+              size="lg"
+              radius="lg"
+              withAsterisk
+              placeholder="********"
+              label="Confirm Password"
+              styles={{
+                root: { fontSize: '14px' },
+                label: { fontSize: '16px' },
+                input: { fontSize: '14px' },
+              }}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setConfirmPassword(e.target.value)
+              }
+            />
 
             <Button radius="lg" h={50} variant="filled" mt={10} type="submit" loading={isPending}>
               Submit

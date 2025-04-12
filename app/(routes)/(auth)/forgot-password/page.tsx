@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect } from 'react';
-import { useForm } from '@mantine/form';
 import { useRouter } from 'next/navigation';
-import { useAppContext } from '@/core/context';
-import { ForgotPasswordDTO } from '@/core/sdk/auth';
-import { showNotification } from '@mantine/notifications';
 import { Box, Button, Paper, Stack, TextInput, Title } from '@mantine/core';
-import { validateForgotPasswordForm } from '@/core/validations/auth.validations';
+import { useForm } from '@mantine/form';
+import { showNotification } from '@mantine/notifications';
+import { useAppContext } from '@/core/context';
 import useForgotPasswordMutation from '@/core/hooks/auth/useForgotPasswordMutation';
+import { ForgotPasswordDTO } from '@/core/sdk/auth';
+import { validateForgotPasswordForm } from '@/core/validations/auth.validations';
 
 const ForgotPassword = () => {
   const router = useRouter();
@@ -37,7 +37,7 @@ const ForgotPassword = () => {
       showNotification({
         message,
         color: 'red',
-        title: 'Error',
+        title: 'Message',
         autoClose: 3000,
       });
       return;

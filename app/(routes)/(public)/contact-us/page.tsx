@@ -48,7 +48,7 @@ const ContactUs = () => {
       showNotification({
         message,
         color: 'red',
-        title: 'Error',
+        title: 'Message',
         autoClose: 3000,
       });
       return;

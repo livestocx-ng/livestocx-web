@@ -468,9 +468,9 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerSigninDonor: async (signinDTO: SigninDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        authControllerSignIn: async (signinDTO: SigninDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'signinDTO' is not null or undefined
-            assertParamExists('authControllerSigninDonor', 'signinDTO', signinDTO)
+            assertParamExists('authControllerSignIn', 'signinDTO', signinDTO)
             const localVarPath = `/v1/auth/signin`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -491,6 +491,41 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
             localVarRequestOptions.data = serializeDataIfNeeded(signinDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {CreateAccountDTO} createAccountDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerSignUp: async (createAccountDTO: CreateAccountDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'createAccountDTO' is not null or undefined
+            assertParamExists('authControllerSignUp', 'createAccountDTO', createAccountDTO)
+            const localVarPath = `/v1/auth/signup`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(createAccountDTO, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -567,41 +602,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
                 options: localVarRequestOptions,
             };
         },
-        /**
-         * 
-         * @param {CreateAccountDTO} createAccountDTO 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authControllerSignupDonor: async (createAccountDTO: CreateAccountDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'createAccountDTO' is not null or undefined
-            assertParamExists('authControllerSignupDonor', 'createAccountDTO', createAccountDTO)
-            const localVarPath = `/v1/auth/signup`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-
-    
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(createAccountDTO, localVarRequestOptions, configuration)
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
     }
 };
 
@@ -618,10 +618,22 @@ export const AuthApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async authControllerSigninDonor(signinDTO: SigninDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SigninResponsePayload>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerSigninDonor(signinDTO, options);
+        async authControllerSignIn(signinDTO: SigninDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SigninResponsePayload>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerSignIn(signinDTO, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerSigninDonor']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerSignIn']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {CreateAccountDTO} createAccountDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerSignUp(createAccountDTO: CreateAccountDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignupResponsePayload>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerSignUp(createAccountDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerSignUp']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -648,18 +660,6 @@ export const AuthApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerSignupCompleteVerification']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
-        /**
-         * 
-         * @param {CreateAccountDTO} createAccountDTO 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async authControllerSignupDonor(createAccountDTO: CreateAccountDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<SignupResponsePayload>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerSignupDonor(createAccountDTO, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.authControllerSignupDonor']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
     }
 };
 
@@ -676,8 +676,17 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        authControllerSigninDonor(signinDTO: SigninDTO, options?: RawAxiosRequestConfig): AxiosPromise<SigninResponsePayload> {
-            return localVarFp.authControllerSigninDonor(signinDTO, options).then((request) => request(axios, basePath));
+        authControllerSignIn(signinDTO: SigninDTO, options?: RawAxiosRequestConfig): AxiosPromise<SigninResponsePayload> {
+            return localVarFp.authControllerSignIn(signinDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CreateAccountDTO} createAccountDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerSignUp(createAccountDTO: CreateAccountDTO, options?: RawAxiosRequestConfig): AxiosPromise<SignupResponsePayload> {
+            return localVarFp.authControllerSignUp(createAccountDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -697,15 +706,6 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
         authControllerSignupCompleteVerification(completeSignupVerificationDTO: CompleteSignupVerificationDTO, options?: RawAxiosRequestConfig): AxiosPromise<SignupVerificationResponsePayload> {
             return localVarFp.authControllerSignupCompleteVerification(completeSignupVerificationDTO, options).then((request) => request(axios, basePath));
         },
-        /**
-         * 
-         * @param {CreateAccountDTO} createAccountDTO 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        authControllerSignupDonor(createAccountDTO: CreateAccountDTO, options?: RawAxiosRequestConfig): AxiosPromise<SignupResponsePayload> {
-            return localVarFp.authControllerSignupDonor(createAccountDTO, options).then((request) => request(axios, basePath));
-        },
     };
 };
 
@@ -723,8 +723,19 @@ export class AuthApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof AuthApi
      */
-    public authControllerSigninDonor(signinDTO: SigninDTO, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authControllerSigninDonor(signinDTO, options).then((request) => request(this.axios, this.basePath));
+    public authControllerSignIn(signinDTO: SigninDTO, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerSignIn(signinDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CreateAccountDTO} createAccountDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AuthApi
+     */
+    public authControllerSignUp(createAccountDTO: CreateAccountDTO, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).authControllerSignUp(createAccountDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -747,17 +758,6 @@ export class AuthApi extends BaseAPI {
      */
     public authControllerSignupCompleteVerification(completeSignupVerificationDTO: CompleteSignupVerificationDTO, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerSignupCompleteVerification(completeSignupVerificationDTO, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CreateAccountDTO} createAccountDTO 
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     * @memberof AuthApi
-     */
-    public authControllerSignupDonor(createAccountDTO: CreateAccountDTO, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).authControllerSignupDonor(createAccountDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
