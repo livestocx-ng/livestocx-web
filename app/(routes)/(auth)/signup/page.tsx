@@ -36,8 +36,6 @@ const Signup = () => {
 
   const router = useRouter();
 
-  const params = new URLSearchParams(window.location.search);
-
   const { isPending, mutate } = useSignupMutation();
   const { isPending: isCheckEmailAvailabilityPending, mutate: checkEmailAvailabilityMutation } =
     useCheckEmailAvailabilityMutation();
@@ -109,6 +107,8 @@ const Signup = () => {
   }, [testimonials]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
     if (authToken && params.get('redirect_to') === null) {
       router.push('/');
     } else if (authToken && params.get('redirect_to') !== null) {
@@ -118,13 +118,15 @@ const Signup = () => {
         routePath.includes('business') ? '/business?subscription_now=true' : routePath
       );
     }
-  }, [authToken, params]);
+  }, [authToken]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
     if (params.get('redirect_to') !== null) {
       localStorage.setItem('LIVESTOCX_AUTH_REDIRECT', params.get('redirect_to')!);
     }
-  }, [params]);
+  }, []);
 
   const submitHandler = async (payload: CreateAccountDTO) => {
     const message = validateSignUpForm(payload, formData.confirmPassword);
@@ -150,280 +152,280 @@ const Signup = () => {
   };
 
   return (
-      <Box
-        py={{ base: 100, sm: 100, md: 100 }}
-        style={{
-          display: 'flex',
-          minHeight: '100vh',
-          alignItems: 'center',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          background:
+    <Box
+      py={{ base: 100, sm: 100, md: 100 }}
+      style={{
+        display: 'flex',
+        minHeight: '100vh',
+        alignItems: 'center',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        background:
           'linear-gradient(180deg, var(--mantine-color-gray-1) 30%, var(--mantine-color-gray-1) 5%)',
-        }}
+      }}
+    >
+      <Title order={3} mb={40}>
+        Sign Up
+      </Title>
+      <Paper
+        shadow="lg"
+        p={{ base: 'md', sm: 'md', md: 'xl' }}
+        w={{ base: '90%', sm: '70%', md: '40%' }}
+      >
+        <form
+          onSubmit={form.onSubmit((values) => {
+            submitHandler(values);
+          })}
         >
-        <Title order={3} mb={40}>
-          Sign Up
-        </Title>
-        <Paper
-          shadow="lg"
-          p={{ base: 'md', sm: 'md', md: 'xl' }}
-          w={{ base: '90%', sm: '70%', md: '40%' }}
-        >
-          <form
-            onSubmit={form.onSubmit((values) => {
-              submitHandler(values);
-            })}
-          >
+          <Stack gap={10}>
+            <Flex direction="column" align="center" justify="center">
+              <Title order={5} style={{ textAlign: 'center' }}>
+                Sellers pay{' '}
+                {productUploadSubscriptionPlan &&
+                  priceFormatter(productUploadSubscriptionPlan.price)}{' '}
+                to start posting!
+              </Title>
+            </Flex>
+            <Tabs
+              defaultValue="CUSTOMER"
+              onChange={(value: string | null) => {
+                form.setFieldValue('role', value!);
+
+                setFormData({ ...formData, isSeller: value === 'FARMER' });
+              }}
+            >
+              <Tabs.List grow justify="center">
+                <Tabs.Tab value="CUSTOMER" color="teal">
+                  Customer
+                </Tabs.Tab>
+                <Tabs.Tab value="FARMER" color="blue">
+                  Farmer
+                </Tabs.Tab>
+              </Tabs.List>
+            </Tabs>
+
             <Stack gap={10}>
-              <Flex direction="column" align="center" justify="center">
-                <Title order={5} style={{ textAlign: 'center' }}>
-                  Sellers pay{' '}
-                  {productUploadSubscriptionPlan &&
-                    priceFormatter(productUploadSubscriptionPlan.price)}{' '}
-                  to start posting!
-                </Title>
-              </Flex>
-              <Tabs
-                defaultValue="CUSTOMER"
-                onChange={(value: string | null) => {
-                  form.setFieldValue('role', value!);
-
-                  setFormData({ ...formData, isSeller: value === 'FARMER' });
-                }}
+              <Flex
+                gap={10}
+                direction={{ base: 'column', sm: 'column', md: 'row' }}
+                justify={{ base: 'start', sm: 'start', md: 'space-between' }}
               >
-                <Tabs.List grow justify="center">
-                  <Tabs.Tab value="CUSTOMER" color="teal">
-                    Customer
-                  </Tabs.Tab>
-                  <Tabs.Tab value="FARMER" color="blue">
-                    Farmer
-                  </Tabs.Tab>
-                </Tabs.List>
-              </Tabs>
-
-              <Stack gap={10}>
-                <Flex
-                  gap={10}
-                  direction={{ base: 'column', sm: 'column', md: 'row' }}
-                  justify={{ base: 'start', sm: 'start', md: 'space-between' }}
-                >
-                  <TextInput
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    label="First name"
-                    styles={{
-                      label: { fontSize: '16px' },
-                      root: { fontSize: '14px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    placeholder="Kunle"
-                    {...form.getInputProps('firstName')}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                  />
-                  <TextInput
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    label="Last name"
-                    styles={{
-                      label: { fontSize: '16px' },
-                      root: { fontSize: '14px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    placeholder="Abiola"
-                    {...form.getInputProps('lastName')}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                  />
-                </Flex>
-                {formData.isSeller && (
-                  <Flex
-                    gap={10}
-                    direction={{ base: 'column', sm: 'column', md: 'row' }}
-                    justify={{ base: 'start', sm: 'start', md: 'space-between' }}
-                  >
-                    <TextInput
-                      size="lg"
-                      radius="lg"
-                      withAsterisk
-                      label="Business name"
-                      styles={{
-                        label: { fontSize: '16px' },
-                        root: { fontSize: '14px' },
-                        input: { fontSize: '14px' },
-                      }}
-                      placeholder="Bola's Farm"
-                      {...form.getInputProps('businessName')}
-                      w={{ base: '100%', sm: '100%', md: '48%' }}
-                    />
-                    <TextInput
-                      size="lg"
-                      radius="lg"
-                      withAsterisk
-                      label="Business address"
-                      styles={{
-                        label: { fontSize: '16px' },
-                        root: { fontSize: '14px' },
-                        input: { fontSize: '14px' },
-                      }}
-                      placeholder="Address"
-                      {...form.getInputProps('businessAddress')}
-                      w={{ base: '100%', sm: '100%', md: '48%' }}
-                    />
-                  </Flex>
-                )}
-                <Flex
-                  gap={10}
-                  direction={{ base: 'column', sm: 'column', md: 'row' }}
-                  justify={{ base: 'start', sm: 'start', md: 'space-between' }}
-                >
-                  <TextInput
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    label="Email"
-                    styles={{
-                      label: { fontSize: '16px' },
-                      root: { fontSize: '14px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    placeholder="tunde@gmail.com"
-                    {...form.getInputProps('email')}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                  />
-                  <NumberInput
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    label="Phone"
-                    maxLength={10}
-                    inputMode="tel"
-                    allowNegative={false}
-                    placeholder="9029389499"
-                    styles={{
-                      label: { fontSize: '16px' },
-                      root: { fontSize: '14px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                    onChange={(value: string | number) => {
-                      form.setFieldValue('phone', '+234'.concat(value!.toString()));
-                    }}
-                  />
-                </Flex>
-                <Flex
-                  gap={10}
-                  direction={{ base: 'column', sm: 'column', md: 'row' }}
-                  justify={{ base: 'start', sm: 'start', md: 'space-between' }}
-                >
-                  <Select
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    label="State"
-                    placeholder="Abia"
-                    styles={{
-                      label: { fontSize: '16px' },
-                      root: { fontSize: '14px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                    onChange={(value) => {
-                      form.setFieldValue('state', value!);
-
-                      const values = availableStates.find((item) => item.state === value)?.lgas;
-
-                      setFormData({ ...formData, availableLgas: values! });
-
-                      if (form.values.city !== '') {
-                        form.setFieldValue('city', '');
-                      }
-                    }}
-                    data={availableStates.map((item) => item.state)}
-                  />
-                  <Select
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    label="City"
-                    placeholder="Ikeja"
-                    {...form.getInputProps('city')}
-                    data={formData.availableLgas}
-                    styles={{
-                      label: { fontSize: '16px' },
-                      root: { fontSize: '14px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                  />
-                </Flex>
-                <Flex
-                  gap={10}
-                  direction={{ base: 'column', sm: 'column', md: 'row' }}
-                  justify={{ base: 'start', sm: 'start', md: 'space-between' }}
-                >
-                  <PasswordInput
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    label="Password"
-                    placeholder="********"
-                    styles={{
-                      label: { fontSize: '16px' },
-                      root: { fontSize: '14px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    {...form.getInputProps('password')}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                  />
-                  <PasswordInput
-                    size="lg"
-                    radius="lg"
-                    withAsterisk
-                    placeholder="********"
-                    label="Confirm Password"
-                    styles={{
-                      root: { fontSize: '14px' },
-                      label: { fontSize: '16px' },
-                      input: { fontSize: '14px' },
-                    }}
-                    w={{ base: '100%', sm: '100%', md: '48%' }}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                      setFormData({ ...formData, confirmPassword: e.target.value })
-                    }
-                  />
-                </Flex>
                 <TextInput
                   size="lg"
                   radius="lg"
-                  label="Referral code"
+                  withAsterisk
+                  label="First name"
                   styles={{
                     label: { fontSize: '16px' },
                     root: { fontSize: '14px' },
                     input: { fontSize: '14px' },
                   }}
-                  placeholder="Referral code(optional)"
-                  {...form.getInputProps('referralCode')}
+                  placeholder="Kunle"
+                  {...form.getInputProps('firstName')}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
                 />
-
-                <Button
+                <TextInput
+                  size="lg"
                   radius="lg"
-                  h={50}
-                  variant="filled"
-                  mt={10}
-                  type="submit"
-                  loading={isPending || isCheckEmailAvailabilityPending}
+                  withAsterisk
+                  label="Last name"
+                  styles={{
+                    label: { fontSize: '16px' },
+                    root: { fontSize: '14px' },
+                    input: { fontSize: '14px' },
+                  }}
+                  placeholder="Abiola"
+                  {...form.getInputProps('lastName')}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
+                />
+              </Flex>
+              {formData.isSeller && (
+                <Flex
+                  gap={10}
+                  direction={{ base: 'column', sm: 'column', md: 'row' }}
+                  justify={{ base: 'start', sm: 'start', md: 'space-between' }}
                 >
-                  Create Account
-                </Button>
-              </Stack>
+                  <TextInput
+                    size="lg"
+                    radius="lg"
+                    withAsterisk
+                    label="Business name"
+                    styles={{
+                      label: { fontSize: '16px' },
+                      root: { fontSize: '14px' },
+                      input: { fontSize: '14px' },
+                    }}
+                    placeholder="Bola's Farm"
+                    {...form.getInputProps('businessName')}
+                    w={{ base: '100%', sm: '100%', md: '48%' }}
+                  />
+                  <TextInput
+                    size="lg"
+                    radius="lg"
+                    withAsterisk
+                    label="Business address"
+                    styles={{
+                      label: { fontSize: '16px' },
+                      root: { fontSize: '14px' },
+                      input: { fontSize: '14px' },
+                    }}
+                    placeholder="Address"
+                    {...form.getInputProps('businessAddress')}
+                    w={{ base: '100%', sm: '100%', md: '48%' }}
+                  />
+                </Flex>
+              )}
+              <Flex
+                gap={10}
+                direction={{ base: 'column', sm: 'column', md: 'row' }}
+                justify={{ base: 'start', sm: 'start', md: 'space-between' }}
+              >
+                <TextInput
+                  size="lg"
+                  radius="lg"
+                  withAsterisk
+                  label="Email"
+                  styles={{
+                    label: { fontSize: '16px' },
+                    root: { fontSize: '14px' },
+                    input: { fontSize: '14px' },
+                  }}
+                  placeholder="tunde@gmail.com"
+                  {...form.getInputProps('email')}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
+                />
+                <NumberInput
+                  size="lg"
+                  radius="lg"
+                  withAsterisk
+                  label="Phone"
+                  maxLength={10}
+                  inputMode="tel"
+                  allowNegative={false}
+                  placeholder="9029389499"
+                  styles={{
+                    label: { fontSize: '16px' },
+                    root: { fontSize: '14px' },
+                    input: { fontSize: '14px' },
+                  }}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
+                  onChange={(value: string | number) => {
+                    form.setFieldValue('phone', '+234'.concat(value!.toString()));
+                  }}
+                />
+              </Flex>
+              <Flex
+                gap={10}
+                direction={{ base: 'column', sm: 'column', md: 'row' }}
+                justify={{ base: 'start', sm: 'start', md: 'space-between' }}
+              >
+                <Select
+                  size="lg"
+                  radius="lg"
+                  withAsterisk
+                  label="State"
+                  placeholder="Abia"
+                  styles={{
+                    label: { fontSize: '16px' },
+                    root: { fontSize: '14px' },
+                    input: { fontSize: '14px' },
+                  }}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
+                  onChange={(value) => {
+                    form.setFieldValue('state', value!);
 
-              {currentTestimonial && <TestimonialCard testimonial={currentTestimonial} />}
+                    const values = availableStates.find((item) => item.state === value)?.lgas;
+
+                    setFormData({ ...formData, availableLgas: values! });
+
+                    if (form.values.city !== '') {
+                      form.setFieldValue('city', '');
+                    }
+                  }}
+                  data={availableStates.map((item) => item.state)}
+                />
+                <Select
+                  size="lg"
+                  radius="lg"
+                  withAsterisk
+                  label="City"
+                  placeholder="Ikeja"
+                  {...form.getInputProps('city')}
+                  data={formData.availableLgas}
+                  styles={{
+                    label: { fontSize: '16px' },
+                    root: { fontSize: '14px' },
+                    input: { fontSize: '14px' },
+                  }}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
+                />
+              </Flex>
+              <Flex
+                gap={10}
+                direction={{ base: 'column', sm: 'column', md: 'row' }}
+                justify={{ base: 'start', sm: 'start', md: 'space-between' }}
+              >
+                <PasswordInput
+                  size="lg"
+                  radius="lg"
+                  withAsterisk
+                  label="Password"
+                  placeholder="********"
+                  styles={{
+                    label: { fontSize: '16px' },
+                    root: { fontSize: '14px' },
+                    input: { fontSize: '14px' },
+                  }}
+                  {...form.getInputProps('password')}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
+                />
+                <PasswordInput
+                  size="lg"
+                  radius="lg"
+                  withAsterisk
+                  placeholder="********"
+                  label="Confirm Password"
+                  styles={{
+                    root: { fontSize: '14px' },
+                    label: { fontSize: '16px' },
+                    input: { fontSize: '14px' },
+                  }}
+                  w={{ base: '100%', sm: '100%', md: '48%' }}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                    setFormData({ ...formData, confirmPassword: e.target.value })
+                  }
+                />
+              </Flex>
+              <TextInput
+                size="lg"
+                radius="lg"
+                label="Referral code"
+                styles={{
+                  label: { fontSize: '16px' },
+                  root: { fontSize: '14px' },
+                  input: { fontSize: '14px' },
+                }}
+                placeholder="Referral code(optional)"
+                {...form.getInputProps('referralCode')}
+              />
+
+              <Button
+                radius="lg"
+                h={50}
+                variant="filled"
+                mt={10}
+                type="submit"
+                loading={isPending || isCheckEmailAvailabilityPending}
+              >
+                Create Account
+              </Button>
             </Stack>
-          </form>
-        </Paper>
-      </Box>
+
+            {currentTestimonial && <TestimonialCard testimonial={currentTestimonial} />}
+          </Stack>
+        </form>
+      </Paper>
+    </Box>
   );
 };
 

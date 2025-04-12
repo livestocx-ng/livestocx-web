@@ -18,8 +18,6 @@ const ResetPassword = () => {
 
   const { isPending, mutate } = useResetPasswordMutation();
 
-  const params = new URLSearchParams(window.location.search);
-
   const [confirmPassword, setConfirmPassword] = useState<string>('');
 
   const form = useForm({
@@ -38,6 +36,8 @@ const ResetPassword = () => {
   }, [authToken]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
     if (params?.has('passwordResetToken')) {
       const accountId = params.get('accountId');
       const passwordResetToken = params.get('passwordResetToken');
@@ -50,7 +50,7 @@ const ResetPassword = () => {
         form.setFieldValue('passwordResetToken', passwordResetToken);
       }
     }
-  }, [params]);
+  }, []);
 
   const submitHandler = (payload: ResetPasswordDTO) => {
     const message = validateResetPasswordForm(payload, confirmPassword);

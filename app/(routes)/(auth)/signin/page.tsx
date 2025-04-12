@@ -35,8 +35,6 @@ const Signin = () => {
 
   const router = useRouter();
 
-  const params = new URLSearchParams(window.location.search);
-
   const { isPending, mutate } = useLoginMutation();
 
   const { authToken, testimonials, productUploadSubscriptionPlan } = useAppContext();
@@ -82,6 +80,8 @@ const Signin = () => {
   }, [testimonials]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
     if (authToken && params.get('redirect_to') === null) {
       router.push('/');
     } else if (authToken && params.get('redirect_to') !== null) {
@@ -91,13 +91,15 @@ const Signin = () => {
         routePath.includes('business') ? '/business?subscription_now=true' : routePath
       );
     }
-  }, [authToken, params]);
+  }, [authToken]);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
     if (params.get('redirect_to') !== null) {
       localStorage.setItem('LIVESTOCX_AUTH_REDIRECT', params.get('redirect_to')!);
     }
-  }, [params]);
+  }, []);
 
   const submitHandler = (payload: SigninDTO) => {
     const message = validateSignInForm(payload);
@@ -198,6 +200,8 @@ const Signin = () => {
               h={50}
               radius="lg"
               onClick={() => {
+                const params = new URLSearchParams(window.location.search);
+
                 const routePath = '/'.concat(params.get('redirect_to')!);
 
                 signIn('google', {

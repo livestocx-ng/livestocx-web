@@ -8,8 +8,6 @@ import useSignupVerificationMutation from '@/core/hooks/auth/useSignupVerificati
 import { CompleteSignupVerificationDTO } from '@/core/sdk/auth';
 
 const SignupVerification = () => {
-  const params = new URLSearchParams(window.location.search);
-
   const { mutate, isPending } = useSignupVerificationMutation();
 
   const [email, setEmail] = useState<string>('');
@@ -23,6 +21,8 @@ const SignupVerification = () => {
   });
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
     if (params.get('hash') !== null) {
       setEmail(params.get('email')!);
 

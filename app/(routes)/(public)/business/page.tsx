@@ -56,17 +56,17 @@ const Business = () => {
     { open: openUpdateBusinessProfileDrawer, close: closeUpdateBusinessProfileDrawer },
   ] = useDisclosure(false);
 
-  const params = new URLSearchParams(window.location.search);
-
   const subscriptionPlansRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
     if (params.get('subscription_now')! === 'true' && subscriptionPlansRef !== null) {
       subscriptionPlansRef.current!.scrollIntoView({
         behavior: 'smooth',
       });
     }
-  }, [params, subscriptionPlansRef]);
+  }, [subscriptionPlansRef]);
 
   return (
     <>
@@ -74,7 +74,7 @@ const Business = () => {
         title="Payment"
         isOpen={isPaymentModalOpen}
         closeModal={closePaymentModal}
-        subscriptionType='premium subscription payment'
+        subscriptionType="premium subscription payment"
       />
       <UpdateBusinessProfileDrawer isOpen={opened} closeDrawer={closeUpdateBusinessProfileDrawer} />
       <Box
