@@ -50,7 +50,7 @@ const ResetPassword = () => {
         form.setFieldValue('passwordResetToken', passwordResetToken);
       }
     }
-  }, []);
+  }, [params]);
 
   const submitHandler = (payload: ResetPasswordDTO) => {
     const message = validateResetPasswordForm(payload, confirmPassword);

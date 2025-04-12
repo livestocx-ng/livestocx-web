@@ -18,6 +18,8 @@ const ResetPasswordVerification = () => {
 
   const { authToken } = useAppContext();
 
+  const params = new URLSearchParams(window.location.search);
+
   const form = useForm({
     mode: 'uncontrolled',
     initialValues: {
@@ -33,7 +35,6 @@ const ResetPasswordVerification = () => {
   }, [authToken]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
 
     if (params?.has('email')) {
       const email = params.get('email');
@@ -42,7 +43,7 @@ const ResetPasswordVerification = () => {
         form.setFieldValue('email', email);
       }
     }
-  }, []);
+  }, [params]);
 
   const submitHandler = (payload: ResetPasswordVerificationDTO) => {
     const message = validateResetPasswordVerificationForm(payload);
