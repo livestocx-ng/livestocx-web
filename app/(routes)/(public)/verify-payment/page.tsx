@@ -1,8 +1,11 @@
 'use client';
 
-import Lottie from 'lottie-react';
+import dynamic from 'next/dynamic';
 import { Box } from '@mantine/core';
 import Animation from '../../../../public/animations/animation_payment.json';
+
+// Import Lottie dynamically with ssr disabled
+const Lottie = dynamic(() => import('lottie-react'), { ssr: false });
 
 const VerifyPaymentScreen = () => {
   return (
