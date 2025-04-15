@@ -41,7 +41,8 @@
     "next-auth": "^4.24.11",
     "ngx-fluent-ui-icons": "^1.0.2",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "react-share": "^5.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.26.10",

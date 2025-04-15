@@ -85,7 +85,7 @@ const Business = () => {
           alignItems: 'center',
           flexDirection: 'column',
           justifyContent: 'center',
-          background: 'linear-gradient(to bottom, #00683880, #00683810',
+          background: 'linear-gradient(to right, #00683860, #00683810',
         }}
       >
         <Stack gap={50}>

@@ -1,31 +1,45 @@
 import React, { createContext, useContext } from 'react';
 import { MantineTheme, useMantineTheme } from '@mantine/core';
 import { useLocalStorage } from '@mantine/hooks';
-import { AccountInfo } from '../sdk/account';
+import { AccountInfo, ListItemInfo } from '../sdk/account';
 import { AvailableStateInfo } from '../sdk/auth';
 import { TestimonialInfo } from '../sdk/communication';
+import { ProductInfo } from '../sdk/marketplace';
 import {
   ChargeResponse,
   PaymentMethod,
   PremiumSubscriptionPlanDescription,
   ProductUploadSubscriptionPlanInfo,
+  PromotionPlanDescription,
   VendorInfo,
 } from '../sdk/vendor';
 
 interface AppContextProps {
   authToken: string;
+  listItems: ListItemInfo[];
+  marketplaceProducts: ProductInfo[];
   theme: MantineTheme | null;
-  currentSubscriptionPlanId: number;
-  chargeResponse: ChargeResponse | null;
+  vendorInfo: VendorInfo | null;
   paymentMethods: PaymentMethod[];
   accountInfo: AccountInfo | null;
-  vendorInfo: VendorInfo | null;
-  availableStates: AvailableStateInfo[];
   testimonials: TestimonialInfo[];
+  currentSubscriptionPlanId: number;
+  chargeResponse: ChargeResponse | null;
+  availableStates: AvailableStateInfo[];
+  marketPlaceProductsTotalPages: number;
+  marketPlaceProductsHasNextPage: boolean;
+  marketPlaceProductsCurrentPage: number;
+  promotionPlans: PromotionPlanDescription[];
   setAuthToken: (authToken: string) => void;
-  setCurrentSubscriptionPlanId: (planId: number) => void;
+  setMarketPlaceProductsTotalPages: (authToken: number) => void;
+  setListItems: (values: ListItemInfo[]) => void;
   setPaymentMethods: (methods: PaymentMethod[]) => void;
+  setCurrentSubscriptionPlanId: (planId: number) => void;
+  setMarketPlaceProducts: (authToken: ProductInfo[]) => void;
+  setMarketPlaceProductsCurrentPage: (value: number) => void;
+  setMarketPlaceProductsHasNextPage: (value: boolean) => void;
   setAvailableStates: (availableStates: AvailableStateInfo[]) => void;
+  setPromotionPlans: (plans: PromotionPlanDescription[]) => void;
   setVendorInfo: (vendorInfo: VendorInfo) => void;
   setChargeResponse: (chargeResponse: ChargeResponse | null) => void;
   setAccountInfo: (accountInfo: AccountInfo) => void;
@@ -39,25 +53,37 @@ interface AppContextProps {
 export const AppContext = createContext<AppContextProps>({
   theme: null,
   authToken: '',
-  currentSubscriptionPlanId: 0,
+  listItems: [],
   vendorInfo: null,
   testimonials: [],
+  promotionPlans: [],
   availableStates: [],
   accountInfo: null,
   chargeResponse: null,
   paymentMethods: [],
+  marketplaceProducts: [],
+  currentSubscriptionPlanId: 0,
   premiumSubscriptionPlans: [],
+  marketPlaceProductsCurrentPage: 1,
+  marketPlaceProductsHasNextPage: false,
   productUploadSubscriptionPlan: null,
+  marketPlaceProductsTotalPages: 0,
+  setListItems: () => {},
   setVendorInfo: () => {},
   setAuthToken: () => {},
   setAccountInfo: () => {},
   setTestimonials: () => {},
   setPaymentMethods: () => {},
+  setPromotionPlans: () => {},
   setChargeResponse: () => {},
   setAvailableStates: () => {},
+  setMarketPlaceProducts: () => {},
   setPremiumSubscriptionPlans: () => {},
   setCurrentSubscriptionPlanId: () => {},
   setProductUploadSubscriptionPlan: () => {},
+  setMarketPlaceProductsTotalPages: () => {},
+  setMarketPlaceProductsCurrentPage: () => {},
+  setMarketPlaceProductsHasNextPage: () => {},
 });
 
 export const AppContextProvider = ({ children }: { children: React.ReactNode }) => {
@@ -142,30 +168,93 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     },
   });
 
+  const [marketplaceProducts, setMarketPlaceProducts] = useLocalStorage<ProductInfo[]>({
+    defaultValue: [],
+    key: 'marketplaceProducts',
+    deserialize(value) {
+      return JSON.parse(value ?? '');
+    },
+  });
+
+  const [marketPlaceProductsTotalPages, setMarketPlaceProductsTotalPages] = useLocalStorage<number>({
+    defaultValue: 0,
+    key: 'marketPlaceProductsTotalPages',
+    deserialize(value) {
+      return JSON.parse(value ?? '');
+    },
+  });
+
+  const [promotionPlans, setPromotionPlans] = useLocalStorage<PromotionPlanDescription[]>({
+    defaultValue: [],
+    key: 'promotionPlans',
+    deserialize(value) {
+      return JSON.parse(value ?? '');
+    },
+  });
+
+  const [marketPlaceProductsCurrentPage, setMarketPlaceProductsCurrentPage] =
+    useLocalStorage<number>({
+      defaultValue: 1,
+      key: 'marketPlaceProductsCurrentPage',
+      deserialize(value) {
+        return JSON.parse(value ?? '');
+      },
+    });
+
+  const [listItems, setListItems] =
+    useLocalStorage<ListItemInfo[]>({
+      defaultValue: [],
+      key: 'listItems',
+      deserialize(value) {
+        return JSON.parse(value ?? '');
+      },
+    });
+
+  const [marketPlaceProductsHasNextPage, setMarketPlaceProductsHasNextPage] =
+    useLocalStorage<boolean>({
+      defaultValue: false,
+      key: 'marketPlaceProductsHasNextPage',
+      deserialize(value) {
+        return JSON.parse(value ?? '');
+      },
+    });
+
   return (
     <AppContext.Provider
       value={{
         theme,
+        listItems,
         authToken,
         vendorInfo,
         accountInfo,
+        setListItems,
         testimonials,
         setAuthToken,
         setVendorInfo,
         setAccountInfo,
         chargeResponse,
         paymentMethods,
+        promotionPlans,
         setTestimonials,
         availableStates,
         setPaymentMethods,
         setChargeResponse,
+        setPromotionPlans,
         setAvailableStates,
+        marketplaceProducts,
+        setMarketPlaceProducts,
         premiumSubscriptionPlans,
         currentSubscriptionPlanId,
         setPremiumSubscriptionPlans,
         setCurrentSubscriptionPlanId,
         productUploadSubscriptionPlan,
+        marketPlaceProductsTotalPages,
+        marketPlaceProductsCurrentPage,
+        marketPlaceProductsHasNextPage,
+        setMarketPlaceProductsTotalPages,
         setProductUploadSubscriptionPlan,
+        setMarketPlaceProductsCurrentPage,
+        setMarketPlaceProductsHasNextPage,
       }}
     >
       {children}

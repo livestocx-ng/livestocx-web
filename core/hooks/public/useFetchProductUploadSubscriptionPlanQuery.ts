@@ -8,7 +8,7 @@ export default function useFetchProductUploadSubscriptionPlanQuery() {
   return useQuery({
     queryKey: ['get-product-upload-subscription-plan'],
     queryFn: async () => {
-      if (productUploadSubscriptionPlan?.description !== '') {
+      if (productUploadSubscriptionPlan) {
         return productUploadSubscriptionPlan;
       }
 

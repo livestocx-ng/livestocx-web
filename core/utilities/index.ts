@@ -1,5 +1,25 @@
 import { IconCpu, IconLeaf, IconTruckDelivery, IconUsers } from '@tabler/icons-react';
 
+interface ProductDisplayType {
+  title: string;
+  value: 'RECOMMENDED' | 'POPULAR' | 'NEAR_YOU';
+}
+
+export const productDisplayTypes: ProductDisplayType[] = [
+  {
+    title: 'Recommended',
+    value: 'RECOMMENDED',
+  },
+  {
+    title: 'Popular',
+    value: 'POPULAR',
+  },
+  {
+    title: 'Near You',
+    value: 'NEAR_YOU',
+  },
+];
+
 export const navLinks = [
   { link: '/', label: 'Home' },
   { link: '/signup', label: 'Register' },

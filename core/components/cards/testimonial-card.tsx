@@ -1,10 +1,20 @@
-import { Testimonial } from '@/core/types';
 import { IconStarFilled } from '@tabler/icons-react';
-import { Avatar, Box, Group, Paper, Stack, Text } from '@mantine/core';
+import { Avatar, Box, Group, Stack, Text } from '@mantine/core';
+import { TestimonialInfo } from '@/core/sdk/communication';
 
-export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
+export function TestimonialCard({ testimonial }: { testimonial: TestimonialInfo }) {
   return (
-    <Paper shadow="sm" p="md" radius="lg" withBorder w={{ base: '100%', md: '100%' }} mb={{ base: 'md', md: 0 }} mx='auto'>
+    <Box
+      p="md"
+      mx="auto"
+      h='160px'
+      style={{
+        borderRadius: '10px',
+        border: '1px solid #ccc',
+      }}
+      mb={{ base: 'md', md: 0 }}
+      w={{ base: '100%', sm: '100%', md: '350px' }}
+    >
       <Stack gap="md">
         <Group align="center" gap="sm">
           <Avatar
@@ -41,6 +51,6 @@ export function TestimonialCard({ testimonial }: { testimonial: Testimonial }) {
           {testimonial.testimonial}
         </Text>
       </Stack>
-    </Paper>
+    </Box>
   );
 }

@@ -1,27 +1,30 @@
 'use client';
 
+import { useEffect } from 'react';
 import Link from 'next/link';
 import { Box, Burger, Button, Container, Drawer, Group, Image, rem, Stack } from '@mantine/core';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { useAppContext } from '@/core/context';
 import useFetchAccountInfoQuery from '@/core/hooks/account/useFetchAccountInfoQuery';
+import useFetchUserListItemsQuery from '@/core/hooks/account/useFetchUserListItemsQuery';
 import useInitializeAuthTokenQuery from '@/core/hooks/auth/useInitializeAuthTokenQuery';
 import useFetchVendorInfoQuery from '@/core/hooks/vendor/useFetchVendorInfoQuery';
 import { navLinks } from '@/core/utilities';
 import { AccountButton } from '../buttons/account_button';
 import { ChatConversationsButton } from '../buttons/chat_conversations_button';
 import UpdateBusinessProfileDrawer from '../drawers/update_business_profile_drawer';
-import classes from './navbar.module.css';
 import UpdateUserRoleDrawer from '../drawers/update_user_role_drawer';
+import classes from './navbar.module.css';
 
 export function Navbar() {
-  useFetchVendorInfoQuery();
-  useFetchAccountInfoQuery();
-  useInitializeAuthTokenQuery();
+  const { refetch: refetchVendorInfo } = useFetchVendorInfoQuery();
+  const { refetch: refetchAccountInfo } = useFetchAccountInfoQuery();
+  const { refetch: refetchUserListItems } = useFetchUserListItemsQuery();
+  const { refetch: reInitializeAuthToken } = useInitializeAuthTokenQuery();
 
   const [scroll] = useWindowScroll();
 
-  const { accountInfo, vendorInfo } = useAppContext();
+  const { authToken, accountInfo, vendorInfo } = useAppContext();
 
   const [opened, { toggle }] = useDisclosure(false);
 
@@ -35,13 +38,20 @@ export function Navbar() {
     { open: openUpdateBusinessProfileDrawer, close: closeUpdateBusinessProfileDrawer },
   ] = useDisclosure(false);
 
+  useEffect(() => {
+    refetchVendorInfo();
+    refetchAccountInfo();
+    refetchUserListItems();
+    reInitializeAuthToken();
+  }, [authToken]);
+
   return (
     <>
       <UpdateUserRoleDrawer
         isOpen={isUpdateUserRoleDrawerOpen}
         closeDrawer={closeUpdateUserRoleDrawer}
       />
-      
+
       <UpdateBusinessProfileDrawer
         isOpen={isUpdateBusinessProfileDrawerOpen}
         closeDrawer={closeUpdateBusinessProfileDrawer}
