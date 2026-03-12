@@ -1,6 +1,11 @@
 import { TestimonialInfo } from '../sdk/communication';
 import { ProductInfo } from '../sdk/marketplace';
 
+export interface Sponsor {
+	name: string;
+	image: string;
+}
+
 export type GridItemType = 'PRODUCT' | 'TESTIMONIAL';
 export type ProductDisplayType = 'RECOMMENDED' | 'POPULAR' | 'NEAR_YOU';
 

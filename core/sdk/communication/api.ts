@@ -121,6 +121,18 @@ export interface ChatConversationUserInfo {
      * @memberof ChatConversationUserInfo
      */
     'name': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ChatConversationUserInfo
+     */
+    'isProductUploadSubscriptionActive': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof ChatConversationUserInfo
+     */
+    'followerCount': number;
 }
 /**
  * 

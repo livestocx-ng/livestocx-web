@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Box, Burger, Button, Container, Drawer, Group, Image, rem, Stack } from '@mantine/core';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { useAppContext } from '@/core/context';
@@ -17,6 +18,8 @@ import UpdateUserRoleDrawer from '../drawers/update_user_role_drawer';
 import classes from './navbar.module.css';
 
 export function Navbar() {
+  const pathname = usePathname();
+
   const { refetch: refetchVendorInfo } = useFetchVendorInfoQuery();
   const { refetch: refetchAccountInfo } = useFetchAccountInfoQuery();
   const { refetch: refetchUserListItems } = useFetchUserListItemsQuery();
@@ -64,11 +67,12 @@ export function Navbar() {
           transition: 'background-color 0.3s ease',
           backdropFilter: scroll.y > 0 ? 'blur(5px)' : 'none',
           WebkitBackdropFilter: scroll.y > 0 ? 'blur(5px)' : 'none',
+          display: pathname.includes('dashboard') ? 'none' : 'block',
           backgroundColor: scroll.y > 0 ? '#ffffff80' : '#ffffff00',
           borderBottom: scroll.y > 0 ? '1px solid var(--mantine-color-gray-3)' : '',
         }}
       >
-        <Container size="xxl" py={5}>
+        <Container size="xxl" py={15}>
           <Group justify="space-between" align="center">
             {/* Left section: Logo and Navigation */}
             <Group>
@@ -83,7 +87,7 @@ export function Navbar() {
               </Link>
 
               {/* Desktop navigation */}
-              <Group gap={40} visibleFrom="xs">
+              <Group gap={40} visibleFrom="md">
                 {navLinks.map((link) => (
                   <Link
                     key={link.label}

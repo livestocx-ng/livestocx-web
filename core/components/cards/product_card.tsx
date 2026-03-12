@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import {
   IconAwardFilled,
   IconHeart,
@@ -14,16 +15,16 @@ import { useAppContext } from '@/core/context';
 import useFetchUserListItemsQuery from '@/core/hooks/account/useFetchUserListItemsQuery';
 import useLikeUnlikeProductMutation from '@/core/hooks/account/useLikeUnlikeProductMutation';
 import { priceFormatter } from '@/core/middlewares';
-import { CallProductVendorHandler } from '@/core/middlewares/product-card-middleware';
+import { CallProductVendorHandler } from '@/core/middlewares/product-middleware';
 import { AddListItemDTO } from '@/core/sdk/account';
 import { ProductInfo } from '@/core/sdk/marketplace';
 import ShareProductModal from '../modals/share_product_modal';
+import { formatProductSlug } from '@/core/middlewares/slug-formatter';
 
 const ProductCard = ({ product }: { product: ProductInfo }) => {
-  const { listItems } = useAppContext();
+  const { listItems, setProductInfo } = useAppContext();
 
   const { mutate } = useLikeUnlikeProductMutation();
-  
 
   const [isShareProductModalOpen, { open: openShareProductModal, close: closeShareProductModal }] =
     useDisclosure(false);
@@ -47,30 +48,40 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
         w={{ base: '48%', sm: '48%', md: 180 }}
       >
         <Box w="100%" h={180} style={{ position: 'relative' }}>
-          <Image
-            src={product.coverPhoto}
-            height={180}
-            width="100%"
-            fit="cover"
-            style={{
-              width: '100%',
-              height: '180px',
-              cursor: 'pointer',
-              objectFit: 'cover',
-              borderRadius: '10px 10px 0 0',
-            }}
-          />
-          <Box
-            style={{
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              position: 'absolute',
-              borderRadius: '10px 10px 0 0',
-              background: 'linear-gradient(to top, #11111160, #11111140',
-            }}
-          />
+          <Box style={{ position: 'relative' }}>
+            <Link
+              href={`/marketplace/products/${formatProductSlug(product)}`}
+              onClick={() => {
+                setProductInfo(product);
+              }}
+            >
+              <Image
+                src={product.coverPhoto}
+                height={180}
+                width="100%"
+                fit="cover"
+                style={{
+                  width: '100%',
+                  height: '180px',
+                  cursor: 'pointer',
+                  objectFit: 'cover',
+                  borderRadius: '10px 10px 0 0',
+                }}
+              />
+            </Link>
+            <Box
+              style={{
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                borderRadius: '10px 10px 0 0',
+                background: 'linear-gradient(to top, #11111160, #11111140)',
+                pointerEvents: 'none',
+              }}
+            />
+          </Box>
 
           {product.isPromotion && (
             <Box

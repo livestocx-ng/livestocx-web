@@ -47,6 +47,8 @@ export default function useVerifyPaymentSessionMutation() {
             'Payment transaction not verified, please ensure you have made this transfer before you verifying.',
         });
       }
+
+      return values.status;
     },
   });
 }

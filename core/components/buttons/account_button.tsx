@@ -8,15 +8,15 @@ import {
   IconUser,
   IconUsers,
 } from '@tabler/icons-react';
+import axios from 'axios';
 import { ActionIcon, Menu } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 import { useAppContext } from '@/core/context';
-import axios from 'axios';
 
 export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
   const router = useRouter();
 
-  const { authToken, setAuthToken } = useAppContext();
+  const { authToken, setAuthToken, setAccountInfo } = useAppContext();
 
   const handleClick = () => {
     if (!authToken) {
@@ -26,6 +26,8 @@ export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
 
   const handleLogout = async () => {
     setAuthToken('');
+
+    setAccountInfo(null);
 
     router.push('/');
 
@@ -104,12 +106,42 @@ export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
 
       <Menu.Dropdown>
         <Menu.Label>Navigation</Menu.Label>
-        <Menu.Item leftSection={<IconUser size={18} />}>Account</Menu.Item>
-        <Menu.Item leftSection={<IconUsers size={18} />}>Referrals</Menu.Item>
-        <Menu.Item leftSection={<IconMessages size={18} />}>Messages</Menu.Item>
-        <Menu.Item leftSection={<IconPackage size={18} />}>Products</Menu.Item>
-        <Menu.Item leftSection={<IconChartAreaLine size={18} />}>Promotions</Menu.Item>
-        <Menu.Item leftSection={<IconBell size={18} />}>Notifications</Menu.Item>
+        <Menu.Item
+          leftSection={<IconPackage size={18} />}
+          onClick={() => router.push('/dashboard/products?tabId=products')}
+        >
+          Products
+        </Menu.Item>
+        <Menu.Item
+          leftSection={<IconChartAreaLine size={18} />}
+          onClick={() => router.push('/dashboard/promotions?tabId=promotions')}
+        >
+          Promotions
+        </Menu.Item>
+        <Menu.Item
+          leftSection={<IconUser size={18} />}
+          onClick={() => router.push('/dashboard/settings?tabId=account-settings')}
+        >
+          Account
+        </Menu.Item>
+        <Menu.Item
+          leftSection={<IconUsers size={18} />}
+          onClick={() => router.push('/dashboard/settings?tabId=referrals')}
+        >
+          Referrals
+        </Menu.Item>
+        <Menu.Item
+          leftSection={<IconMessages size={18} />}
+          onClick={() => router.push('/dashboard/messages?tabId=messages')}
+        >
+          Messages
+        </Menu.Item>
+        <Menu.Item
+          leftSection={<IconBell size={18} />}
+          onClick={() => router.push('/dashboard/notifications?tabId=notifications')}
+        >
+          Notifications
+        </Menu.Item>
 
         <Menu.Divider />
 

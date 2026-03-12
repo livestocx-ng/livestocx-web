@@ -2,13 +2,13 @@ import { ProductInfo } from '../sdk/marketplace';
 import { VendorInfo } from '../sdk/vendor';
 
 export function formatProductSlug(product: ProductInfo): string {
-  const formattedProductName = product.name.replace(/,/g, '');
+  const formattedProductName = product?.name.replace(/,/g, '');
 
-  const formattedProductNameWithoutCommas = formattedProductName.replace(/\s+/g, '-').toLowerCase();
+  const formattedProductNameWithoutCommas = formattedProductName?.replace(/\s+/g, '-').toLowerCase();
 
-  const slug = `${formattedProductNameWithoutCommas}_${product.productId}`;
+  const slug = `${formattedProductNameWithoutCommas}_${product?.productId.toLowerCase()}`;
 
-  return slug.toLowerCase();
+  return slug.toLowerCase() ?? '';
 }
 
 export function formatVendorSlug(vendor: VendorInfo): string {

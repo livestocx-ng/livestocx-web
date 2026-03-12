@@ -113,6 +113,12 @@ export interface AccountInfo {
      * @memberof AccountInfo
      */
     'isProductUploadSubscriptionActive': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountInfo
+     */
+    'productUploadLimit': number;
 }
 
 export const AccountInfoRoleEnum = {
@@ -1168,6 +1174,67 @@ export interface PromotionsInfo {
 /**
  * 
  * @export
+ * @interface SubscriptionInfo
+ */
+export interface SubscriptionInfo {
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionInfo
+     */
+    'title': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof SubscriptionInfo
+     */
+    'isExpired': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionInfo
+     */
+    'subscription_date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionInfo
+     */
+    'expiration_date': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionInfo
+     */
+    'payment_method': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof SubscriptionInfo
+     */
+    'amount_paid': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionInfo
+     */
+    'payment_reference': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionInfo
+     */
+    'payment_gateway': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SubscriptionInfo
+     */
+    'payment_date': string;
+}
+/**
+ * 
+ * @export
  * @interface UpdateProductDto
  */
 export interface UpdateProductDto {
@@ -1615,6 +1682,12 @@ export interface VendorProductInfo {
      * @memberof VendorProductInfo
      */
     'updatedAt': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof VendorProductInfo
+     */
+    'isFlagged': boolean;
 }
 
 export const VendorProductInfoCategoryEnum = {
@@ -3242,6 +3315,39 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        vendorProductControllerGenerateProductId: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/vendor/products/generate-product-id`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} productId Product Id
          * @param {UpdateProductDto} updateProductDto 
          * @param {*} [options] Override http request option.
@@ -3335,6 +3441,17 @@ export const ProductApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async vendorProductControllerGenerateProductId(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.vendorProductControllerGenerateProductId(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.vendorProductControllerGenerateProductId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {number} productId Product Id
          * @param {UpdateProductDto} updateProductDto 
          * @param {*} [options] Override http request option.
@@ -3383,6 +3500,14 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          */
         vendorProductControllerFetchProducts(page: number, pageSize: number, options?: RawAxiosRequestConfig): AxiosPromise<VendorProductsResponse> {
             return localVarFp.vendorProductControllerFetchProducts(page, pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        vendorProductControllerGenerateProductId(options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.vendorProductControllerGenerateProductId(options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -3436,6 +3561,16 @@ export class ProductApi extends BaseAPI {
      */
     public vendorProductControllerFetchProducts(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).vendorProductControllerFetchProducts(page, pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductApi
+     */
+    public vendorProductControllerGenerateProductId(options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).vendorProductControllerGenerateProductId(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -3543,6 +3678,39 @@ export const ProductUploadSubscriptionApiAxiosParamCreator = function (configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/vendor/product-upload/plans`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         productUploadSubscriptionControllerFetchUserProductUploadSubscription: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/vendor/product-upload/me`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -3610,6 +3778,17 @@ export const ProductUploadSubscriptionApiFp = function(configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ProductUploadSubscriptionPlanInfo>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductUploadSubscriptionApi.productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async productUploadSubscriptionControllerFetchUserProductUploadSubscription(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductUploadSubscriptionInfo>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.productUploadSubscriptionControllerFetchUserProductUploadSubscription(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -3649,6 +3828,14 @@ export const ProductUploadSubscriptionApiFactory = function (configuration?: Con
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options?: RawAxiosRequestConfig): AxiosPromise<Array<ProductUploadSubscriptionPlanInfo>> {
+            return localVarFp.productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         productUploadSubscriptionControllerFetchUserProductUploadSubscription(options?: RawAxiosRequestConfig): AxiosPromise<ProductUploadSubscriptionInfo> {
             return localVarFp.productUploadSubscriptionControllerFetchUserProductUploadSubscription(options).then((request) => request(axios, basePath));
         },
@@ -3682,6 +3869,16 @@ export class ProductUploadSubscriptionApi extends BaseAPI {
      */
     public productUploadSubscriptionControllerFetchProductUploadSubscriptionPlan(options?: RawAxiosRequestConfig) {
         return ProductUploadSubscriptionApiFp(this.configuration).productUploadSubscriptionControllerFetchProductUploadSubscriptionPlan(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof ProductUploadSubscriptionApi
+     */
+    public productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options?: RawAxiosRequestConfig) {
+        return ProductUploadSubscriptionApiFp(this.configuration).productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -4528,6 +4725,107 @@ export class PromotionSubscriptionApi extends BaseAPI {
      */
     public promotionSubscriptionControllerUpdateUserPromotionPlan(planId: number, options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerUpdateUserPromotionPlan(planId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
+ * SubscriptionsApi - axios parameter creator
+ * @export
+ */
+export const SubscriptionsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionControllerFetchSubscriptions: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/vendor/subscription/me`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * SubscriptionsApi - functional programming interface
+ * @export
+ */
+export const SubscriptionsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = SubscriptionsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async subscriptionControllerFetchSubscriptions(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SubscriptionInfo>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.subscriptionControllerFetchSubscriptions(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SubscriptionsApi.subscriptionControllerFetchSubscriptions']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * SubscriptionsApi - factory interface
+ * @export
+ */
+export const SubscriptionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = SubscriptionsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        subscriptionControllerFetchSubscriptions(options?: RawAxiosRequestConfig): AxiosPromise<Array<SubscriptionInfo>> {
+            return localVarFp.subscriptionControllerFetchSubscriptions(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * SubscriptionsApi - object-oriented interface
+ * @export
+ * @class SubscriptionsApi
+ * @extends {BaseAPI}
+ */
+export class SubscriptionsApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SubscriptionsApi
+     */
+    public subscriptionControllerFetchSubscriptions(options?: RawAxiosRequestConfig) {
+        return SubscriptionsApiFp(this.configuration).subscriptionControllerFetchSubscriptions(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

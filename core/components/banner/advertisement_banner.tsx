@@ -108,7 +108,7 @@ const AdvertisementBanner = () => {
             size="sm"
             ta="center"
             fw={500}
-            style={{ fontSize: '12px', '@media (min-width: 768px)': { fontSize: '14px' } }}
+            style={{ fontSize: '12px', '@media (minWidth: 768px)': { fontSize: '14px' } }}
           >
             Boost your posted product for{' '}
             {promotionPlans?.length > 0

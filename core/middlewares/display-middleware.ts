@@ -11,21 +11,25 @@ export function createProductGridItems(
   let productIndex = 0;
   let testimonialIndex = 0;
 
+  // Process products and insert testimonials between product groups
   while (productIndex < products.length) {
     const remainingProducts = products.length - productIndex;
     const batchSize = Math.min(interval, remainingProducts);
 
-    // Push next batch of products
+    // Add a batch of products (these will form a row)
     for (let i = 0; i < batchSize; i++) {
-      const product = products[productIndex++];
-      gridItems.push({
-        type: 'PRODUCT',
-        id: product.id,
-        data: product,
-      });
+      if (productIndex < products.length) {
+        const product = products[productIndex++];
+        gridItems.push({
+          type: 'PRODUCT',
+          id: product.id,
+          data: product,
+        });
+      }
     }
 
-    // Add a testimonial *only if* there are more products left afterward
+    // Insert a testimonial between product groups (only if more products remain)
+    // This ensures testimonials appear as full-width breaks between product rows
     if (productIndex < products.length && testimonialIndex < testimonials.length) {
       const testimonial = testimonials[testimonialIndex++];
       gridItems.push({
@@ -38,4 +42,3 @@ export function createProductGridItems(
 
   return gridItems;
 }
-

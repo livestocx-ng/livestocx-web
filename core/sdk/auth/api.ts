@@ -115,13 +115,19 @@ export interface CreateAccountDTO {
      * @type {string}
      * @memberof CreateAccountDTO
      */
-    'phone': string;
+    'phone'?: string;
     /**
      * Referral code of the user (Optional).
      * @type {string}
      * @memberof CreateAccountDTO
      */
     'referralCode': string;
+    /**
+     * How did you hear about Livestocx?
+     * @type {string}
+     * @memberof CreateAccountDTO
+     */
+    'referral_source': string;
     /**
      * Role of the user.
      * @type {string}
@@ -300,6 +306,113 @@ export interface SignupVerificationResponsePayload {
      */
     'token': string;
 }
+
+/**
+ * AIApi - axios parameter creator
+ * @export
+ */
+export const AIApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} query What do you want to ask the AI
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerTestGeminiAI: async (query: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'query' is not null or undefined
+            assertParamExists('authControllerTestGeminiAI', 'query', query)
+            const localVarPath = `/v1/auth/test-gemini`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AIApi - functional programming interface
+ * @export
+ */
+export const AIApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AIApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} query What do you want to ask the AI
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async authControllerTestGeminiAI(query: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<object>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authControllerTestGeminiAI(query, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AIApi.authControllerTestGeminiAI']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AIApi - factory interface
+ * @export
+ */
+export const AIApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AIApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} query What do you want to ask the AI
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authControllerTestGeminiAI(query: string, options?: RawAxiosRequestConfig): AxiosPromise<object> {
+            return localVarFp.authControllerTestGeminiAI(query, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AIApi - object-oriented interface
+ * @export
+ * @class AIApi
+ * @extends {BaseAPI}
+ */
+export class AIApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} query What do you want to ask the AI
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AIApi
+     */
+    public authControllerTestGeminiAI(query: string, options?: RawAxiosRequestConfig) {
+        return AIApiFp(this.configuration).authControllerTestGeminiAI(query, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
 
 /**
  * AddressHelperApi - axios parameter creator
@@ -764,6 +877,161 @@ export class AuthApi extends BaseAPI {
 
 
 /**
+ * HelperApi - axios parameter creator
+ * @export
+ */
+export const HelperApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        helperControllerFetchReferralSources: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/auth/helper/referral-sources`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        helperControllerFetchReferralSources_1: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/auth/helper/referral-sources`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * HelperApi - functional programming interface
+ * @export
+ */
+export const HelperApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = HelperApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async helperControllerFetchReferralSources(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.helperControllerFetchReferralSources(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['HelperApi.helperControllerFetchReferralSources']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async helperControllerFetchReferralSources_1(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.helperControllerFetchReferralSources_1(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['HelperApi.helperControllerFetchReferralSources_1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * HelperApi - factory interface
+ * @export
+ */
+export const HelperApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = HelperApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        helperControllerFetchReferralSources(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+            return localVarFp.helperControllerFetchReferralSources(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        helperControllerFetchReferralSources_1(options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+            return localVarFp.helperControllerFetchReferralSources_1(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * HelperApi - object-oriented interface
+ * @export
+ * @class HelperApi
+ * @extends {BaseAPI}
+ */
+export class HelperApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelperApi
+     */
+    public helperControllerFetchReferralSources(options?: RawAxiosRequestConfig) {
+        return HelperApiFp(this.configuration).helperControllerFetchReferralSources(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelperApi
+     */
+    public helperControllerFetchReferralSources_1(options?: RawAxiosRequestConfig) {
+        return HelperApiFp(this.configuration).helperControllerFetchReferralSources_1(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * HelpersApi - axios parameter creator
  * @export
  */
@@ -793,6 +1061,35 @@ export const HelpersApiAxiosParamCreator = function (configuration?: Configurati
             if (email !== undefined) {
                 localVarQueryParameter['email'] = email;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        authHelperControllerGenerateVendorId: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/auth/helper/accounts/generate-vendor-id`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
 
 
     
@@ -919,6 +1216,17 @@ export const HelpersApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async authHelperControllerGenerateVendorId(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.authHelperControllerGenerateVendorId(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['HelpersApi.authHelperControllerGenerateVendorId']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async authHelperControllerUpdateAccountLocation(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.authHelperControllerUpdateAccountLocation(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -971,6 +1279,14 @@ export const HelpersApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        authHelperControllerGenerateVendorId(options?: RawAxiosRequestConfig): AxiosPromise<string> {
+            return localVarFp.authHelperControllerGenerateVendorId(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         authHelperControllerUpdateAccountLocation(options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.authHelperControllerUpdateAccountLocation(options).then((request) => request(axios, basePath));
         },
@@ -1009,6 +1325,16 @@ export class HelpersApi extends BaseAPI {
      */
     public authHelperControllerCheckEmailAvailability(email: string, options?: RawAxiosRequestConfig) {
         return HelpersApiFp(this.configuration).authHelperControllerCheckEmailAvailability(email, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof HelpersApi
+     */
+    public authHelperControllerGenerateVendorId(options?: RawAxiosRequestConfig) {
+        return HelpersApiFp(this.configuration).authHelperControllerGenerateVendorId(options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

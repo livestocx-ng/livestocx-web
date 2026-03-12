@@ -442,6 +442,12 @@ export interface ProductInfo {
      * @memberof ProductInfo
      */
     'createdAt': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof ProductInfo
+     */
+    'isFlagged': boolean;
 }
 
 export const ProductInfoCategoryEnum = {
@@ -543,6 +549,12 @@ export interface ProductInfoVendor {
     'isUpdated': boolean;
     /**
      * 
+     * @type {boolean}
+     * @memberof ProductInfoVendor
+     */
+    'isProductUploadSubscriptionActive': boolean;
+    /**
+     * 
      * @type {string}
      * @memberof ProductInfoVendor
      */
@@ -634,6 +646,37 @@ export interface ProductsResponse {
      * @memberof ProductsResponse
      */
     'hasNextPage': boolean;
+}
+/**
+ * 
+ * @export
+ * @interface SearchHintInfo
+ */
+export interface SearchHintInfo {
+    /**
+     * Name of the animal.
+     * @type {string}
+     * @memberof SearchHintInfo
+     */
+    'name': string;
+    /**
+     * City of the vendor.
+     * @type {string}
+     * @memberof SearchHintInfo
+     */
+    'city': string;
+    /**
+     * State of the vendor.
+     * @type {string}
+     * @memberof SearchHintInfo
+     */
+    'state': string;
+    /**
+     * City, State of the vendor.
+     * @type {string}
+     * @memberof SearchHintInfo
+     */
+    'formattedLocation': string;
 }
 /**
  * 
@@ -1048,10 +1091,12 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
          * @param {string} [category] Category
          * @param {boolean} [inStock] In Stock
          * @param {boolean} [isNegotiable] Is Negotiable
+         * @param {number} [latitude] Latitude
+         * @param {number} [longitude] Longitude
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        marketplaceControllerFetchSearchFeed: async (page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        marketplaceControllerFetchSearchFeed: async (page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, latitude?: number, longitude?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'page' is not null or undefined
             assertParamExists('marketplaceControllerFetchSearchFeed', 'page', page)
             // verify required parameter 'pageSize' is not null or undefined
@@ -1102,6 +1147,54 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
 
             if (isNegotiable !== undefined) {
                 localVarQueryParameter['isNegotiable'] = isNegotiable;
+            }
+
+            if (latitude !== undefined) {
+                localVarQueryParameter['latitude'] = latitude;
+            }
+
+            if (longitude !== undefined) {
+                localVarQueryParameter['longitude'] = longitude;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} query Query
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        marketplaceControllerFetchSearchHints: async (query: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'query' is not null or undefined
+            assertParamExists('marketplaceControllerFetchSearchHints', 'query', query)
+            const localVarPath = `/v1/marketplace/search-hints`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (query !== undefined) {
+                localVarQueryParameter['query'] = query;
             }
 
 
@@ -1187,13 +1280,27 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
          * @param {string} [category] Category
          * @param {boolean} [inStock] In Stock
          * @param {boolean} [isNegotiable] Is Negotiable
+         * @param {number} [latitude] Latitude
+         * @param {number} [longitude] Longitude
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async marketplaceControllerFetchSearchFeed(page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.marketplaceControllerFetchSearchFeed(page, pageSize, query, state, city, category, inStock, isNegotiable, options);
+        async marketplaceControllerFetchSearchFeed(page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, latitude?: number, longitude?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ProductsResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.marketplaceControllerFetchSearchFeed(page, pageSize, query, state, city, category, inStock, isNegotiable, latitude, longitude, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.marketplaceControllerFetchSearchFeed']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} query Query
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async marketplaceControllerFetchSearchHints(query: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<SearchHintInfo>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.marketplaceControllerFetchSearchHints(query, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MarketplaceApi.marketplaceControllerFetchSearchHints']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -1256,11 +1363,22 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
          * @param {string} [category] Category
          * @param {boolean} [inStock] In Stock
          * @param {boolean} [isNegotiable] Is Negotiable
+         * @param {number} [latitude] Latitude
+         * @param {number} [longitude] Longitude
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        marketplaceControllerFetchSearchFeed(page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, options?: RawAxiosRequestConfig): AxiosPromise<ProductsResponse> {
-            return localVarFp.marketplaceControllerFetchSearchFeed(page, pageSize, query, state, city, category, inStock, isNegotiable, options).then((request) => request(axios, basePath));
+        marketplaceControllerFetchSearchFeed(page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, latitude?: number, longitude?: number, options?: RawAxiosRequestConfig): AxiosPromise<ProductsResponse> {
+            return localVarFp.marketplaceControllerFetchSearchFeed(page, pageSize, query, state, city, category, inStock, isNegotiable, latitude, longitude, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {string} query Query
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        marketplaceControllerFetchSearchHints(query: string, options?: RawAxiosRequestConfig): AxiosPromise<Array<SearchHintInfo>> {
+            return localVarFp.marketplaceControllerFetchSearchHints(query, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1330,12 +1448,25 @@ export class MarketplaceApi extends BaseAPI {
      * @param {string} [category] Category
      * @param {boolean} [inStock] In Stock
      * @param {boolean} [isNegotiable] Is Negotiable
+     * @param {number} [latitude] Latitude
+     * @param {number} [longitude] Longitude
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof MarketplaceApi
      */
-    public marketplaceControllerFetchSearchFeed(page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, options?: RawAxiosRequestConfig) {
-        return MarketplaceApiFp(this.configuration).marketplaceControllerFetchSearchFeed(page, pageSize, query, state, city, category, inStock, isNegotiable, options).then((request) => request(this.axios, this.basePath));
+    public marketplaceControllerFetchSearchFeed(page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, latitude?: number, longitude?: number, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).marketplaceControllerFetchSearchFeed(page, pageSize, query, state, city, category, inStock, isNegotiable, latitude, longitude, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {string} query Query
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MarketplaceApi
+     */
+    public marketplaceControllerFetchSearchHints(query: string, options?: RawAxiosRequestConfig) {
+        return MarketplaceApiFp(this.configuration).marketplaceControllerFetchSearchHints(query, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

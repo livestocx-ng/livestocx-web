@@ -113,6 +113,12 @@ export interface AccountInfo {
      * @memberof AccountInfo
      */
     'isProductUploadSubscriptionActive': boolean;
+    /**
+     * 
+     * @type {number}
+     * @memberof AccountInfo
+     */
+    'productUploadLimit': number;
 }
 
 export const AccountInfoRoleEnum = {
@@ -302,6 +308,32 @@ export interface FileUploadResult {
 /**
  * 
  * @export
+ * @interface FollowCommunityUserContactsDTO
+ */
+export interface FollowCommunityUserContactsDTO {
+    /**
+     * String Array of phone contacts
+     * @type {string}
+     * @memberof FollowCommunityUserContactsDTO
+     */
+    'phoneContacts': string;
+}
+/**
+ * 
+ * @export
+ * @interface FollowCommunityUserContactsWithNamesDTO
+ */
+export interface FollowCommunityUserContactsWithNamesDTO {
+    /**
+     * Array of phone contacts
+     * @type {Array<PhoneContactDto>}
+     * @memberof FollowCommunityUserContactsWithNamesDTO
+     */
+    'phoneContacts': Array<PhoneContactDto>;
+}
+/**
+ * 
+ * @export
  * @interface ListItemInfo
  */
 export interface ListItemInfo {
@@ -455,6 +487,25 @@ export interface NotificationsResponse {
 /**
  * 
  * @export
+ * @interface PhoneContactDto
+ */
+export interface PhoneContactDto {
+    /**
+     * Name of the phone contact
+     * @type {string}
+     * @memberof PhoneContactDto
+     */
+    'name': string;
+    /**
+     * Phone number of the phone contact
+     * @type {string}
+     * @memberof PhoneContactDto
+     */
+    'phone': string;
+}
+/**
+ * 
+ * @export
  * @interface PhoneContactInfo
  */
 export interface PhoneContactInfo {
@@ -572,6 +623,25 @@ export interface UpdateFCMTokenDTO {
      * @memberof UpdateFCMTokenDTO
      */
     'fcmToken': string;
+}
+/**
+ * 
+ * @export
+ * @interface UpdateLocationCoordinatesDTO
+ */
+export interface UpdateLocationCoordinatesDTO {
+    /**
+     * Latitude of the user.
+     * @type {string}
+     * @memberof UpdateLocationCoordinatesDTO
+     */
+    'latitude': string;
+    /**
+     * Longitude of the user.
+     * @type {string}
+     * @memberof UpdateLocationCoordinatesDTO
+     */
+    'longitude': string;
 }
 /**
  * 
@@ -712,6 +782,84 @@ export const CommunityApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @param {FollowCommunityUserContactsDTO} followCommunityUserContactsDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        communityControllerFollowCommunityUserContacts: async (followCommunityUserContactsDTO: FollowCommunityUserContactsDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'followCommunityUserContactsDTO' is not null or undefined
+            assertParamExists('communityControllerFollowCommunityUserContacts', 'followCommunityUserContactsDTO', followCommunityUserContactsDTO)
+            const localVarPath = `/v1/account/community/follow-user-contacts`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(followCommunityUserContactsDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {FollowCommunityUserContactsWithNamesDTO} followCommunityUserContactsWithNamesDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        communityControllerFollowCommunityUserContactsWithNames: async (followCommunityUserContactsWithNamesDTO: FollowCommunityUserContactsWithNamesDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'followCommunityUserContactsWithNamesDTO' is not null or undefined
+            assertParamExists('communityControllerFollowCommunityUserContactsWithNames', 'followCommunityUserContactsWithNamesDTO', followCommunityUserContactsWithNamesDTO)
+            const localVarPath = `/v1/account/community/follow-user-contacts/with-names`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(followCommunityUserContactsWithNamesDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -756,6 +904,30 @@ export const CommunityApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['CommunityApi.communityControllerFollowCommunityUser']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @param {FollowCommunityUserContactsDTO} followCommunityUserContactsDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO: FollowCommunityUserContactsDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommunityApi.communityControllerFollowCommunityUserContacts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {FollowCommunityUserContactsWithNamesDTO} followCommunityUserContactsWithNamesDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO: FollowCommunityUserContactsWithNamesDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CommunityApi.communityControllerFollowCommunityUserContactsWithNames']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -790,6 +962,24 @@ export const CommunityApiFactory = function (configuration?: Configuration, base
          */
         communityControllerFollowCommunityUser(userId: number, options?: RawAxiosRequestConfig): AxiosPromise<CommunityUserInfo> {
             return localVarFp.communityControllerFollowCommunityUser(userId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {FollowCommunityUserContactsDTO} followCommunityUserContactsDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO: FollowCommunityUserContactsDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {FollowCommunityUserContactsWithNamesDTO} followCommunityUserContactsWithNamesDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO: FollowCommunityUserContactsWithNamesDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -830,6 +1020,28 @@ export class CommunityApi extends BaseAPI {
      */
     public communityControllerFollowCommunityUser(userId: number, options?: RawAxiosRequestConfig) {
         return CommunityApiFp(this.configuration).communityControllerFollowCommunityUser(userId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {FollowCommunityUserContactsDTO} followCommunityUserContactsDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommunityApi
+     */
+    public communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO: FollowCommunityUserContactsDTO, options?: RawAxiosRequestConfig) {
+        return CommunityApiFp(this.configuration).communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {FollowCommunityUserContactsWithNamesDTO} followCommunityUserContactsWithNamesDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof CommunityApi
+     */
+    public communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO: FollowCommunityUserContactsWithNamesDTO, options?: RawAxiosRequestConfig) {
+        return CommunityApiFp(this.configuration).communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1387,6 +1599,45 @@ export const MeApiAxiosParamCreator = function (configuration?: Configuration) {
         },
         /**
          * 
+         * @param {UpdateLocationCoordinatesDTO} updateLocationCoordinatesDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountControllerUpdateLocationCoordinates: async (updateLocationCoordinatesDTO: UpdateLocationCoordinatesDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'updateLocationCoordinatesDTO' is not null or undefined
+            assertParamExists('accountControllerUpdateLocationCoordinates', 'updateLocationCoordinatesDTO', updateLocationCoordinatesDTO)
+            const localVarPath = `/v1/account/me/update-location-coordinates`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateLocationCoordinatesDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {UpdateProfileImageDTO} updateProfileImageDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1483,6 +1734,18 @@ export const MeApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {UpdateLocationCoordinatesDTO} updateLocationCoordinatesDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO: UpdateLocationCoordinatesDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['MeApi.accountControllerUpdateLocationCoordinates']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {UpdateProfileImageDTO} updateProfileImageDTO 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1537,6 +1800,15 @@ export const MeApiFactory = function (configuration?: Configuration, basePath?: 
          */
         accountControllerUpdateFcmToken(updateFCMTokenDTO: UpdateFCMTokenDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.accountControllerUpdateFcmToken(updateFCMTokenDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {UpdateLocationCoordinatesDTO} updateLocationCoordinatesDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO: UpdateLocationCoordinatesDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1598,6 +1870,17 @@ export class MeApi extends BaseAPI {
      */
     public accountControllerUpdateFcmToken(updateFCMTokenDTO: UpdateFCMTokenDTO, options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).accountControllerUpdateFcmToken(updateFCMTokenDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {UpdateLocationCoordinatesDTO} updateLocationCoordinatesDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof MeApi
+     */
+    public accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO: UpdateLocationCoordinatesDTO, options?: RawAxiosRequestConfig) {
+        return MeApiFp(this.configuration).accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1916,11 +2199,12 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
         /**
          * 
          * @summary Upload an file
+         * @param {string} [fileName] The name of the file
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imageUploadControllerUploadFile: async (file?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imageUploadControllerUploadFile: async (fileName?: string, file?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/account/upload/file`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1933,6 +2217,10 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
             const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            if (fileName !== undefined) {
+                localVarQueryParameter['fileName'] = fileName;
+            }
 
 
             if (file !== undefined) { 
@@ -1956,11 +2244,12 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
          * 
          * @summary Upload an image with optional resizing
          * @param {ImageUploadControllerUploadImageTypeEnum} [type] 
+         * @param {string} [fileName] The name of the file
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imageUploadControllerUploadImage: async (type?: ImageUploadControllerUploadImageTypeEnum, file?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        imageUploadControllerUploadImage: async (type?: ImageUploadControllerUploadImageTypeEnum, fileName?: string, file?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/v1/account/upload/image`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1976,6 +2265,10 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
 
             if (type !== undefined) {
                 localVarQueryParameter['type'] = type;
+            }
+
+            if (fileName !== undefined) {
+                localVarQueryParameter['fileName'] = fileName;
             }
 
 
@@ -2009,12 +2302,13 @@ export const UploadApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Upload an file
+         * @param {string} [fileName] The name of the file
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imageUploadControllerUploadFile(file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileUploadResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imageUploadControllerUploadFile(file, options);
+        async imageUploadControllerUploadFile(fileName?: string, file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileUploadResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imageUploadControllerUploadFile(fileName, file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UploadApi.imageUploadControllerUploadFile']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2023,12 +2317,13 @@ export const UploadApiFp = function(configuration?: Configuration) {
          * 
          * @summary Upload an image with optional resizing
          * @param {ImageUploadControllerUploadImageTypeEnum} [type] 
+         * @param {string} [fileName] The name of the file
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async imageUploadControllerUploadImage(type?: ImageUploadControllerUploadImageTypeEnum, file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileUploadResult>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.imageUploadControllerUploadImage(type, file, options);
+        async imageUploadControllerUploadImage(type?: ImageUploadControllerUploadImageTypeEnum, fileName?: string, file?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<FileUploadResult>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.imageUploadControllerUploadImage(type, fileName, file, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UploadApi.imageUploadControllerUploadImage']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -2046,23 +2341,25 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
         /**
          * 
          * @summary Upload an file
+         * @param {string} [fileName] The name of the file
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imageUploadControllerUploadFile(file?: File, options?: RawAxiosRequestConfig): AxiosPromise<FileUploadResult> {
-            return localVarFp.imageUploadControllerUploadFile(file, options).then((request) => request(axios, basePath));
+        imageUploadControllerUploadFile(fileName?: string, file?: File, options?: RawAxiosRequestConfig): AxiosPromise<FileUploadResult> {
+            return localVarFp.imageUploadControllerUploadFile(fileName, file, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary Upload an image with optional resizing
          * @param {ImageUploadControllerUploadImageTypeEnum} [type] 
+         * @param {string} [fileName] The name of the file
          * @param {File} [file] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        imageUploadControllerUploadImage(type?: ImageUploadControllerUploadImageTypeEnum, file?: File, options?: RawAxiosRequestConfig): AxiosPromise<FileUploadResult> {
-            return localVarFp.imageUploadControllerUploadImage(type, file, options).then((request) => request(axios, basePath));
+        imageUploadControllerUploadImage(type?: ImageUploadControllerUploadImageTypeEnum, fileName?: string, file?: File, options?: RawAxiosRequestConfig): AxiosPromise<FileUploadResult> {
+            return localVarFp.imageUploadControllerUploadImage(type, fileName, file, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2077,26 +2374,28 @@ export class UploadApi extends BaseAPI {
     /**
      * 
      * @summary Upload an file
+     * @param {string} [fileName] The name of the file
      * @param {File} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
      */
-    public imageUploadControllerUploadFile(file?: File, options?: RawAxiosRequestConfig) {
-        return UploadApiFp(this.configuration).imageUploadControllerUploadFile(file, options).then((request) => request(this.axios, this.basePath));
+    public imageUploadControllerUploadFile(fileName?: string, file?: File, options?: RawAxiosRequestConfig) {
+        return UploadApiFp(this.configuration).imageUploadControllerUploadFile(fileName, file, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary Upload an image with optional resizing
      * @param {ImageUploadControllerUploadImageTypeEnum} [type] 
+     * @param {string} [fileName] The name of the file
      * @param {File} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof UploadApi
      */
-    public imageUploadControllerUploadImage(type?: ImageUploadControllerUploadImageTypeEnum, file?: File, options?: RawAxiosRequestConfig) {
-        return UploadApiFp(this.configuration).imageUploadControllerUploadImage(type, file, options).then((request) => request(this.axios, this.basePath));
+    public imageUploadControllerUploadImage(type?: ImageUploadControllerUploadImageTypeEnum, fileName?: string, file?: File, options?: RawAxiosRequestConfig) {
+        return UploadApiFp(this.configuration).imageUploadControllerUploadImage(type, fileName, file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

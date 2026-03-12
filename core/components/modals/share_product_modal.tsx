@@ -1,16 +1,17 @@
-import { IconCopy } from '@tabler/icons-react';
+/* eslint-disable no-console */
 import {
-  FacebookIcon,
-  FacebookShareButton,
   TwitterIcon,
-  TwitterShareButton,
   WhatsappIcon,
+  FacebookIcon,
+  TwitterShareButton,
+  FacebookShareButton,
   WhatsappShareButton,
 } from 'react-share';
+import { IconCopy } from '@tabler/icons-react';
 import { Flex, Image, Modal } from '@mantine/core';
+import { ProductInfo } from '@/core/sdk/marketplace';
 import { showNotification } from '@mantine/notifications';
 import { formatProductSlug } from '@/core/middlewares/slug-formatter';
-import { ProductInfo } from '@/core/sdk/marketplace';
 
 const ShareProductModal = ({
   isOpen,
@@ -36,7 +37,7 @@ const ShareProductModal = ({
         fit="cover"
         height={180}
         width="100%"
-        src={productInfo.coverPhoto}
+        src={productInfo?.coverPhoto}
         style={{
           width: '100%',
           height: '180px',
@@ -45,7 +46,7 @@ const ShareProductModal = ({
       />
       <Flex mx="auto" justify="center" gap={30} mt={20}>
         <WhatsappShareButton
-          title={`Check out my ${productInfo.name} on Livestocx: `}
+          title={`Check out my ${productInfo?.name} on Livestocx: `}
           url={'https://livestocx.com'.concat(
             `/marketplace/products/${formatProductSlug(productInfo!)}`
           )}
@@ -53,7 +54,7 @@ const ShareProductModal = ({
           <WhatsappIcon size={30} round />
         </WhatsappShareButton>
         <FacebookShareButton
-          title={`Check out my ${productInfo.name} on Livestocx: `}
+          title={`Check out my ${productInfo?.name} on Livestocx: `}
           url={'https://livestocx.com'.concat(
             `/marketplace/products/${formatProductSlug(productInfo!)}`
           )}
@@ -61,7 +62,7 @@ const ShareProductModal = ({
           <FacebookIcon size={30} round />
         </FacebookShareButton>
         <TwitterShareButton
-          title={`Check out my ${productInfo.name} on Livestocx: `}
+          title={`Check out my ${productInfo?.name} on Livestocx: `}
           url={'https://livestocx.com'.concat(
             `/marketplace/products/${formatProductSlug(productInfo!)}`
           )}
@@ -72,7 +73,7 @@ const ShareProductModal = ({
           color="black"
           onClick={async () => {
             const text = 'https://livestocx.com'.concat(
-              `/marketplace/products/${productInfo.productId.toLowerCase()}${productInfo.name.toLowerCase()}`
+              `/marketplace/products/${formatProductSlug(productInfo!)}`
             );
 
             try {
