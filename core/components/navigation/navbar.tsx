@@ -120,8 +120,8 @@ export function Navbar() {
                 color="orange"
                 radius="xl"
                 size="xs"
-                // component={Link}
-                // href="/sell"
+                component={Link}
+                href="/dashboard/products"
                 onClick={() => {
                   if (accountInfo?.role === 'CUSTOMER') {
                     return openUpdateUserRoleDrawer();
@@ -129,6 +129,7 @@ export function Navbar() {
                     return openUpdateBusinessProfileDrawer();
                   }
                 }}
+
               >
                 Sell
               </Button>

@@ -87,16 +87,16 @@ const AdvertisementBanner = () => {
       return router.replace('/signin?redirect_to=account');
     }
 
-    router.replace('/account');
+    router.replace('/dashboard/products');
   };
 
   return (
     <Box
-    w="100%"
-    py={5}
-    px={16}
-    onClick={handleClick}
-    style={{
+      w="100%"
+      py={5}
+      px={16}
+      onClick={handleClick}
+      style={{
         background: 'linear-gradient(to top right, #fed7aa, #f97316)',
         cursor: 'pointer',
         zIndex: 50,
