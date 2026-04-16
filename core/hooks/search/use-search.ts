@@ -8,7 +8,13 @@ export default function useSearch(payload: {
     currentPage: number;
     pageSize: number;
     searchQuery: string;
-    location: string;
+    state?: string;
+    city?: string;
+    category?: string;
+    inStock?: boolean;
+    isNegotiable?: boolean;
+    latitude?: number;
+    longitude?: number;
 }) {
     const {
         setMarketPlaceProducts,
@@ -18,18 +24,33 @@ export default function useSearch(payload: {
     } = useAppContext();
 
     return useQuery({
-        queryKey: ['search-products', payload.searchQuery,
-             payload.location, 
-            payload.currentPage],
+        queryKey: ['search-products', 
+            payload.searchQuery,
+            payload.state,
+            payload.city,
+            payload.category,
+            payload.currentPage,
+            payload.inStock,
+            payload.isNegotiable,
+            payload.latitude,
+            payload.longitude
+        ],
 
-        enabled: payload.searchQuery.trim().length >= 2,
+        enabled: payload.searchQuery.trim().length >= 2 || !!payload.state || !!payload.category,
 
         queryFn: async () => {
+            const searchLocation = (payload.state === 'Nigeria' || !payload.state) ? undefined : payload.state;
             const response = await marketplaceApi.marketplaceControllerFetchSearchFeed(
                 payload.currentPage,
                 payload.pageSize,
                 payload.searchQuery,
-                payload.location === 'Plateau' ? '' : payload.location
+                searchLocation,
+                payload.city,
+                payload.category,
+                payload.inStock,
+                payload.isNegotiable,
+                payload.latitude,
+                payload.longitude
             );
 
             const { products, totalPages } = response.data;
@@ -45,7 +66,7 @@ export default function useSearch(payload: {
         },
         staleTime: 1000 * 30,
         placeholderData: (previousData) => previousData,
-     
+
     });
 }
 
