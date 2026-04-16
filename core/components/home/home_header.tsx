@@ -96,35 +96,22 @@
 
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
-import { IconSearch, IconMapPin } from '@tabler/icons-react';
-import { Box, Button, Flex, Image, Stack, Text, TextInput, Title, Select, Popover, ActionIcon } from '@mantine/core';
+import { IconSearch } from '@tabler/icons-react';
+import { Box, Button, Flex, Image, Stack, TextInput, Title } from '@mantine/core';
 import useSearch from '@/core/hooks/search/use-search';
-import { useAppContext } from '@/core/context';
 
 const HomeHeader = () => {
   const [searchInput, setSearchInput] = useState('');
   const [activeQuery, setActiveQuery] = useState('');
 
-  const { availableStates } = useAppContext();
-  const [selectedState, setSelectedState] = useState<string | null>(null);
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
-  const [popoverOpened, setPopoverOpened] = useState(false);
-
-  const cities = useMemo(() => {
-    if (!selectedState) return [];
-    const state = availableStates.find((s) => s.state === selectedState);
-    return state?.lgas || [];
-  }, [selectedState, availableStates]);
-
-
   const { isFetching } = useSearch({
     currentPage: 1,
     pageSize: 20,
     searchQuery: activeQuery,
-    state: selectedState || '',
-    city: selectedCity || '',
+    state: '',
+    city: '',
   });
 
   const handleSearchSubmit = (e: React.FormEvent) => {
@@ -164,57 +151,6 @@ const HomeHeader = () => {
               value={searchInput}
               onChange={(e) => setSearchInput(e.currentTarget.value)}
               w={{ base: '100%', sm: '100%', md: '60%' }}
-              leftSection={
-                <Popover 
-                  width={300} 
-                  position="bottom" 
-                  withArrow 
-                  shadow="md"
-                  opened={popoverOpened}
-                  onChange={setPopoverOpened}
-                >
-                  <Popover.Target>
-                    <ActionIcon 
-                      variant="transparent" 
-                      color={selectedState ? 'green' : 'gray'} 
-                      title="Select Location"
-                      onClick={() => setPopoverOpened((o) => !o)}
-                    >
-                      <IconMapPin size={20} />
-                    </ActionIcon>
-                  </Popover.Target>
-                  <Popover.Dropdown>
-                    <Stack gap="sm">
-                      <Text fw={700} fz="sm">Search Location</Text>
-                      <Select
-                        label="State"
-                        placeholder="Pick a state"
-                        data={['Nigeria', ...availableStates.map((s) => s.state)]}
-                        value={selectedState}
-                        onChange={(val) => {
-                          setSelectedState(val === 'Nigeria' ? null : val);
-                          setSelectedCity(null);
-                        }}
-                        allowDeselect
-                        clearable
-                      />
-                      <Select
-                        label="City/LGA"
-                        placeholder="Select City"
-                        data={cities}
-                        value={selectedCity}
-                        onChange={(val) => {
-                          setSelectedCity(val);
-                          setPopoverOpened(false); // Close only after city is selected
-                        }}
-                        disabled={!selectedState}
-                        allowDeselect
-                        clearable
-                      />
-                    </Stack>
-                  </Popover.Dropdown>
-                </Popover>
-              }
               rightSection={
                 <Button
                   h={35}
@@ -240,9 +176,6 @@ const HomeHeader = () => {
                   paddingRight: 80,
                   height: 50,
                   fontSize: 14
-                },
-                section: {
-                  paddingLeft: 10
                 }
               }}
             />
