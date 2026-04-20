@@ -1,11 +1,11 @@
 'use client';
 
 import {
-  Message01Icon,
-  PromotionIcon,
-  PackageAddIcon,
-  AccountSetting01Icon,
-} from 'hugeicons-react';
+  IconMessage as Message01Icon,
+  IconSpeakerphone as PromotionIcon,
+  IconPackage as PackageAddIcon,
+  IconSettings as AccountSetting01Icon,
+} from '@tabler/icons-react';
 import { Divider, Stack } from '@mantine/core';
 import DashboardNavigationLink from './dashboard-navigation-link';
 

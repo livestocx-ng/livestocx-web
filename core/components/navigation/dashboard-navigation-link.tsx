@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { HugeiconsProps } from 'hugeicons-react';
+import { IconProps } from '@tabler/icons-react';
 import { Group, Paper, Text, useMantineTheme } from '@mantine/core';
 
 export default function DashboardNavigationLink({
@@ -11,7 +11,7 @@ export default function DashboardNavigationLink({
   rightIcon,
   path,
 }: {
-  Icon: React.FC<HugeiconsProps>;
+  Icon: React.FC<IconProps>;
   label: string;
   rightIcon?: React.ReactNode;
   path: string;

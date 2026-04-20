@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo, useState } from 'react';
-import { DollarCircleIcon } from 'hugeicons-react';
+import { IconCurrencyDollar as DollarCircleIcon } from '@tabler/icons-react';
 import {
   Box,
   Button,

@@ -27,7 +27,7 @@ export const validateSignUpForm = (values: CreateAccountDTO, confirmPassword: st
     message = 'First name is required';
   } else if (values.lastName.length <= 0) {
     message = 'Last name is required';
-  } else if (values.phone.length <= 10) {
+  } else if (values.phone && values.phone.length <= 10) {
     message = 'Invalid phone number';
   } else if (!values.state) {
     message = 'State is required';

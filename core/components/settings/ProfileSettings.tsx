@@ -89,21 +89,6 @@ export const ProfileSettings = () => {
   const [isPasswordModalOpen, { open: openPasswordModal, close: closePasswordModal }] =
     useDisclosure(false);
 
-  const handleUpdateEmail = async (email: string) => {
-    // TODO: Implement API call to update email
-    // eslint-disable-next-line no-console
-    console.log('Updating email to:', email);
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  };
-
-  const handleUpdatePassword = async (_currentPassword: string, _newPassword: string) => {
-    // TODO: Implement API call to update password
-    // eslint-disable-next-line no-console
-    console.log('Updating password');
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  };
 
   const fullName = [accountInfo?.firstName, accountInfo?.lastName].filter(Boolean).join(' ');
 
@@ -121,13 +106,10 @@ export const ProfileSettings = () => {
       <UpdateEmailModal
         isOpen={isEmailModalOpen}
         closeModal={closeEmailModal}
-        currentValue={accountInfo?.email || ''}
-        onSave={handleUpdateEmail}
       />
       <UpdatePasswordModal
         isOpen={isPasswordModalOpen}
         closeModal={closePasswordModal}
-        onSave={handleUpdatePassword}
       />
 
       {/* Profile Fields */}

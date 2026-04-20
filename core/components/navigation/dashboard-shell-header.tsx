@@ -3,8 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { IconX } from '@tabler/icons-react';
-import { AccountSetting01Icon, Logout01Icon, Menu01Icon, UserIcon } from 'hugeicons-react';
+import { IconSettings as AccountSetting01Icon, IconLogout as Logout01Icon, IconMenu2 as Menu01Icon, IconUser as UserIcon, IconX } from '@tabler/icons-react';
 import {
   ActionIcon,
   AppShell,

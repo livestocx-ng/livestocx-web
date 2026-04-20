@@ -55,7 +55,7 @@ export const UpdatePasswordModal = ({ isOpen, closeModal }: UpdatePasswordModalP
       opened={isOpen}
       onClose={() => {
         if (isPending === false) {
-          useUpdateAccountPasswordMutation();
+          closeModal();
         }
       }}
       title="Update Password"

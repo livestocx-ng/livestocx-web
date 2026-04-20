@@ -66,6 +66,7 @@ const Signup = () => {
       state: '',
       city: '',
       businessName: '',
+      referral_source: '',
       businessAddress: '',
     },
   });

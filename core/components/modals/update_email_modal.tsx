@@ -9,8 +9,6 @@ import useVerifyNewAccountEmailMutation from '@/core/hooks/account/useUpdateAcco
 interface UpdateEmailModalProps {
   isOpen: boolean;
   closeModal: () => void;
-  currentValue: string;
-  onSave: (value: string) => Promise<void>;
 }
 
 export const UpdateEmailModal = ({ isOpen, closeModal }: UpdateEmailModalProps) => {

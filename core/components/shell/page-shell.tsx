@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { ArrowLeft01Icon } from 'hugeicons-react';
+import { IconArrowLeft as ArrowLeft01Icon } from '@tabler/icons-react';
 import { Box, Button, Container, Divider, Grid, Group, Text, Title } from '@mantine/core';
 
 export default function PageShell({
