@@ -98,13 +98,14 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import { IconSearch } from '@tabler/icons-react';
+import { IconExternalLink, IconSearch } from '@tabler/icons-react';
 import { Box, Button, Flex, Image, Stack, TextInput, Title } from '@mantine/core';
 import useSearch from '@/core/hooks/search/use-search';
 
 const HomeHeader = () => {
   const [searchInput, setSearchInput] = useState('');
   const [activeQuery, setActiveQuery] = useState('');
+  const [isClimateButtonHovered, setIsClimateButtonHovered] = useState(false);
 
   const { isFetching } = useSearch({
     currentPage: 1,
@@ -132,7 +133,45 @@ const HomeHeader = () => {
         <Title order={3} c="white">
           Best Deals. Everything Animals
         </Title>
+        
+        <Flex w="100%" justify="flex-start" align="flex-start" px={{ base: 16, md: 32 }}>
+        <Button
+          type="button"
+          onClick={() => {
+            window.open('https://climateresilience.livestocx.com', '_blank');
+          }}
+          onMouseEnter={() => setIsClimateButtonHovered(true)}
+          onMouseLeave={() => setIsClimateButtonHovered(false)}
+          c="white"
+          radius="xl"
+          px="lg"
+          py="sm"
+          variant="filled"
+          styles={{
+            root: {
+              backgroundColor: isClimateButtonHovered ? '#c2410c' : '#ea580c',
+              transition: 'background-color 200ms ease-in-out',
+              height: 'auto',
+            },
+          inner: {
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 4,
+          },
+        }}
+      >
+      <Box style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <Box style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span>Climate Resilience AI</span>
+          <IconExternalLink size={18} />
+        </Box>
 
+        <span style={{ fontSize: 11, textDecoration: 'underline', opacity: 0.9 }}>
+          Learn More
+        </span>
+      </Box>
+      </Button>
+        </Flex>
         <Flex gap="sm">
           <Link target="_blank" href="https://apps.apple.com/ng/app/livestocx/id6738842775">
             <Image src="/icons/icon_appstore.svg" alt="App Store" w={110} fit="contain" />

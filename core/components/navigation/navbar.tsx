@@ -87,27 +87,34 @@ export function Navbar() {
               </Link>
 
               {/* Desktop navigation */}
-              <Group gap={40} visibleFrom="md">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.label}
-                    href={link.link}
-                    style={{
-                      display: 'block',
-                      lineHeight: 1,
-                      padding: `${rem(8)} ${rem(12)}`,
-                      borderRadius: 'var(--mantine-radius-sm)',
-                      textDecoration: 'none',
-                      color:
-                        scroll.y > 0 ? 'var(--mantine-color-black)' : 'var(--mantine-color-black)',
-                      fontSize: 'var(--mantine-font-size-sm)',
-                      fontWeight: 500,
-                      transition: 'background-color 150ms ease',
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
+              <Group gap={5} visibleFrom="md">
+                {navLinks.map((link) => {
+                  const commonStyle = {
+                    display: 'block',
+                    lineHeight: 1,
+                    padding: `${rem(8)} ${rem(12)}`,
+                    borderRadius: 'var(--mantine-radius-sm)',
+                    textDecoration: 'none',
+                    color: 'var(--mantine-color-black)',
+                    fontSize: 'var(--mantine-font-size-sm)',
+                    fontWeight: 500,
+                    transition: 'background-color 150ms ease',
+                  } as const;
+
+                  if (link.link.startsWith('http')) {
+                    return (
+                      <a key={link.label} href={link.link} style={commonStyle}>
+                        {link.label}
+                      </a>
+                    );
+                  }
+
+                  return (
+                    <Link key={link.label} href={link.link} style={commonStyle}>
+                      {link.label}
+                    </Link>
+                  );
+                })}
               </Group>
             </Group>
 
@@ -155,26 +162,33 @@ export function Navbar() {
           zIndex={1000000}
         >
           <Stack>
-            {navLinks.map((link) => (
-              <Link
-                key={link.label}
-                href={link.link}
-                style={{
-                  display: 'block',
-                  lineHeight: 1,
-                  padding: `${rem(8)} ${rem(12)}`,
-                  borderRadius: 'var(--mantine-radius-sm)',
-                  textDecoration: 'none',
-                  color: 'var(--mantine-color-black)',
-                  fontSize: 'var(--mantine-font-size-sm)',
-                  fontWeight: 500,
-                  transition: 'background-color 150ms ease',
-                }}
-                onClick={toggle}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const commonStyle = {
+                display: 'block',
+                lineHeight: 1,
+                padding: `${rem(8)} ${rem(12)}`,
+                borderRadius: 'var(--mantine-radius-sm)',
+                textDecoration: 'none',
+                color: 'var(--mantine-color-black)',
+                fontSize: 'var(--mantine-font-size-sm)',
+                fontWeight: 500,
+                transition: 'background-color 150ms ease',
+              } as const;
+
+              if (link.link.startsWith('http')) {
+                return (
+                  <a key={link.label} href={link.link} style={commonStyle} onClick={toggle}>
+                    {link.label}
+                  </a>
+                );
+              }
+
+              return (
+                <Link key={link.label} href={link.link} style={commonStyle} onClick={toggle}>
+                  {link.label}
+                </Link>
+              );
+            })}
           </Stack>
         </Drawer>
       </Box>
