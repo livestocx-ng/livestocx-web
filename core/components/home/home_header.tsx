@@ -129,48 +129,58 @@ const HomeHeader = () => {
         background: 'linear-gradient(to bottom, #317549, #31754910)',
       }}
     >
+
+      <style>
+        {`
+          @keyframes orangeSpectrum {
+            0% { background-color: #ee7129; }  
+            33% { background-color: #d1552be9; }  
+            66% { background-color: #f9c416; }   
+            100% { background-color: #ee7129; } 
+          }
+        `}
+      </style>
+
       <Stack px={20} py={{ base: 20, sm: 20, md: 40 }} gap={10} w="100%" align="center">
         <Title order={3} c="white">
           Best Deals. Everything Animals
         </Title>
-        
-        <Flex w="100%" justify="flex-start" align="flex-start" px={{ base: 16, md: 32 }}>
-        <Button
-          type="button"
-          onClick={() => {
-            window.open('https://climateresilience.livestocx.com', '_blank');
-          }}
-          onMouseEnter={() => setIsClimateButtonHovered(true)}
-          onMouseLeave={() => setIsClimateButtonHovered(false)}
-          c="white"
-          radius="xl"
-          px="lg"
-          py="sm"
-          variant="filled"
-          styles={{
-            root: {
-              backgroundColor: isClimateButtonHovered ? '#c2410c' : '#ea580c',
-              transition: 'background-color 200ms ease-in-out',
-              height: 'auto',
-            },
-          inner: {
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: 4,
-          },
-        }}
-      >
-      <Box style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <Box style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span>Climate Resilience AI</span>
-          <IconExternalLink size={18} />
-        </Box>
 
-        <span style={{ fontSize: 11, textDecoration: 'underline', opacity: 0.9 }}>
-          Learn More
-        </span>
-      </Box>
-      </Button>
+        <Flex w="100%" justify="flex-start" align="flex-start" px={{ base: 16, md: 32 }}>
+          <Button
+            type="button"
+            onClick={() => {
+              window.open('https://climateresilience.livestocx.com', '_blank');
+            }}
+            c="white"
+            radius="xl"
+            px="lg"
+            py="sm"
+            variant="filled"
+            styles={{
+              root: {
+                animation: 'orangeSpectrum 4s infinite ease-in-out',
+                height: 'auto',
+                border: 'none',
+              },
+              inner: {
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: 4,
+              },
+            }}
+          >
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <Box style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <span>Climate Resilience AI</span>
+                <IconExternalLink size={18} />
+              </Box>
+
+              <span style={{ fontSize: 11, textDecoration: 'underline', opacity: 0.9 }}>
+                Learn More
+              </span>
+            </Box>
+          </Button>
         </Flex>
         <Flex gap="sm">
           <Link target="_blank" href="https://apps.apple.com/ng/app/livestocx/id6738842775">
