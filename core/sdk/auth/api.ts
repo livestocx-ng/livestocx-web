@@ -23,293 +23,171 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
-/**
- * 
- * @export
- * @interface AvailabilityCheckInfo
- */
 export interface AvailabilityCheckInfo {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AvailabilityCheckInfo
-     */
     'isAvailable': boolean;
 }
-/**
- * 
- * @export
- * @interface AvailableStateInfo
- */
 export interface AvailableStateInfo {
     /**
      * Name of the state.
-     * @type {string}
-     * @memberof AvailableStateInfo
      */
     'state': string;
     /**
      * Value of the state.
-     * @type {string}
-     * @memberof AvailableStateInfo
      */
     'stateId': string;
     /**
      * Name of the state.
-     * @type {Array<string>}
-     * @memberof AvailableStateInfo
      */
     'lgas': Array<string>;
 }
-/**
- * 
- * @export
- * @interface CompleteSignupVerificationDTO
- */
 export interface CompleteSignupVerificationDTO {
-    /**
-     * 
-     * @type {string}
-     * @memberof CompleteSignupVerificationDTO
-     */
     'signupVerificationHash': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CompleteSignupVerificationDTO
-     */
     'otp': string;
 }
-/**
- * 
- * @export
- * @interface CreateAccountDTO
- */
 export interface CreateAccountDTO {
     /**
      * Email address of the user.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'email': string;
     /**
      * Password for the user account.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'password': string;
     /**
      * First name of the user.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'firstName': string;
     /**
      * Last name of the user.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'lastName': string;
     /**
      * Phone number of the user.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'phone'?: string;
     /**
      * Referral code of the user (Optional).
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'referralCode': string;
     /**
      * How did you hear about Livestocx?
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'referral_source': string;
     /**
      * Role of the user.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'role': string;
     /**
      * State of the user.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'state'?: string;
     /**
      * City of the user.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'city'?: string;
     /**
      * Name of the business.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'businessName'?: string;
     /**
      * Address of the business.
-     * @type {string}
-     * @memberof CreateAccountDTO
      */
     'businessAddress'?: string;
 }
-/**
- * 
- * @export
- * @interface ForgotPasswordDTO
- */
 export interface ForgotPasswordDTO {
     /**
      * Account email.
-     * @type {string}
-     * @memberof ForgotPasswordDTO
      */
     'email': string;
 }
-/**
- * 
- * @export
- * @interface OAuthSigninDTO
- */
+export interface GooglePlaceInfo {
+    /**
+     * The description of the place
+     */
+    'place_id': string;
+    /**
+     * The description of the place
+     */
+    'formatted_address': string;
+    /**
+     * The description of the place
+     */
+    'name': string;
+    /**
+     * The description of the place
+     */
+    'address_components': Array<string>;
+    /**
+     * The description of the place
+     */
+    'state': string;
+    /**
+     * The description of the place
+     */
+    'lga': string;
+}
 export interface OAuthSigninDTO {
     /**
      * Account email.
-     * @type {string}
-     * @memberof OAuthSigninDTO
      */
     'email': string;
 }
-/**
- * 
- * @export
- * @interface ResetPasswordDTO
- */
 export interface ResetPasswordDTO {
     /**
      * Account password.
-     * @type {string}
-     * @memberof ResetPasswordDTO
      */
     'newPassword': string;
     /**
      * Password reset token.
-     * @type {string}
-     * @memberof ResetPasswordDTO
      */
     'passwordResetToken': string;
     /**
      * Account Id.
-     * @type {string}
-     * @memberof ResetPasswordDTO
      */
     'accountId': string;
 }
-/**
- * 
- * @export
- * @interface ResetPasswordOTPVerificationResponsePayload
- */
 export interface ResetPasswordOTPVerificationResponsePayload {
     /**
      * Account Id.
-     * @type {string}
-     * @memberof ResetPasswordOTPVerificationResponsePayload
      */
     'accountId': string;
     /**
      * Password reset token
-     * @type {string}
-     * @memberof ResetPasswordOTPVerificationResponsePayload
      */
     'passwordResetToken': string;
 }
-/**
- * 
- * @export
- * @interface ResetPasswordVerificationDTO
- */
 export interface ResetPasswordVerificationDTO {
     /**
      * Account email.
-     * @type {string}
-     * @memberof ResetPasswordVerificationDTO
      */
     'email': string;
     /**
      * Password reset token.
-     * @type {string}
-     * @memberof ResetPasswordVerificationDTO
      */
     'otp': string;
 }
-/**
- * 
- * @export
- * @interface SigninDTO
- */
 export interface SigninDTO {
     /**
      * Account email.
-     * @type {string}
-     * @memberof SigninDTO
      */
     'email': string;
     /**
      * Account password.
-     * @type {string}
-     * @memberof SigninDTO
      */
     'password': string;
 }
-/**
- * 
- * @export
- * @interface SigninResponsePayload
- */
 export interface SigninResponsePayload {
-    /**
-     * 
-     * @type {string}
-     * @memberof SigninResponsePayload
-     */
     'token': string;
 }
-/**
- * 
- * @export
- * @interface SignupResponsePayload
- */
 export interface SignupResponsePayload {
-    /**
-     * 
-     * @type {string}
-     * @memberof SignupResponsePayload
-     */
     'signupVerificationHash': string;
 }
-/**
- * 
- * @export
- * @interface SignupVerificationResponsePayload
- */
 export interface SignupVerificationResponsePayload {
-    /**
-     * 
-     * @type {string}
-     * @memberof SignupVerificationResponsePayload
-     */
     'token': string;
 }
 
 /**
  * AIApi - axios parameter creator
- * @export
  */
 export const AIApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -354,7 +232,6 @@ export const AIApiAxiosParamCreator = function (configuration?: Configuration) {
 
 /**
  * AIApi - functional programming interface
- * @export
  */
 export const AIApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AIApiAxiosParamCreator(configuration)
@@ -376,7 +253,6 @@ export const AIApiFp = function(configuration?: Configuration) {
 
 /**
  * AIApi - factory interface
- * @export
  */
 export const AIApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AIApiFp(configuration)
@@ -395,9 +271,6 @@ export const AIApiFactory = function (configuration?: Configuration, basePath?: 
 
 /**
  * AIApi - object-oriented interface
- * @export
- * @class AIApi
- * @extends {BaseAPI}
  */
 export class AIApi extends BaseAPI {
     /**
@@ -405,7 +278,6 @@ export class AIApi extends BaseAPI {
      * @param {string} query What do you want to ask the AI
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AIApi
      */
     public authControllerTestGeminiAI(query: string, options?: RawAxiosRequestConfig) {
         return AIApiFp(this.configuration).authControllerTestGeminiAI(query, options).then((request) => request(this.axios, this.basePath));
@@ -416,7 +288,6 @@ export class AIApi extends BaseAPI {
 
 /**
  * AddressHelperApi - axios parameter creator
- * @export
  */
 export const AddressHelperApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -483,7 +354,6 @@ export const AddressHelperApiAxiosParamCreator = function (configuration?: Confi
 
 /**
  * AddressHelperApi - functional programming interface
- * @export
  */
 export const AddressHelperApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AddressHelperApiAxiosParamCreator(configuration)
@@ -515,7 +385,6 @@ export const AddressHelperApiFp = function(configuration?: Configuration) {
 
 /**
  * AddressHelperApi - factory interface
- * @export
  */
 export const AddressHelperApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AddressHelperApiFp(configuration)
@@ -541,16 +410,12 @@ export const AddressHelperApiFactory = function (configuration?: Configuration, 
 
 /**
  * AddressHelperApi - object-oriented interface
- * @export
- * @class AddressHelperApi
- * @extends {BaseAPI}
  */
 export class AddressHelperApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AddressHelperApi
      */
     public addressHelperControllerGetAvailableStates(options?: RawAxiosRequestConfig) {
         return AddressHelperApiFp(this.configuration).addressHelperControllerGetAvailableStates(options).then((request) => request(this.axios, this.basePath));
@@ -560,7 +425,6 @@ export class AddressHelperApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AddressHelperApi
      */
     public addressHelperControllerGetAvailableStates_1(options?: RawAxiosRequestConfig) {
         return AddressHelperApiFp(this.configuration).addressHelperControllerGetAvailableStates_1(options).then((request) => request(this.axios, this.basePath));
@@ -571,7 +435,6 @@ export class AddressHelperApi extends BaseAPI {
 
 /**
  * AuthApi - axios parameter creator
- * @export
  */
 export const AuthApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -720,7 +583,6 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * AuthApi - functional programming interface
- * @export
  */
 export const AuthApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = AuthApiAxiosParamCreator(configuration)
@@ -778,7 +640,6 @@ export const AuthApiFp = function(configuration?: Configuration) {
 
 /**
  * AuthApi - factory interface
- * @export
  */
 export const AuthApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = AuthApiFp(configuration)
@@ -824,9 +685,6 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * AuthApi - object-oriented interface
- * @export
- * @class AuthApi
- * @extends {BaseAPI}
  */
 export class AuthApi extends BaseAPI {
     /**
@@ -834,7 +692,6 @@ export class AuthApi extends BaseAPI {
      * @param {SigninDTO} signinDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public authControllerSignIn(signinDTO: SigninDTO, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerSignIn(signinDTO, options).then((request) => request(this.axios, this.basePath));
@@ -845,7 +702,6 @@ export class AuthApi extends BaseAPI {
      * @param {CreateAccountDTO} createAccountDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public authControllerSignUp(createAccountDTO: CreateAccountDTO, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerSignUp(createAccountDTO, options).then((request) => request(this.axios, this.basePath));
@@ -856,7 +712,6 @@ export class AuthApi extends BaseAPI {
      * @param {OAuthSigninDTO} oAuthSigninDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public authControllerSigninOAuth(oAuthSigninDTO: OAuthSigninDTO, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerSigninOAuth(oAuthSigninDTO, options).then((request) => request(this.axios, this.basePath));
@@ -867,7 +722,6 @@ export class AuthApi extends BaseAPI {
      * @param {CompleteSignupVerificationDTO} completeSignupVerificationDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof AuthApi
      */
     public authControllerSignupCompleteVerification(completeSignupVerificationDTO: CompleteSignupVerificationDTO, options?: RawAxiosRequestConfig) {
         return AuthApiFp(this.configuration).authControllerSignupCompleteVerification(completeSignupVerificationDTO, options).then((request) => request(this.axios, this.basePath));
@@ -877,8 +731,194 @@ export class AuthApi extends BaseAPI {
 
 
 /**
+ * GoogleLocationApi - axios parameter creator
+ */
+export const GoogleLocationApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {number} latitude 
+         * @param {number} longitude 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        googleLocationControllerFetchLocationInfo: async (latitude: number, longitude: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'latitude' is not null or undefined
+            assertParamExists('googleLocationControllerFetchLocationInfo', 'latitude', latitude)
+            // verify required parameter 'longitude' is not null or undefined
+            assertParamExists('googleLocationControllerFetchLocationInfo', 'longitude', longitude)
+            const localVarPath = `/v1/auth/google-location/fetch-location-info`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (latitude !== undefined) {
+                localVarQueryParameter['latitude'] = latitude;
+            }
+
+            if (longitude !== undefined) {
+                localVarQueryParameter['longitude'] = longitude;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} latitude 
+         * @param {number} longitude 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        googleLocationControllerFetchLocationInfo_1: async (latitude: number, longitude: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'latitude' is not null or undefined
+            assertParamExists('googleLocationControllerFetchLocationInfo_1', 'latitude', latitude)
+            // verify required parameter 'longitude' is not null or undefined
+            assertParamExists('googleLocationControllerFetchLocationInfo_1', 'longitude', longitude)
+            const localVarPath = `/v1/auth/google-location/fetch-location-info`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (latitude !== undefined) {
+                localVarQueryParameter['latitude'] = latitude;
+            }
+
+            if (longitude !== undefined) {
+                localVarQueryParameter['longitude'] = longitude;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * GoogleLocationApi - functional programming interface
+ */
+export const GoogleLocationApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = GoogleLocationApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {number} latitude 
+         * @param {number} longitude 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async googleLocationControllerFetchLocationInfo(latitude: number, longitude: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GooglePlaceInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.googleLocationControllerFetchLocationInfo(latitude, longitude, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GoogleLocationApi.googleLocationControllerFetchLocationInfo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} latitude 
+         * @param {number} longitude 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async googleLocationControllerFetchLocationInfo_1(latitude: number, longitude: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GooglePlaceInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.googleLocationControllerFetchLocationInfo_1(latitude, longitude, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['GoogleLocationApi.googleLocationControllerFetchLocationInfo_1']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * GoogleLocationApi - factory interface
+ */
+export const GoogleLocationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = GoogleLocationApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {number} latitude 
+         * @param {number} longitude 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        googleLocationControllerFetchLocationInfo(latitude: number, longitude: number, options?: RawAxiosRequestConfig): AxiosPromise<GooglePlaceInfo> {
+            return localVarFp.googleLocationControllerFetchLocationInfo(latitude, longitude, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} latitude 
+         * @param {number} longitude 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        googleLocationControllerFetchLocationInfo_1(latitude: number, longitude: number, options?: RawAxiosRequestConfig): AxiosPromise<GooglePlaceInfo> {
+            return localVarFp.googleLocationControllerFetchLocationInfo_1(latitude, longitude, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * GoogleLocationApi - object-oriented interface
+ */
+export class GoogleLocationApi extends BaseAPI {
+    /**
+     * 
+     * @param {number} latitude 
+     * @param {number} longitude 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public googleLocationControllerFetchLocationInfo(latitude: number, longitude: number, options?: RawAxiosRequestConfig) {
+        return GoogleLocationApiFp(this.configuration).googleLocationControllerFetchLocationInfo(latitude, longitude, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} latitude 
+     * @param {number} longitude 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public googleLocationControllerFetchLocationInfo_1(latitude: number, longitude: number, options?: RawAxiosRequestConfig) {
+        return GoogleLocationApiFp(this.configuration).googleLocationControllerFetchLocationInfo_1(latitude, longitude, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * HelperApi - axios parameter creator
- * @export
  */
 export const HelperApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -945,7 +985,6 @@ export const HelperApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * HelperApi - functional programming interface
- * @export
  */
 export const HelperApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = HelperApiAxiosParamCreator(configuration)
@@ -977,7 +1016,6 @@ export const HelperApiFp = function(configuration?: Configuration) {
 
 /**
  * HelperApi - factory interface
- * @export
  */
 export const HelperApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = HelperApiFp(configuration)
@@ -1003,16 +1041,12 @@ export const HelperApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * HelperApi - object-oriented interface
- * @export
- * @class HelperApi
- * @extends {BaseAPI}
  */
 export class HelperApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HelperApi
      */
     public helperControllerFetchReferralSources(options?: RawAxiosRequestConfig) {
         return HelperApiFp(this.configuration).helperControllerFetchReferralSources(options).then((request) => request(this.axios, this.basePath));
@@ -1022,7 +1056,6 @@ export class HelperApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HelperApi
      */
     public helperControllerFetchReferralSources_1(options?: RawAxiosRequestConfig) {
         return HelperApiFp(this.configuration).helperControllerFetchReferralSources_1(options).then((request) => request(this.axios, this.basePath));
@@ -1033,7 +1066,6 @@ export class HelperApi extends BaseAPI {
 
 /**
  * HelpersApi - axios parameter creator
- * @export
  */
 export const HelpersApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1194,7 +1226,6 @@ export const HelpersApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * HelpersApi - functional programming interface
- * @export
  */
 export const HelpersApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = HelpersApiAxiosParamCreator(configuration)
@@ -1260,7 +1291,6 @@ export const HelpersApiFp = function(configuration?: Configuration) {
 
 /**
  * HelpersApi - factory interface
- * @export
  */
 export const HelpersApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = HelpersApiFp(configuration)
@@ -1311,9 +1341,6 @@ export const HelpersApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * HelpersApi - object-oriented interface
- * @export
- * @class HelpersApi
- * @extends {BaseAPI}
  */
 export class HelpersApi extends BaseAPI {
     /**
@@ -1321,7 +1348,6 @@ export class HelpersApi extends BaseAPI {
      * @param {string} email 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HelpersApi
      */
     public authHelperControllerCheckEmailAvailability(email: string, options?: RawAxiosRequestConfig) {
         return HelpersApiFp(this.configuration).authHelperControllerCheckEmailAvailability(email, options).then((request) => request(this.axios, this.basePath));
@@ -1331,7 +1357,6 @@ export class HelpersApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HelpersApi
      */
     public authHelperControllerGenerateVendorId(options?: RawAxiosRequestConfig) {
         return HelpersApiFp(this.configuration).authHelperControllerGenerateVendorId(options).then((request) => request(this.axios, this.basePath));
@@ -1341,7 +1366,6 @@ export class HelpersApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HelpersApi
      */
     public authHelperControllerUpdateAccountLocation(options?: RawAxiosRequestConfig) {
         return HelpersApiFp(this.configuration).authHelperControllerUpdateAccountLocation(options).then((request) => request(this.axios, this.basePath));
@@ -1351,7 +1375,6 @@ export class HelpersApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HelpersApi
      */
     public authHelperControllerUpdateAccountStatus(options?: RawAxiosRequestConfig) {
         return HelpersApiFp(this.configuration).authHelperControllerUpdateAccountStatus(options).then((request) => request(this.axios, this.basePath));
@@ -1361,7 +1384,6 @@ export class HelpersApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof HelpersApi
      */
     public authHelperControllerUpdateVendorsInfo(options?: RawAxiosRequestConfig) {
         return HelpersApiFp(this.configuration).authHelperControllerUpdateVendorsInfo(options).then((request) => request(this.axios, this.basePath));
@@ -1372,7 +1394,6 @@ export class HelpersApi extends BaseAPI {
 
 /**
  * NotificationApi - axios parameter creator
- * @export
  */
 export const NotificationApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1415,7 +1436,6 @@ export const NotificationApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * NotificationApi - functional programming interface
- * @export
  */
 export const NotificationApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = NotificationApiAxiosParamCreator(configuration)
@@ -1437,7 +1457,6 @@ export const NotificationApiFp = function(configuration?: Configuration) {
 
 /**
  * NotificationApi - factory interface
- * @export
  */
 export const NotificationApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = NotificationApiFp(configuration)
@@ -1456,9 +1475,6 @@ export const NotificationApiFactory = function (configuration?: Configuration, b
 
 /**
  * NotificationApi - object-oriented interface
- * @export
- * @class NotificationApi
- * @extends {BaseAPI}
  */
 export class NotificationApi extends BaseAPI {
     /**
@@ -1466,7 +1482,6 @@ export class NotificationApi extends BaseAPI {
      * @param {string} [token] FCM token
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationApi
      */
     public authControllerTestFCMNotification(token?: string, options?: RawAxiosRequestConfig) {
         return NotificationApiFp(this.configuration).authControllerTestFCMNotification(token, options).then((request) => request(this.axios, this.basePath));
@@ -1477,7 +1492,6 @@ export class NotificationApi extends BaseAPI {
 
 /**
  * PasswordApi - axios parameter creator
- * @export
  */
 export const PasswordApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1591,7 +1605,6 @@ export const PasswordApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * PasswordApi - functional programming interface
- * @export
  */
 export const PasswordApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PasswordApiAxiosParamCreator(configuration)
@@ -1637,7 +1650,6 @@ export const PasswordApiFp = function(configuration?: Configuration) {
 
 /**
  * PasswordApi - factory interface
- * @export
  */
 export const PasswordApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PasswordApiFp(configuration)
@@ -1674,9 +1686,6 @@ export const PasswordApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * PasswordApi - object-oriented interface
- * @export
- * @class PasswordApi
- * @extends {BaseAPI}
  */
 export class PasswordApi extends BaseAPI {
     /**
@@ -1684,7 +1693,6 @@ export class PasswordApi extends BaseAPI {
      * @param {ForgotPasswordDTO} forgotPasswordDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PasswordApi
      */
     public authControllerForgotPassword(forgotPasswordDTO: ForgotPasswordDTO, options?: RawAxiosRequestConfig) {
         return PasswordApiFp(this.configuration).authControllerForgotPassword(forgotPasswordDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1695,7 +1703,6 @@ export class PasswordApi extends BaseAPI {
      * @param {ResetPasswordDTO} resetPasswordDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PasswordApi
      */
     public authControllerResetPassword(resetPasswordDTO: ResetPasswordDTO, options?: RawAxiosRequestConfig) {
         return PasswordApiFp(this.configuration).authControllerResetPassword(resetPasswordDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1706,7 +1713,6 @@ export class PasswordApi extends BaseAPI {
      * @param {ResetPasswordVerificationDTO} resetPasswordVerificationDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PasswordApi
      */
     public authControllerResetPasswordOtpVerification(resetPasswordVerificationDTO: ResetPasswordVerificationDTO, options?: RawAxiosRequestConfig) {
         return PasswordApiFp(this.configuration).authControllerResetPasswordOtpVerification(resetPasswordVerificationDTO, options).then((request) => request(this.axios, this.basePath));

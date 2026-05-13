@@ -25,13 +25,18 @@ export const navLinks = [
   { link: '/', label: 'Home' },
   // { link: '/signup', label: 'Register' },
   { link: '/business', label: 'Business' },
-  { link: 'https://climateresilience.livestocx.com/', label: 'Mobile Climate' },
-  { link: '/digital-advisory', label: 'Digital Advisory' },
-  { link: '/veterinary-response', label: 'Veterinary Response' },
-  { link: '/livestock-outbreak', label: 'Livestock Outbreak' },
+  {
+    label: 'Solutions',
+    links: [
+      { link: 'https://climateresilience.livestocx.com/', label: 'Mobile Climate' },
+      { link: '/digital-advisory', label: 'Digital Advisory' },
+      { link: '/veterinary-response', label: 'Veterinary Response' },
+      { link: '/livestock-outbreak', label: 'Livestock Outbreak' },
+    ]
+  },
   { link: '/blog', label: 'Blog' },
-  { link: '/about-us', label: 'About Us' },
-  { link: '/contact-us', label: 'Contact Us' },
+  { link: '/about-us', label: 'About' },
+  { link: '/contact-us', label: 'Contact' },
   { link: '/privacy-policy', label: 'Privacy' },
   { link: '/terms-of-service', label: 'Terms' },
 ];

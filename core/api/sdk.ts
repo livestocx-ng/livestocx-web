@@ -29,7 +29,7 @@ import {
   ProductApi as VendorProductApi,
 } from '../sdk/vendor';
 import { appAxiosInstance } from './axios-instance';
-import { Configuration as CommunicationConfiguration, TestimonialsApi } from '../sdk/communication';
+import { Configuration as CommunicationConfiguration, BlogsApi, TestimonialsApi, } from '../sdk/communication';
 
 export const ServerPath = process.env.NEXT_PUBLIC_CORE_SERVICE_HOST;
 
@@ -78,6 +78,12 @@ export const marketplaceApi = new MarketplaceApi(marketplaceConfig, undefined, a
 export const productApi = new ProductApi(marketplaceConfig, undefined, appAxiosInstance);
 
 export const payableApi = new PayableApi(vendorConfig, undefined, appAxiosInstance);
+
+export const blogsApi = new BlogsApi(
+  communicationConfig,
+  undefined,
+  appAxiosInstance
+);
 
 export const testimonialsApi = new TestimonialsApi(
   communicationConfig,

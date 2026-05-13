@@ -23,28 +23,17 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
-/**
- * 
- * @export
- * @interface AddListItemDTO
- */
 export interface AddListItemDTO {
     /**
      * ID of the item.
-     * @type {string}
-     * @memberof AddListItemDTO
      */
     'itemId': string;
     /**
      * Type of the list item.
-     * @type {string}
-     * @memberof AddListItemDTO
      */
     'itemType': AddListItemDTOItemTypeEnum;
     /**
      * Type of the list entity.
-     * @type {string}
-     * @memberof AddListItemDTO
      */
     'entityType': AddListItemDTOEntityTypeEnum;
 }
@@ -65,96 +54,39 @@ export const AddListItemDTOEntityTypeEnum = {
 
 export type AddListItemDTOEntityTypeEnum = typeof AddListItemDTOEntityTypeEnum[keyof typeof AddListItemDTOEntityTypeEnum];
 
-/**
- * 
- * @export
- * @interface AddProductReviewDto
- */
 export interface AddProductReviewDto {
     /**
      * Rating
-     * @type {number}
-     * @memberof AddProductReviewDto
      */
     'rating': number;
     /**
      * Review description
-     * @type {string}
-     * @memberof AddProductReviewDto
      */
     'description': string;
 }
-/**
- * 
- * @export
- * @interface GroupedProductsResponse
- */
 export interface GroupedProductsResponse {
-    /**
-     * 
-     * @type {Array<ProductInfo>}
-     * @memberof GroupedProductsResponse
-     */
     'recommendedProducts': Array<ProductInfo>;
-    /**
-     * 
-     * @type {Array<ProductInfo>}
-     * @memberof GroupedProductsResponse
-     */
     'popularProducts': Array<ProductInfo>;
-    /**
-     * 
-     * @type {Array<ProductInfo>}
-     * @memberof GroupedProductsResponse
-     */
     'productsNearUser': Array<ProductInfo>;
-    /**
-     * 
-     * @type {Array<ProductInfo>}
-     * @memberof GroupedProductsResponse
-     */
     'otherProducts': Array<ProductInfo>;
-    /**
-     * 
-     * @type {number}
-     * @memberof GroupedProductsResponse
-     */
     'otherProductsTotalPages': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof GroupedProductsResponse
-     */
     'otherProductsHasNextPage': boolean;
 }
-/**
- * 
- * @export
- * @interface ListItemInfo
- */
 export interface ListItemInfo {
     /**
      * List Item ID
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'id': string;
     /**
      * List Item Type
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'itemType': ListItemInfoItemTypeEnum;
     /**
      * ID of the item.
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'itemId': string;
     /**
      * Type of the list entity.
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'entityType': ListItemInfoEntityTypeEnum;
 }
@@ -175,28 +107,11 @@ export const ListItemInfoEntityTypeEnum = {
 
 export type ListItemInfoEntityTypeEnum = typeof ListItemInfoEntityTypeEnum[keyof typeof ListItemInfoEntityTypeEnum];
 
-/**
- * 
- * @export
- * @interface MediaInfo
- */
 export interface MediaInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof MediaInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MediaInfo
-     */
     'mediaUrl': string;
     /**
      * The type of media
-     * @type {string}
-     * @memberof MediaInfo
      */
     'mediaType': MediaInfoMediaTypeEnum;
 }
@@ -209,28 +124,17 @@ export const MediaInfoMediaTypeEnum = {
 
 export type MediaInfoMediaTypeEnum = typeof MediaInfoMediaTypeEnum[keyof typeof MediaInfoMediaTypeEnum];
 
-/**
- * 
- * @export
- * @interface ProductCategoryInfo
- */
 export interface ProductCategoryInfo {
     /**
      * Name of the category.
-     * @type {string}
-     * @memberof ProductCategoryInfo
      */
     'name': string;
     /**
      * Value of the category.
-     * @type {string}
-     * @memberof ProductCategoryInfo
      */
     'value': ProductCategoryInfoValueEnum;
     /**
      * Image URL of the category.
-     * @type {string}
-     * @memberof ProductCategoryInfo
      */
     'imageUrl': string;
 }
@@ -254,199 +158,48 @@ export const ProductCategoryInfoValueEnum = {
 
 export type ProductCategoryInfoValueEnum = typeof ProductCategoryInfoValueEnum[keyof typeof ProductCategoryInfoValueEnum];
 
-/**
- * 
- * @export
- * @interface ProductCharacteristicInfo
- */
 export interface ProductCharacteristicInfo {
     /**
      * Name of the characteristic.
-     * @type {string}
-     * @memberof ProductCharacteristicInfo
      */
     'name': string;
     /**
      * Value of the characteristic.
-     * @type {string}
-     * @memberof ProductCharacteristicInfo
      */
     'value': string;
     /**
      * Type of the characteristic.
-     * @type {string}
-     * @memberof ProductCharacteristicInfo
      */
     'type': string;
 }
-/**
- * 
- * @export
- * @interface ProductDetails
- */
 export interface ProductDetails {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductDetails
-     */
     'averageRating': string;
-    /**
-     * 
-     * @type {Array<ProductRatingInfo>}
-     * @memberof ProductDetails
-     */
     'ratings': Array<ProductRatingInfo>;
-    /**
-     * 
-     * @type {Array<ProductReviewInfo>}
-     * @memberof ProductDetails
-     */
     'reviews': Array<ProductReviewInfo>;
-    /**
-     * 
-     * @type {Array<ProductInfo>}
-     * @memberof ProductDetails
-     */
     'relatedProducts': Array<ProductInfo>;
-    /**
-     * 
-     * @type {Array<ProductInfo>}
-     * @memberof ProductDetails
-     */
     'moreProducts': Array<ProductInfo>;
 }
-/**
- * 
- * @export
- * @interface ProductInfo
- */
 export interface ProductInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'productId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'price': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'discountPrice': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'category': ProductInfoCategoryEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'description': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProductInfo
-     */
     'isNegotiable': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'impressionCount': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProductInfo
-     */
     'inStock': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'totalReviews': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'viewCount': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'likeCount': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProductInfo
-     */
     'isPromotion': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'coverPhoto': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'videoUrl'?: string;
-    /**
-     * 
-     * @type {Array<MediaInfo>}
-     * @memberof ProductInfo
-     */
     'media': Array<MediaInfo>;
-    /**
-     * 
-     * @type {ProductInfoVendor}
-     * @memberof ProductInfo
-     */
     'vendor': ProductInfoVendor;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'user': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfo
-     */
     'createdAt': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProductInfo
-     */
     'isFlagged': boolean;
 }
 
@@ -469,310 +222,297 @@ export const ProductInfoCategoryEnum = {
 
 export type ProductInfoCategoryEnum = typeof ProductInfoCategoryEnum[keyof typeof ProductInfoCategoryEnum];
 
-/**
- * 
- * @export
- * @interface ProductInfoVendor
- */
 export interface ProductInfoVendor {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
     'vendorId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
     'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
     'state': string;
+    'city': string;
+    'formattedAddress': string;
+    'address': string;
+    'avatar': string;
+    'phoneNumber': string;
+    'isUpdated': boolean;
+    'isProductUploadSubscriptionActive': boolean;
+    'createdAt': string;
+}
+export interface ProductRatingInfo {
+    'rating': number;
+    'count': number;
+}
+export interface ProductReviewInfo {
+    'user': string;
+    'rating': string;
+    'description': string;
+    'author': string;
+    'avatar': string;
+    'email': string;
+}
+export interface ProductsResponse {
+    'products': Array<ProductInfo>;
+    'totalPages': number;
+    'hasNextPage': boolean;
+}
+export interface RegisterSearchEventContactMethodDTO {
     /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
+     * Product ID
+     */
+    'productId': string;
+    /**
+     * Query
+     */
+    'query': string;
+    /**
+     * Category
+     */
+    'category': string;
+    /**
+     * City
      */
     'city': string;
     /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
+     * State
      */
-    'formattedAddress': string;
+    'state': string;
     /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
+     * Search Event ID
      */
-    'address': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
-    'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
-    'phoneNumber': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProductInfoVendor
-     */
-    'isUpdated': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProductInfoVendor
-     */
-    'isProductUploadSubscriptionActive': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductInfoVendor
-     */
-    'createdAt': string;
+    'contactMethod': string;
 }
-/**
- * 
- * @export
- * @interface ProductRatingInfo
- */
-export interface ProductRatingInfo {
+export interface RegisterSearchEventProductDTO {
     /**
-     * 
-     * @type {number}
-     * @memberof ProductRatingInfo
+     * Product ID
      */
-    'rating': number;
+    'productId': string;
     /**
-     * 
-     * @type {number}
-     * @memberof ProductRatingInfo
+     * Query
      */
-    'count': number;
+    'query': string;
+    /**
+     * Category
+     */
+    'category': string;
+    /**
+     * City
+     */
+    'city': string;
+    /**
+     * State
+     */
+    'state': string;
 }
-/**
- * 
- * @export
- * @interface ProductReviewInfo
- */
-export interface ProductReviewInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductReviewInfo
-     */
-    'user': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductReviewInfo
-     */
-    'rating': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductReviewInfo
-     */
-    'description': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductReviewInfo
-     */
-    'author': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductReviewInfo
-     */
-    'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductReviewInfo
-     */
-    'email': string;
-}
-/**
- * 
- * @export
- * @interface ProductsResponse
- */
-export interface ProductsResponse {
-    /**
-     * 
-     * @type {Array<ProductInfo>}
-     * @memberof ProductsResponse
-     */
-    'products': Array<ProductInfo>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductsResponse
-     */
-    'totalPages': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ProductsResponse
-     */
-    'hasNextPage': boolean;
-}
-/**
- * 
- * @export
- * @interface SearchHintInfo
- */
 export interface SearchHintInfo {
     /**
      * Name of the animal.
-     * @type {string}
-     * @memberof SearchHintInfo
      */
     'name': string;
     /**
      * City of the vendor.
-     * @type {string}
-     * @memberof SearchHintInfo
      */
     'city': string;
     /**
      * State of the vendor.
-     * @type {string}
-     * @memberof SearchHintInfo
      */
     'state': string;
     /**
      * City, State of the vendor.
-     * @type {string}
-     * @memberof SearchHintInfo
      */
     'formattedLocation': string;
 }
-/**
- * 
- * @export
- * @interface StoreInfo
- */
 export interface StoreInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'vendorId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'state': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'city': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'address': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'formattedAddress': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'phoneNumber': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreInfo
-     */
     'isUpdated': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof StoreInfo
-     */
     'isAccountDisabled': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof StoreInfo
-     */
     'createdAt': string;
 }
 
 /**
+ * AnalyticsApi - axios parameter creator
+ */
+export const AnalyticsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {RegisterSearchEventContactMethodDTO} registerSearchEventContactMethodDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerRegisterSearchEventContactMethod: async (registerSearchEventContactMethodDTO: RegisterSearchEventContactMethodDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerSearchEventContactMethodDTO' is not null or undefined
+            assertParamExists('analyticsControllerRegisterSearchEventContactMethod', 'registerSearchEventContactMethodDTO', registerSearchEventContactMethodDTO)
+            const localVarPath = `/v1/marketplace/register-search-event-contact-method`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(registerSearchEventContactMethodDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {RegisterSearchEventProductDTO} registerSearchEventProductDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerRegisterSearchEventProduct: async (registerSearchEventProductDTO: RegisterSearchEventProductDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'registerSearchEventProductDTO' is not null or undefined
+            assertParamExists('analyticsControllerRegisterSearchEventProduct', 'registerSearchEventProductDTO', registerSearchEventProductDTO)
+            const localVarPath = `/v1/marketplace/register-search-event-product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(registerSearchEventProductDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * AnalyticsApi - functional programming interface
+ */
+export const AnalyticsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = AnalyticsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {RegisterSearchEventContactMethodDTO} registerSearchEventContactMethodDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsControllerRegisterSearchEventContactMethod(registerSearchEventContactMethodDTO: RegisterSearchEventContactMethodDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsControllerRegisterSearchEventContactMethod(registerSearchEventContactMethodDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.analyticsControllerRegisterSearchEventContactMethod']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {RegisterSearchEventProductDTO} registerSearchEventProductDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async analyticsControllerRegisterSearchEventProduct(registerSearchEventProductDTO: RegisterSearchEventProductDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.analyticsControllerRegisterSearchEventProduct(registerSearchEventProductDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['AnalyticsApi.analyticsControllerRegisterSearchEventProduct']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * AnalyticsApi - factory interface
+ */
+export const AnalyticsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = AnalyticsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {RegisterSearchEventContactMethodDTO} registerSearchEventContactMethodDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerRegisterSearchEventContactMethod(registerSearchEventContactMethodDTO: RegisterSearchEventContactMethodDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.analyticsControllerRegisterSearchEventContactMethod(registerSearchEventContactMethodDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {RegisterSearchEventProductDTO} registerSearchEventProductDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        analyticsControllerRegisterSearchEventProduct(registerSearchEventProductDTO: RegisterSearchEventProductDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.analyticsControllerRegisterSearchEventProduct(registerSearchEventProductDTO, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * AnalyticsApi - object-oriented interface
+ */
+export class AnalyticsApi extends BaseAPI {
+    /**
+     * 
+     * @param {RegisterSearchEventContactMethodDTO} registerSearchEventContactMethodDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public analyticsControllerRegisterSearchEventContactMethod(registerSearchEventContactMethodDTO: RegisterSearchEventContactMethodDTO, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).analyticsControllerRegisterSearchEventContactMethod(registerSearchEventContactMethodDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {RegisterSearchEventProductDTO} registerSearchEventProductDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public analyticsControllerRegisterSearchEventProduct(registerSearchEventProductDTO: RegisterSearchEventProductDTO, options?: RawAxiosRequestConfig) {
+        return AnalyticsApiFp(this.configuration).analyticsControllerRegisterSearchEventProduct(registerSearchEventProductDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * DefaultApi - axios parameter creator
- * @export
  */
 export const DefaultApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -828,7 +568,6 @@ export const DefaultApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * DefaultApi - functional programming interface
- * @export
  */
 export const DefaultApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DefaultApiAxiosParamCreator(configuration)
@@ -851,7 +590,6 @@ export const DefaultApiFp = function(configuration?: Configuration) {
 
 /**
  * DefaultApi - factory interface
- * @export
  */
 export const DefaultApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DefaultApiFp(configuration)
@@ -871,9 +609,6 @@ export const DefaultApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * DefaultApi - object-oriented interface
- * @export
- * @class DefaultApi
- * @extends {BaseAPI}
  */
 export class DefaultApi extends BaseAPI {
     /**
@@ -882,7 +617,6 @@ export class DefaultApi extends BaseAPI {
      * @param {number} pageSize Page Size
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DefaultApi
      */
     public marketplaceControllerFetchHomeFeed(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return DefaultApiFp(this.configuration).marketplaceControllerFetchHomeFeed(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -893,7 +627,6 @@ export class DefaultApi extends BaseAPI {
 
 /**
  * MarketplaceApi - axios parameter creator
- * @export
  */
 export const MarketplaceApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1213,7 +946,6 @@ export const MarketplaceApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * MarketplaceApi - functional programming interface
- * @export
  */
 export const MarketplaceApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MarketplaceApiAxiosParamCreator(configuration)
@@ -1308,7 +1040,6 @@ export const MarketplaceApiFp = function(configuration?: Configuration) {
 
 /**
  * MarketplaceApi - factory interface
- * @export
  */
 export const MarketplaceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MarketplaceApiFp(configuration)
@@ -1385,9 +1116,6 @@ export const MarketplaceApiFactory = function (configuration?: Configuration, ba
 
 /**
  * MarketplaceApi - object-oriented interface
- * @export
- * @class MarketplaceApi
- * @extends {BaseAPI}
  */
 export class MarketplaceApi extends BaseAPI {
     /**
@@ -1396,7 +1124,6 @@ export class MarketplaceApi extends BaseAPI {
      * @param {number} [pageSize] Page Size
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MarketplaceApi
      */
     public marketplaceControllerFetchFeedGrouped(page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).marketplaceControllerFetchFeedGrouped(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -1408,7 +1135,6 @@ export class MarketplaceApi extends BaseAPI {
      * @param {number} pageSize Page size
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MarketplaceApi
      */
     public marketplaceControllerFetchPopularProducts(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).marketplaceControllerFetchPopularProducts(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -1420,7 +1146,6 @@ export class MarketplaceApi extends BaseAPI {
      * @param {number} pageSize Page size
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MarketplaceApi
      */
     public marketplaceControllerFetchProductsNearUser(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).marketplaceControllerFetchProductsNearUser(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -1432,7 +1157,6 @@ export class MarketplaceApi extends BaseAPI {
      * @param {number} pageSize Page size
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MarketplaceApi
      */
     public marketplaceControllerFetchRecommendedProducts(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).marketplaceControllerFetchRecommendedProducts(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -1452,7 +1176,6 @@ export class MarketplaceApi extends BaseAPI {
      * @param {number} [longitude] Longitude
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MarketplaceApi
      */
     public marketplaceControllerFetchSearchFeed(page: number, pageSize: number, query?: string, state?: string, city?: string, category?: string, inStock?: boolean, isNegotiable?: boolean, latitude?: number, longitude?: number, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).marketplaceControllerFetchSearchFeed(page, pageSize, query, state, city, category, inStock, isNegotiable, latitude, longitude, options).then((request) => request(this.axios, this.basePath));
@@ -1463,7 +1186,6 @@ export class MarketplaceApi extends BaseAPI {
      * @param {string} query Query
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MarketplaceApi
      */
     public marketplaceControllerFetchSearchHints(query: string, options?: RawAxiosRequestConfig) {
         return MarketplaceApiFp(this.configuration).marketplaceControllerFetchSearchHints(query, options).then((request) => request(this.axios, this.basePath));
@@ -1474,7 +1196,6 @@ export class MarketplaceApi extends BaseAPI {
 
 /**
  * MiscellaneousApi - axios parameter creator
- * @export
  */
 export const MiscellaneousApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1582,7 +1303,6 @@ export const MiscellaneousApiAxiosParamCreator = function (configuration?: Confi
 
 /**
  * MiscellaneousApi - functional programming interface
- * @export
  */
 export const MiscellaneousApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MiscellaneousApiAxiosParamCreator(configuration)
@@ -1625,7 +1345,6 @@ export const MiscellaneousApiFp = function(configuration?: Configuration) {
 
 /**
  * MiscellaneousApi - factory interface
- * @export
  */
 export const MiscellaneousApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MiscellaneousApiFp(configuration)
@@ -1659,16 +1378,12 @@ export const MiscellaneousApiFactory = function (configuration?: Configuration, 
 
 /**
  * MiscellaneousApi - object-oriented interface
- * @export
- * @class MiscellaneousApi
- * @extends {BaseAPI}
  */
 export class MiscellaneousApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MiscellaneousApi
      */
     public marketplaceControllerFetchFormattedProductCategories(options?: RawAxiosRequestConfig) {
         return MiscellaneousApiFp(this.configuration).marketplaceControllerFetchFormattedProductCategories(options).then((request) => request(this.axios, this.basePath));
@@ -1678,7 +1393,6 @@ export class MiscellaneousApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MiscellaneousApi
      */
     public marketplaceControllerFetchProductCategories(options?: RawAxiosRequestConfig) {
         return MiscellaneousApiFp(this.configuration).marketplaceControllerFetchProductCategories(options).then((request) => request(this.axios, this.basePath));
@@ -1688,7 +1402,6 @@ export class MiscellaneousApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MiscellaneousApi
      */
     public marketplaceControllerFetchProductCharacteristics(options?: RawAxiosRequestConfig) {
         return MiscellaneousApiFp(this.configuration).marketplaceControllerFetchProductCharacteristics(options).then((request) => request(this.axios, this.basePath));
@@ -1699,7 +1412,6 @@ export class MiscellaneousApi extends BaseAPI {
 
 /**
  * ProductApi - axios parameter creator
- * @export
  */
 export const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1994,7 +1706,6 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * ProductApi - functional programming interface
- * @export
  */
 export const ProductApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductApiAxiosParamCreator(configuration)
@@ -2089,7 +1800,6 @@ export const ProductApiFp = function(configuration?: Configuration) {
 
 /**
  * ProductApi - factory interface
- * @export
  */
 export const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProductApiFp(configuration)
@@ -2163,9 +1873,6 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * ProductApi - object-oriented interface
- * @export
- * @class ProductApi
- * @extends {BaseAPI}
  */
 export class ProductApi extends BaseAPI {
     /**
@@ -2173,7 +1880,6 @@ export class ProductApi extends BaseAPI {
      * @param {number} productId Product Id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public marketplaceControllerAddProductImpression(productId: number, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).marketplaceControllerAddProductImpression(productId, options).then((request) => request(this.axios, this.basePath));
@@ -2185,7 +1891,6 @@ export class ProductApi extends BaseAPI {
      * @param {AddProductReviewDto} addProductReviewDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public marketplaceControllerAddReview(productId: number, addProductReviewDto: AddProductReviewDto, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).marketplaceControllerAddReview(productId, addProductReviewDto, options).then((request) => request(this.axios, this.basePath));
@@ -2196,7 +1901,6 @@ export class ProductApi extends BaseAPI {
      * @param {string} productId Formatted Product Id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public marketplaceControllerFetchProductDescription(productId: string, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).marketplaceControllerFetchProductDescription(productId, options).then((request) => request(this.axios, this.basePath));
@@ -2207,7 +1911,6 @@ export class ProductApi extends BaseAPI {
      * @param {string} productId Formatted Product Id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public marketplaceControllerFetchProductInfo(productId: string, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).marketplaceControllerFetchProductInfo(productId, options).then((request) => request(this.axios, this.basePath));
@@ -2218,7 +1921,6 @@ export class ProductApi extends BaseAPI {
      * @param {number} productId Product Id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public marketplaceControllerRegisterCallSeller(productId: number, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).marketplaceControllerRegisterCallSeller(productId, options).then((request) => request(this.axios, this.basePath));
@@ -2229,7 +1931,6 @@ export class ProductApi extends BaseAPI {
      * @param {number} productId Product Id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public marketplaceControllerRegisterContactSeller(productId: number, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).marketplaceControllerRegisterContactSeller(productId, options).then((request) => request(this.axios, this.basePath));
@@ -2240,7 +1941,6 @@ export class ProductApi extends BaseAPI {
      * @param {number} productId Product Id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public marketplaceControllerRegisterViewProduct(productId: number, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).marketplaceControllerRegisterViewProduct(productId, options).then((request) => request(this.axios, this.basePath));
@@ -2251,7 +1951,6 @@ export class ProductApi extends BaseAPI {
 
 /**
  * StoreApi - axios parameter creator
- * @export
  */
 export const StoreApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -2354,7 +2053,6 @@ export const StoreApiAxiosParamCreator = function (configuration?: Configuration
 
 /**
  * StoreApi - functional programming interface
- * @export
  */
 export const StoreApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = StoreApiAxiosParamCreator(configuration)
@@ -2390,7 +2088,6 @@ export const StoreApiFp = function(configuration?: Configuration) {
 
 /**
  * StoreApi - factory interface
- * @export
  */
 export const StoreApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = StoreApiFp(configuration)
@@ -2420,9 +2117,6 @@ export const StoreApiFactory = function (configuration?: Configuration, basePath
 
 /**
  * StoreApi - object-oriented interface
- * @export
- * @class StoreApi
- * @extends {BaseAPI}
  */
 export class StoreApi extends BaseAPI {
     /**
@@ -2432,7 +2126,6 @@ export class StoreApi extends BaseAPI {
      * @param {number} pageSize 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public storeControllerFetchStoreProducts(page: number, storeId: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeControllerFetchStoreProducts(page, storeId, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -2443,7 +2136,6 @@ export class StoreApi extends BaseAPI {
      * @param {string} slug 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof StoreApi
      */
     public storeControllerFetchStoreProfile(slug: string, options?: RawAxiosRequestConfig) {
         return StoreApiFp(this.configuration).storeControllerFetchStoreProfile(slug, options).then((request) => request(this.axios, this.basePath));
@@ -2454,7 +2146,6 @@ export class StoreApi extends BaseAPI {
 
 /**
  * UserListApi - axios parameter creator
- * @export
  */
 export const UserListApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -2575,7 +2266,6 @@ export const UserListApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * UserListApi - functional programming interface
- * @export
  */
 export const UserListApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserListApiAxiosParamCreator(configuration)
@@ -2623,7 +2313,6 @@ export const UserListApiFp = function(configuration?: Configuration) {
 
 /**
  * UserListApi - factory interface
- * @export
  */
 export const UserListApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserListApiFp(configuration)
@@ -2662,9 +2351,6 @@ export const UserListApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * UserListApi - object-oriented interface
- * @export
- * @class UserListApi
- * @extends {BaseAPI}
  */
 export class UserListApi extends BaseAPI {
     /**
@@ -2673,7 +2359,6 @@ export class UserListApi extends BaseAPI {
      * @param {AddListItemDTO} addListItemDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserListApi
      */
     public listItemControllerAddItemToList(addListItemDTO: AddListItemDTO, options?: RawAxiosRequestConfig) {
         return UserListApiFp(this.configuration).listItemControllerAddItemToList(addListItemDTO, options).then((request) => request(this.axios, this.basePath));
@@ -2684,7 +2369,6 @@ export class UserListApi extends BaseAPI {
      * @summary Get all list items for the current user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserListApi
      */
     public listItemControllerGetUserList(options?: RawAxiosRequestConfig) {
         return UserListApiFp(this.configuration).listItemControllerGetUserList(options).then((request) => request(this.axios, this.basePath));
@@ -2696,7 +2380,6 @@ export class UserListApi extends BaseAPI {
      * @param {number} itemId ID of the list item to remove
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserListApi
      */
     public listItemControllerRemoveItemFromList(itemId: number, options?: RawAxiosRequestConfig) {
         return UserListApiFp(this.configuration).listItemControllerRemoveItemFromList(itemId, options).then((request) => request(this.axios, this.basePath));

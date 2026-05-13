@@ -3,7 +3,8 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Box, Burger, Button, Container, Drawer, Group, Image, rem, Stack } from '@mantine/core';
+import { Box, Burger, Button, Container, Drawer, Group, Image, rem, Stack, Menu, NavLink } from '@mantine/core';
+import { IconChevronDown } from '@tabler/icons-react';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { useAppContext } from '@/core/context';
 import useFetchAccountInfoQuery from '@/core/hooks/account/useFetchAccountInfoQuery';
@@ -101,7 +102,38 @@ export function Navbar() {
                     transition: 'background-color 150ms ease',
                   } as const;
 
-                  if (link.link.startsWith('http')) {
+                  if (link.links) {
+                    return (
+                      <Menu key={link.label} trigger="hover" transitionProps={{ exitDuration: 0 }} withinPortal>
+                        <Menu.Target>
+                          <a
+                            href="#"
+                            style={commonStyle}
+                            onClick={(event) => event.preventDefault()}
+                          >
+                            <Group gap={5}>
+                              {link.label}
+                              <IconChevronDown size={14} />
+                            </Group>
+                          </a>
+                        </Menu.Target>
+                        <Menu.Dropdown>
+                          {link.links.map((item) => (
+                            <Menu.Item
+                              key={item.label}
+                              component={item.link.startsWith('http') ? 'a' : Link}
+                              href={item.link}
+                              target={item.link.startsWith('http') ? '_blank' : undefined}
+                            >
+                              {item.label}
+                            </Menu.Item>
+                          ))}
+                        </Menu.Dropdown>
+                      </Menu>
+                    );
+                  }
+
+                  if (link.link?.startsWith('http')) {
                     return (
                       <a key={link.label} href={link.link} style={commonStyle}>
                         {link.label}
@@ -110,7 +142,7 @@ export function Navbar() {
                   }
 
                   return (
-                    <Link key={link.label} href={link.link} style={commonStyle}>
+                    <Link key={link.label} href={link.link as string} style={commonStyle}>
                       {link.label}
                     </Link>
                   );
@@ -175,7 +207,40 @@ export function Navbar() {
                 transition: 'background-color 150ms ease',
               } as const;
 
-              if (link.link.startsWith('http')) {
+              if (link.links) {
+                return (
+                  <NavLink
+                    key={link.label}
+                    label={link.label}
+                    styles={{
+                       label: {
+                           fontWeight: 500,
+                           fontSize: 'var(--mantine-font-size-sm)',
+                           color: 'var(--mantine-color-black)'
+                       }
+                    }}
+                  >
+                    {link.links.map((item) => (
+                      <NavLink
+                        key={item.label}
+                        component={item.link.startsWith('http') ? 'a' : Link}
+                        href={item.link}
+                        label={item.label}
+                        onClick={toggle}
+                        target={item.link.startsWith('http') ? '_blank' : undefined}
+                        styles={{
+                           label: {
+                               fontSize: 'var(--mantine-font-size-sm)',
+                               color: 'var(--mantine-color-gray-7)'
+                           }
+                        }}
+                      />
+                    ))}
+                  </NavLink>
+                );
+              }
+
+              if (link.link?.startsWith('http')) {
                 return (
                   <a key={link.label} href={link.link} style={commonStyle} onClick={toggle}>
                     {link.label}
@@ -184,7 +249,7 @@ export function Navbar() {
               }
 
               return (
-                <Link key={link.label} href={link.link} style={commonStyle} onClick={toggle}>
+                <Link key={link.label} href={link.link as string} style={commonStyle} onClick={toggle}>
                   {link.label}
                 </Link>
               );

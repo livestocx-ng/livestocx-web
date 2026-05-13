@@ -1,176 +1,166 @@
 'use client';
+import { Box, Container, Image, Stack, Text, Title, Grid, Card, ThemeIcon, SimpleGrid, Badge, Group } from '@mantine/core';
+import { IconBrain, IconUsersGroup, IconWorld, IconCheck } from '@tabler/icons-react';
 import StoreLinksToggle from '@/public/icons/storeLinksToggle';
-import { Box, Container, Image, Stack, Text, Title } from '@mantine/core';
-import React from 'react';
-
 
 const LivestockOutbreakPage = () => {
-	return (
-		<>
-			{/* <MainNavbar /> */}
-			<main>
-				<Box
-					className='bg-home'
-					h={{ base: 100, md: 200 }}
-					w='100%'
-					style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-				>
-					<Title order={3} c='black' ta='center' px='md'>
-						Early Detection for Livestock Outbreaks
-					</Title>
-				</Box>
+    return (
+        <main>
+            {/* Hero Section */}
+            <Box
+                style={{
+                    background: 'linear-gradient(135deg, #006838 0%, #004a28 100%)',
+                    padding: '80px 0',
+                    color: 'white',
+                    textAlign: 'center'
+                }}
+            >
+                <Container size="lg">
+                    <Badge size="lg" variant="white" color="primary" mb="xl">
+                        Livestocx Platform
+                    </Badge>
+                    <Title order={1} size={48} c="white" mb="md" fw={800}>
+                        Early Detection for Livestock Outbreaks
+                    </Title>
+                    <Text size="xl" c="white" opacity={0.9} style={{ maxWidth: 800, margin: '0 auto' }} lh={1.6}>
+                        A mobile-first solution helping farmers identify animal health threats before they become widespread. Transforming everyday monitoring into a powerful early warning mechanism.
+                    </Text>
+                </Container>
+            </Box>
 
-				<Container size='lg' py='md'>
-					<Stack gap='lg'>
-					<div>
-						<Text size='sm' lh={1.8}>
-							Disease outbreaks can cripple livestock dependent
-							communities in a matter of days, especially when
-							detection is delayed. The economic impact of losing
-							even a portion of a herd to disease can cascade into
-							food insecurity, lost income, and a decline in
-							community resilience. Livestocx is solving this
-							challenge through its Early Detection System for
-							Livestock Outbreaks, a mobile-first solution that
-							helps farmers identify animal health threats before
-							they become widespread. At the core of this system
-							is a digital tool that allows farmers to log daily
-							observations of their animals such as eating habits,
-							energy levels, milk output, mobility, and
-							temperature. These entries are used to create a
-							health profile for each animal. When the system
-							detects unusual patterns or warning signs based on
-							the data like a drop in appetite coupled with
-							labored breathing it flags the animal for further
-							observation or intervention. This predictive
-							approach transforms everyday monitoring into an
-							early warning mechanism, giving farmers an edge in
-							disease prevention. For example, early
-							identification of foot and mouth disease can prevent
-							its spread across hundreds of animals, saving both
-							livestock and livelihoods. This system is designed
-							to be lightweight, intuitive, and usable by farmers
-							regardless of technical skill or education level,
-							ensuring that anyone with a phone can participate in
-							disease surveillance.
-						</Text>
+            {/* Introduction Section */}
+            <Container size="lg" py={80}>
+                <Grid gutter={60} align="center">
+                    <Grid.Col span={{ base: 12, md: 6 }}>
+                        <Title order={2} mb="lg" c="primary.9" fw={700}>
+                            Proactive Daily Monitoring
+                        </Title>
+                        <Text size="md" c="dimmed" lh={1.8} mb="md">
+                            Disease outbreaks can cripple livestock-dependent communities in a matter of days. The economic impact of losing even a portion of a herd cascades into food insecurity and lost income.
+                        </Text>
+                        <Text size="md" c="dimmed" lh={1.8} mb="xl">
+                            At the core of our system is a digital tool that allows farmers to log daily observations—eating habits, energy levels, milk output, mobility, and temperature. When the system detects unusual patterns, it flags the animal for further observation or intervention.
+                        </Text>
+                        
+                        <Stack gap="sm">
+                            <Group gap="sm" wrap="nowrap">
+                                <ThemeIcon color="primary.9" variant="light" radius="xl" size="sm"><IconCheck size={14} /></ThemeIcon>
+                                <Text size="sm" fw={500}>Lightweight and intuitive interface</Text>
+                            </Group>
+                            <Group gap="sm" wrap="nowrap">
+                                <ThemeIcon color="primary.9" variant="light" radius="xl" size="sm"><IconCheck size={14} /></ThemeIcon>
+                                <Text size="sm" fw={500}>Prevents widespread transmission</Text>
+                            </Group>
+                            <Group gap="sm" wrap="nowrap">
+                                <ThemeIcon color="primary.9" variant="light" radius="xl" size="sm"><IconCheck size={14} /></ThemeIcon>
+                                <Text size="sm" fw={500}>Usable regardless of technical skill</Text>
+                            </Group>
+                        </Stack>
+                    </Grid.Col>
+                    <Grid.Col span={{ base: 12, md: 6 }}>
+                        <Box style={{ position: 'relative' }}>
+                            <Image
+                                src="/climate/chicken-flu.jpeg"
+                                radius="lg"
+                                style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
+                                alt="Livestocx - Early Detection for Livestock Outbreaks"
+                            />
+                            <Box 
+                                style={{ 
+                                    position: 'absolute', 
+                                    bottom: -20, 
+                                    left: -20, 
+                                    background: 'white', 
+                                    padding: '20px', 
+                                    borderRadius: '12px',
+                                    boxShadow: '0 10px 30px rgba(0,0,0,0.1)'
+                                }}
+                            >
+                                <Title order={3} c="primary.9" mb={5}>Real-Time</Title>
+                                <Text size="sm" c="dimmed" fw={500}>Surveillance</Text>
+                            </Box>
+                        </Box>
+                    </Grid.Col>
+                </Grid>
+            </Container>
 
-						<Box mt='md' style={{ display: 'flex', justifyContent: 'center' }}>
-							<Image
-								w={700}
-								h={300}
-								src='/climate/chicken-flu.jpeg'
-								radius='md'
-								fit='cover'
-								alt='Livestocx - Early Detection for Livestock Outbreaks'
-							/>
-						</Box>
-					</div>
-					<div>
-						<Text size='sm' lh={1.8}>
-							What makes this system truly powerful is its AI
-							driven diagnostic capability. Using machine learning
-							models trained on thousands of cases across
-							different livestock species and disease types, the
-							platform can intelligently match reported symptoms
-							with likely conditions. For instance, if multiple
-							herders in a region begin reporting similar symptoms
-							such as fever and nasal discharge in goats the
-							system not only notifies the individual users but
-							also correlates the cases across space and time to
-							generate a potential outbreak alert. This alert is
-							then sent to nearby users, local veterinary
-							authorities, and public health institutions,
-							initiating a chain of response actions. The speed
-							and accuracy of this analysis reduce the time
-							between symptom onset and containment measures. It
-							also reduces the burden on overwhelmed veterinary
-							workers by directing their attention where it is
-							needed most. Even more, the AI continues to learn
-							and improve over time as it processes more reports
-							and feedback. The more it is used, the better it
-							becomes. This is especially important in regions
-							experiencing new or mutated disease strains due to
-							climate change, trade movement, or ecological
-							shifts. With Livestocx, early detection is no longer
-							a matter of chance it is a data backed, community
-							enabled function embedded into the daily routines of
-							livestock management.
-						</Text>
-					</div>
-					<div>
-						<Text size='sm' lh={1.8}>
-							A major strength of Livestocx early detection
-							approach is its participatory design. Instead of
-							relying solely on government officials or
-							veterinarians to identify outbreaks, the system
-							empowers farmers to serve as the first line of
-							defense. It gives them easy to use symptom checkers,
-							multilingual support, and even voice assisted
-							logging for non literate users. Community health
-							clusters can be created within the app, enabling
-							farmers in the same village or grazing corridor to
-							share reports, validate suspicions, and coordinate
-							responses. This peer to peer verification mechanism
-							enhances accuracy and increases engagement. In
-							addition, the system includes educational tools that
-							help farmers learn how to spot early signs of
-							diseases like Newcastle disease, anthrax, and
-							contagious bovine pleuropneumonia. Farmers are
-							trained not just to use the technology but to
-							understand the logic behind it, making them more
-							vigilant and confident in managing livestock health.
-							This decentralized model reduces response time,
-							improves reporting rates, and builds trust between
-							farmers and the veterinary support network. It also
-							creates a culture of shared accountability, where
-							disease prevention is seen not just as a service
-							provided from the outside, but as a community
-							responsibility. In this way, technology becomes a
-							facilitator of behavior change and collective
-							action.
-						</Text>
-					</div>
-					<div>
-						<Text size='sm' lh={1.8}>
-							Finally, Livestocx ensures that outbreak data is not
-							only used at the local level but also contributes to
-							national and continental disease control efforts.
-							All reports submitted through the platform are
-							anonymized, encrypted, and aggregated into regional
-							and national dashboards accessible by veterinary
-							authorities. These dashboards provide a near
-							real-time overview of livestock health trends,
-							helping inform vaccine stockpiling, emergency
-							funding, and resource deployment. For example, if an
-							outbreak of Rift Valley Fever is detected in
-							Northern Nigeria, vaccines and treatment supplies
-							can be dispatched in days not weeks because the
-							system has already logged and verified the early
-							reports. Government agencies can also use the data
-							to identify vulnerable zones, plan for seasonal
-							disease surges, and evaluate the effectiveness of
-							past interventions. Beyond emergencies, the data
-							contributes to long term policy development in
-							animal health, trade, and food safety. By bridging
-							the gap between grassroots observations and
-							institutional action, Livestocx builds a more
-							responsive and integrated livestock health
-							ecosystem. In a world where emerging diseases are
-							becoming more frequent and complex, early detection
-							is no longer optional it is the frontline defense
-							for rural resilience and sustainable agriculture.
-						</Text>
-					</div>
-					<div>
-						<StoreLinksToggle />
-					</div>
-					</Stack>
-				</Container>
-			</main>
-			{/* <Footer /> */}
-		</>
-	);
+            {/* Core Features Section */}
+            <Box bg="gray.0" py={80}>
+                <Container size="lg">
+                    <Stack align="center" mb={50}>
+                        <Badge variant="light" color="primary.9">System Capabilities</Badge>
+                        <Title order={2} ta="center" c="primary.9" fw={700}>
+                            Data-Backed, Community Enabled
+                        </Title>
+                        <Text c="dimmed" ta="center" style={{ maxWidth: 700 }}>
+                            By bridging the gap between grassroots observations and institutional action, Livestocx builds a more responsive and integrated livestock health ecosystem.
+                        </Text>
+                    </Stack>
+
+                    <SimpleGrid cols={{ base: 1, md: 3 }} spacing={30}>
+                        <Card shadow="sm" padding="xl" radius="lg" withBorder>
+                            <ThemeIcon size={60} radius="md" color="primary.9" variant="light" mb="xl">
+                                <IconBrain size={30} />
+                            </ThemeIcon>
+                            <Title order={3} size="h4" mb="sm" fw={600}>AI-Driven Diagnostics</Title>
+                            <Text size="sm" c="dimmed" lh={1.7}>
+                                Using machine learning models, the platform matches reported symptoms with likely conditions. If multiple herders report similar symptoms, it correlates cases across space and time to generate potential outbreak alerts, reducing the time between symptom onset and containment.
+                            </Text>
+                        </Card>
+
+                        <Card shadow="sm" padding="xl" radius="lg" withBorder>
+                            <ThemeIcon size={60} radius="md" color="primary.9" variant="light" mb="xl">
+                                <IconUsersGroup size={30} />
+                            </ThemeIcon>
+                            <Title order={3} size="h4" mb="sm" fw={600}>Participatory Design</Title>
+                            <Text size="sm" c="dimmed" lh={1.7}>
+                                Empowers farmers to serve as the first line of defense with easy-to-use symptom checkers, multilingual support, and voice-assisted logging. Community health clusters enable farmers to share reports, validate suspicions, and coordinate responses through peer-to-peer verification.
+                            </Text>
+                        </Card>
+
+                        <Card shadow="sm" padding="xl" radius="lg" withBorder>
+                            <ThemeIcon size={60} radius="md" color="primary.9" variant="light" mb="xl">
+                                <IconWorld size={30} />
+                            </ThemeIcon>
+                            <Title order={3} size="h4" mb="sm" fw={600}>National Disease Control</Title>
+                            <Text size="sm" c="dimmed" lh={1.7}>
+                                Outbreak data contributes to national and continental efforts. Reports are anonymized, encrypted, and aggregated into regional dashboards. This near real-time overview helps inform vaccine stockpiling, emergency funding, and long-term policy development.
+                            </Text>
+                        </Card>
+                    </SimpleGrid>
+                </Container>
+            </Box>
+
+            {/* CTA Section */}
+            <Container size="lg" py={80}>
+                <Card 
+                    radius="xl" 
+                    p={{ base: 'xl', md: 60 }} 
+                    style={{ 
+                        background: 'linear-gradient(135deg, #006838 0%, #004a28 100%)',
+                        color: 'white'
+                    }}
+                >
+                    <Stack align="center" gap="lg">
+                        <Title order={2} ta="center" c="white" fw={700}>Join the Surveillance Network</Title>
+                        <Text c="white" opacity={0.9} ta="center" style={{ maxWidth: 600 }} mb="md" size="lg">
+                            Early detection is no longer optional—it is the frontline defense for rural resilience. Download the app today.
+                        </Text>
+                        <Box 
+                            style={{ 
+                                backgroundColor: 'white', 
+                                padding: '15px 30px', 
+                                borderRadius: '16px',
+                                boxShadow: '0 10px 25px rgba(0,0,0,0.1)'
+                            }}
+                        >
+                            <StoreLinksToggle />
+                        </Box>
+                    </Stack>
+                </Card>
+            </Container>
+        </main>
+    );
 };
 
 export default LivestockOutbreakPage;

@@ -23,535 +23,307 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
-/**
- * 
- * @export
- * @interface AddDiscussionCommentDto
- */
 export interface AddDiscussionCommentDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof AddDiscussionCommentDto
-     */
     'content': string;
 }
-/**
- * 
- * @export
- * @interface ChatConversationInfo
- */
-export interface ChatConversationInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationInfo
-     */
+export interface BlogArticleInfo {
     'id': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChatConversationInfo
-     */
+    'blog': number;
+    'hasCTA': boolean;
+    'imageUrl'?: string;
+    'title': string;
+    'description': string;
+}
+export interface BlogInfo {
+    'id': string;
+    'title': string;
+    'imageUrl': string;
+    'subDescription': string;
+    'description': string;
+    'createdAt': string;
+    'articles': Array<BlogArticleInfo>;
+}
+export interface ChatConversationInfo {
+    'id': string;
     'unreadMessagesCount': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationInfo
-     */
     'lastConversationMessage': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationInfo
-     */
     'lastConversationTimestamp': string;
-    /**
-     * 
-     * @type {ChatConversationUserInfo}
-     * @memberof ChatConversationInfo
-     */
     'user1': ChatConversationUserInfo;
-    /**
-     * 
-     * @type {ChatConversationUserInfo}
-     * @memberof ChatConversationInfo
-     */
     'user2': ChatConversationUserInfo;
 }
-/**
- * 
- * @export
- * @interface ChatConversationUserInfo
- */
 export interface ChatConversationUserInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationUserInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationUserInfo
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationUserInfo
-     */
     'phoneNumber': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationUserInfo
-     */
     'role': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationUserInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatConversationUserInfo
-     */
     'name': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChatConversationUserInfo
-     */
     'isProductUploadSubscriptionActive': boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChatConversationUserInfo
-     */
     'followerCount': number;
 }
-/**
- * 
- * @export
- * @interface ChatConversationsResponse
- */
 export interface ChatConversationsResponse {
-    /**
-     * 
-     * @type {Array<ChatConversationInfo>}
-     * @memberof ChatConversationsResponse
-     */
     'conversations': Array<ChatConversationInfo>;
-    /**
-     * 
-     * @type {number}
-     * @memberof ChatConversationsResponse
-     */
     'totalPages': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChatConversationsResponse
-     */
     'hasNextPage': boolean;
 }
-/**
- * 
- * @export
- * @interface ChatMessageInfo
- */
 export interface ChatMessageInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageInfo
-     */
     'content': string;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof ChatMessageInfo
-     */
     'isRead': Array<number>;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageInfo
-     */
     'timestamp': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageInfo
-     */
     'sender': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageInfo
-     */
     'recipient': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageInfo
-     */
     'conversation': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof ChatMessageInfo
-     */
     'hasCTA': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof ChatMessageInfo
-     */
     'ctaType': string;
 }
-/**
- * 
- * @export
- * @interface CommentAuthorInfo
- */
 export interface CommentAuthorInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommentAuthorInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommentAuthorInfo
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommentAuthorInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommentAuthorInfo
-     */
     'role': string;
 }
-/**
- * 
- * @export
- * @interface CreateDiscussionDto
- */
 export interface CreateDiscussionDto {
     /**
      * Content of the discussion
-     * @type {string}
-     * @memberof CreateDiscussionDto
      */
     'content': string;
     /**
      * Category of the discussion
-     * @type {string}
-     * @memberof CreateDiscussionDto
      */
     'category': string;
     /**
      * Media url of the discussion(image, video, etc.)
-     * @type {string}
-     * @memberof CreateDiscussionDto
      */
     'mediaUrl': string;
 }
-/**
- * 
- * @export
- * @interface DiscussionAuthorInfo
- */
 export interface DiscussionAuthorInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionAuthorInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionAuthorInfo
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionAuthorInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionAuthorInfo
-     */
     'role': string;
 }
-/**
- * 
- * @export
- * @interface DiscussionCommentInfo
- */
 export interface DiscussionCommentInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionCommentInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionCommentInfo
-     */
     'content': string;
-    /**
-     * 
-     * @type {CommentAuthorInfo}
-     * @memberof DiscussionCommentInfo
-     */
     'author': CommentAuthorInfo;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionCommentInfo
-     */
     'createdAt': string;
 }
-/**
- * 
- * @export
- * @interface DiscussionCommentsResponse
- */
 export interface DiscussionCommentsResponse {
-    /**
-     * 
-     * @type {Array<DiscussionCommentInfo>}
-     * @memberof DiscussionCommentsResponse
-     */
     'comments': Array<DiscussionCommentInfo>;
-    /**
-     * 
-     * @type {number}
-     * @memberof DiscussionCommentsResponse
-     */
     'totalPages': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DiscussionCommentsResponse
-     */
     'hasNextPage': boolean;
 }
-/**
- * 
- * @export
- * @interface DiscussionInfo
- */
 export interface DiscussionInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionInfo
-     */
     'content': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionInfo
-     */
     'category': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionInfo
-     */
     'mediaType': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionInfo
-     */
     'media': string;
-    /**
-     * 
-     * @type {DiscussionAuthorInfo}
-     * @memberof DiscussionInfo
-     */
     'author': DiscussionAuthorInfo;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionInfo
-     */
     'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionInfo
-     */
     'updatedAt': string;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof DiscussionInfo
-     */
     'reactions': Array<number>;
-    /**
-     * 
-     * @type {number}
-     * @memberof DiscussionInfo
-     */
     'comments': number;
 }
-/**
- * 
- * @export
- * @interface DiscussionReactionAuthor
- */
 export interface DiscussionReactionAuthor {
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionReactionAuthor
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionReactionAuthor
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionReactionAuthor
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionReactionAuthor
-     */
     'role': string;
 }
-/**
- * 
- * @export
- * @interface DiscussionReactionInfo
- */
 export interface DiscussionReactionInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionReactionInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {DiscussionReactionAuthor}
-     * @memberof DiscussionReactionInfo
-     */
     'author': DiscussionReactionAuthor;
-    /**
-     * 
-     * @type {string}
-     * @memberof DiscussionReactionInfo
-     */
     'createdAt': string;
 }
-/**
- * 
- * @export
- * @interface DiscussionsResponse
- */
 export interface DiscussionsResponse {
-    /**
-     * 
-     * @type {Array<DiscussionInfo>}
-     * @memberof DiscussionsResponse
-     */
     'discussions': Array<DiscussionInfo>;
-    /**
-     * 
-     * @type {number}
-     * @memberof DiscussionsResponse
-     */
     'totalPages': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof DiscussionsResponse
-     */
     'hasNextPage': boolean;
 }
-/**
- * 
- * @export
- * @interface TestimonialInfo
- */
 export interface TestimonialInfo {
     /**
      * The ID of the testimonial
-     * @type {string}
-     * @memberof TestimonialInfo
      */
     'id': string;
     /**
      * The author of the testimonial
-     * @type {string}
-     * @memberof TestimonialInfo
      */
     'author': string;
     /**
      * The avatar URL of the testimonial
-     * @type {string}
-     * @memberof TestimonialInfo
      */
     'avatarUrl': string;
     /**
      * The testimonial
-     * @type {string}
-     * @memberof TestimonialInfo
      */
     'testimonial': string;
     /**
      * The created at date of the testimonial
-     * @type {string}
-     * @memberof TestimonialInfo
      */
     'createdAt': string;
 }
 
 /**
+ * BlogsApi - axios parameter creator
+ */
+export const BlogsApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        blogControllerFetchBlogFeed: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/communication/blogs/feed`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} blogId The ID of the blog
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        blogControllerFetchBlogInfo: async (blogId: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'blogId' is not null or undefined
+            assertParamExists('blogControllerFetchBlogInfo', 'blogId', blogId)
+            const localVarPath = `/v1/communication/blogs/info`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            if (blogId !== undefined) {
+                localVarQueryParameter['blogId'] = blogId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BlogsApi - functional programming interface
+ */
+export const BlogsApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BlogsApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async blogControllerFetchBlogFeed(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BlogInfo>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.blogControllerFetchBlogFeed(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlogsApi.blogControllerFetchBlogFeed']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} blogId The ID of the blog
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async blogControllerFetchBlogInfo(blogId: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<BlogInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.blogControllerFetchBlogInfo(blogId, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BlogsApi.blogControllerFetchBlogInfo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BlogsApi - factory interface
+ */
+export const BlogsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BlogsApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        blogControllerFetchBlogFeed(options?: RawAxiosRequestConfig): AxiosPromise<Array<BlogInfo>> {
+            return localVarFp.blogControllerFetchBlogFeed(options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {number} blogId The ID of the blog
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        blogControllerFetchBlogInfo(blogId: number, options?: RawAxiosRequestConfig): AxiosPromise<BlogInfo> {
+            return localVarFp.blogControllerFetchBlogInfo(blogId, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BlogsApi - object-oriented interface
+ */
+export class BlogsApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public blogControllerFetchBlogFeed(options?: RawAxiosRequestConfig) {
+        return BlogsApiFp(this.configuration).blogControllerFetchBlogFeed(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {number} blogId The ID of the blog
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public blogControllerFetchBlogInfo(blogId: number, options?: RawAxiosRequestConfig) {
+        return BlogsApiFp(this.configuration).blogControllerFetchBlogInfo(blogId, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * ChatApi - axios parameter creator
- * @export
  */
 export const ChatApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -800,7 +572,6 @@ export const ChatApiAxiosParamCreator = function (configuration?: Configuration)
 
 /**
  * ChatApi - functional programming interface
- * @export
  */
 export const ChatApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ChatApiAxiosParamCreator(configuration)
@@ -882,7 +653,6 @@ export const ChatApiFp = function(configuration?: Configuration) {
 
 /**
  * ChatApi - factory interface
- * @export
  */
 export const ChatApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ChatApiFp(configuration)
@@ -946,9 +716,6 @@ export const ChatApiFactory = function (configuration?: Configuration, basePath?
 
 /**
  * ChatApi - object-oriented interface
- * @export
- * @class ChatApi
- * @extends {BaseAPI}
  */
 export class ChatApi extends BaseAPI {
     /**
@@ -956,7 +723,6 @@ export class ChatApi extends BaseAPI {
      * @param {number} receiverId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChatApi
      */
     public chatControllerCreateChatConversation(receiverId: number, options?: RawAxiosRequestConfig) {
         return ChatApiFp(this.configuration).chatControllerCreateChatConversation(receiverId, options).then((request) => request(this.axios, this.basePath));
@@ -966,7 +732,6 @@ export class ChatApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChatApi
      */
     public chatControllerFetchAdminChatConversation(options?: RawAxiosRequestConfig) {
         return ChatApiFp(this.configuration).chatControllerFetchAdminChatConversation(options).then((request) => request(this.axios, this.basePath));
@@ -977,7 +742,6 @@ export class ChatApi extends BaseAPI {
      * @param {number} receiverId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChatApi
      */
     public chatControllerFetchChatConversation(receiverId: number, options?: RawAxiosRequestConfig) {
         return ChatApiFp(this.configuration).chatControllerFetchChatConversation(receiverId, options).then((request) => request(this.axios, this.basePath));
@@ -988,7 +752,6 @@ export class ChatApi extends BaseAPI {
      * @param {number} conversationId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChatApi
      */
     public chatControllerFetchChatConversationMessages(conversationId: number, options?: RawAxiosRequestConfig) {
         return ChatApiFp(this.configuration).chatControllerFetchChatConversationMessages(conversationId, options).then((request) => request(this.axios, this.basePath));
@@ -1000,7 +763,6 @@ export class ChatApi extends BaseAPI {
      * @param {number} pageSize 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChatApi
      */
     public chatControllerFetchChatConversations(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return ChatApiFp(this.configuration).chatControllerFetchChatConversations(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -1011,7 +773,6 @@ export class ChatApi extends BaseAPI {
      * @param {number} conversationId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ChatApi
      */
     public chatControllerReadChatConversationMessages(conversationId: number, options?: RawAxiosRequestConfig) {
         return ChatApiFp(this.configuration).chatControllerReadChatConversationMessages(conversationId, options).then((request) => request(this.axios, this.basePath));
@@ -1022,7 +783,6 @@ export class ChatApi extends BaseAPI {
 
 /**
  * DiscussionsApi - axios parameter creator
- * @export
  */
 export const DiscussionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1398,7 +1158,6 @@ export const DiscussionsApiAxiosParamCreator = function (configuration?: Configu
 
 /**
  * DiscussionsApi - functional programming interface
- * @export
  */
 export const DiscussionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = DiscussionsApiAxiosParamCreator(configuration)
@@ -1511,7 +1270,6 @@ export const DiscussionsApiFp = function(configuration?: Configuration) {
 
 /**
  * DiscussionsApi - factory interface
- * @export
  */
 export const DiscussionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = DiscussionsApiFp(configuration)
@@ -1600,9 +1358,6 @@ export const DiscussionsApiFactory = function (configuration?: Configuration, ba
 
 /**
  * DiscussionsApi - object-oriented interface
- * @export
- * @class DiscussionsApi
- * @extends {BaseAPI}
  */
 export class DiscussionsApi extends BaseAPI {
     /**
@@ -1611,7 +1366,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {AddDiscussionCommentDto} addDiscussionCommentDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerAddDiscussionComment(discussionId: number, addDiscussionCommentDto: AddDiscussionCommentDto, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerAddDiscussionComment(discussionId, addDiscussionCommentDto, options).then((request) => request(this.axios, this.basePath));
@@ -1622,7 +1376,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {number} discussionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerAddDiscussionReaction(discussionId: number, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerAddDiscussionReaction(discussionId, options).then((request) => request(this.axios, this.basePath));
@@ -1633,7 +1386,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {CreateDiscussionDto} createDiscussionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerCreateDiscussion(createDiscussionDto: CreateDiscussionDto, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerCreateDiscussion(createDiscussionDto, options).then((request) => request(this.axios, this.basePath));
@@ -1644,7 +1396,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {number} discussionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerFetchDiscussionComments(discussionId: number, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerFetchDiscussionComments(discussionId, options).then((request) => request(this.axios, this.basePath));
@@ -1655,7 +1406,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {number} discussionId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerFetchDiscussionReactions(discussionId: number, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerFetchDiscussionReactions(discussionId, options).then((request) => request(this.axios, this.basePath));
@@ -1668,7 +1418,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {string} category 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerFetchDiscussionsByCategory(page: number, pageSize: number, category: string, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerFetchDiscussionsByCategory(page, pageSize, category, options).then((request) => request(this.axios, this.basePath));
@@ -1680,7 +1429,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {number} pageSize 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerFetchDiscussionsFeed(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerFetchDiscussionsFeed(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -1694,7 +1442,6 @@ export class DiscussionsApi extends BaseAPI {
      * @param {string} category 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof DiscussionsApi
      */
     public discussionControllerSearchDiscussions(page: number, pageSize: number, query: string, category: string, options?: RawAxiosRequestConfig) {
         return DiscussionsApiFp(this.configuration).discussionControllerSearchDiscussions(page, pageSize, query, category, options).then((request) => request(this.axios, this.basePath));
@@ -1705,7 +1452,6 @@ export class DiscussionsApi extends BaseAPI {
 
 /**
  * TestimonialsApi - axios parameter creator
- * @export
  */
 export const TestimonialsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1743,7 +1489,6 @@ export const TestimonialsApiAxiosParamCreator = function (configuration?: Config
 
 /**
  * TestimonialsApi - functional programming interface
- * @export
  */
 export const TestimonialsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = TestimonialsApiAxiosParamCreator(configuration)
@@ -1764,7 +1509,6 @@ export const TestimonialsApiFp = function(configuration?: Configuration) {
 
 /**
  * TestimonialsApi - factory interface
- * @export
  */
 export const TestimonialsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = TestimonialsApiFp(configuration)
@@ -1782,16 +1526,12 @@ export const TestimonialsApiFactory = function (configuration?: Configuration, b
 
 /**
  * TestimonialsApi - object-oriented interface
- * @export
- * @class TestimonialsApi
- * @extends {BaseAPI}
  */
 export class TestimonialsApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof TestimonialsApi
      */
     public testimonialControllerFetchTestimonialsFeed(options?: RawAxiosRequestConfig) {
         return TestimonialsApiFp(this.configuration).testimonialControllerFetchTestimonialsFeed(options).then((request) => request(this.axios, this.basePath));

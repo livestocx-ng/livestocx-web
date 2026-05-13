@@ -1,161 +1,113 @@
-
-// import React from 'react';
-// import Link from 'next/link';
-// import Image from 'next/image';
-// import { PencilIcon } from 'lucide-react';
-// import { BlogItem } from '@/core/types/types';
-
-// interface BlogCardProps {
-//     blog: BlogItem;
-//     isAdmin?: boolean; 
-//     onEdit?: (blog: BlogItem) => void; 
-// }
-
-// const BlogCard = ({ blog, isAdmin, onEdit }: BlogCardProps) => {
-
-//     const slug = blog.title.toLowerCase().replace(/ /g, '-'); 
-
-//     return (
-//         <div className='w-[360px] flex flex-col space-y-5 border rounded-md p-2 hover:shadow-md transition-shadow'>
-//             {/* Admin Controls */}
-//             {isAdmin && (
-//                 <div className='flex justify-end'>
-//                     <button 
-//                         type='button'
-//                         onClick={() => onEdit?.(blog)}
-//                         className='p-1 bg-white border border-slate-300 rounded-full hover:bg-slate-50'
-//                     >
-//                         <PencilIcon size={14} className='text-green-600' />
-//                     </button>
-//                 </div>
-//             )}
-
-//             {/* Link to Detail Page */}
-//             <Link
-//                 href={`/blog/${slug}`}
-//                 className='w-full h-[240px] relative rounded-md overflow-hidden'
-//             >
-//                 <img    
-//                     src={blog.imageUrl}
-//                     alt={`Blog - ${blog.title}`}
-//                     className='object-cover'
-//                     sizes="(max-width: 768px) 100vw, 360px"
-//                 />
-//             </Link>
-
-//             <div className="px-1">
-//                 <h1 className='text-sm font-semibold line-clamp-2 h-[40px]'>
-//                     {blog.title}
-//                 </h1>
-
-//                 <section className='text-sm text-slate-600 mt-2'>
-//                     {blog?.subDescription?.slice(0, 150)}...
-//                 </section>
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default BlogCard;
-
-
-
-
 import React from 'react';
 import Link from 'next/link';
-import { PencilIcon } from 'lucide-react';
-import { Card, Image, Text, ActionIcon, Stack, Group } from '@mantine/core';
-import { BlogItem } from '@/core/types/types';
+import { ChevronRight } from 'lucide-react';
+import { BlogInfo } from '@/core/sdk/communication';
 import { formatBlogSlug } from '@/core/middlewares/slug-formatter';
+import { Image, Text, Stack, Group, Title, Avatar, Button, rem, Box } from '@mantine/core';
+import dayjs from 'dayjs';
+import { useAppContext } from '@/core/context';
 
 interface BlogCardProps {
-    blog: BlogItem;
-    isAdmin?: boolean;
-    onEdit?: (blog: BlogItem) => void;
+	blog: BlogInfo;
+	isAdmin?: boolean;
+	onEdit?: (blog: BlogInfo) => void;
 }
 
-const BlogCard = ({ blog, isAdmin, onEdit }: BlogCardProps) => {
+const BlogCard = ({ blog }: BlogCardProps) => {
+	const slug = formatBlogSlug(blog);
+	const { setBlogFeedItem } = useAppContext();
 
-    const slug = blog.title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
+	const truncatedText = blog?.subDescription
+		? blog.subDescription.length > 150
+			? `${blog.subDescription.slice(0, 150)}...`
+			: blog.subDescription
+		: '';
 
-    const truncatedText = blog?.subDescription
-        ? blog.subDescription.length > 200
-            ? `${blog.subDescription.slice(0, 200)}...`
-            : blog.subDescription
-        : '';
+	const formattedDate = blog.createdAt ? dayjs(blog.createdAt).format('MMM D, YYYY') : 'Nov 29, 2024';
 
-    return (
-        <Card
-            key={blog.id}
-            shadow="sm"
-            padding="lg"
-            radius="md"
-            withBorder
-            className="w-[360px] hover:shadow-lg transition-all duration-300"
-            style={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column'
-            }}
-        >
+	return (
+		<Stack gap="md" style={{ height: '100%' }}>
+			<Link 
+				href={`/blog/${slug}`} 
+				style={{ display: 'block' }}
+				onClick={() => setBlogFeedItem(blog)}
+			>
+				<Image
+					src={blog.imageUrl}
+					height={280}
+					alt={blog.title}
+					fit="cover"
+					radius={0}
+				/>
+			</Link>
 
-            <Card.Section className="relative overflow-hidden">
-                {isAdmin && (
-                    <ActionIcon
-                        variant="white"
-                        color="green.6"
-                        radius="xl"
-                        className="absolute top-3 left-3 z-10 shadow-sm"
-                        onClick={() => onEdit?.(blog)}
-                    >
-                        <PencilIcon size={16} />
-                    </ActionIcon>
-                )}
+			<Stack gap="xs" style={{ flex: 1 }}>
+				<Group gap="sm">
+					{/* <Avatar 
+						src={null} 
+						size="sm" 
+						radius="xl" 
+						color="green.9"
+					>
+						{blog?.title?.charAt(0) || 'B'}
+					</Avatar> */}
+					<Group gap={4}>
+						<Text size="xs" fw={600} c="dark.4">Author</Text>
+						<Text size="xs" c="dimmed">{formattedDate}</Text>
+					</Group>
+				</Group>
 
-                <Link href={`/blog/${formatBlogSlug(blog)}`}>
-                    <Image
-                        src={blog.imageUrl}
-                        height={180}
-                        alt={blog.title}
-                        fit="cover"
-                        className="transition-transform duration-500 hover:scale-105"
-                    />
-                </Link>
-            </Card.Section>
+				<Title
+					order={3}
+					component={Link}
+					href={`/blog/${slug}`}
+					onClick={() => setBlogFeedItem(blog)}
+					size={rem(24)}
+					fw={700}
+					lh={1.3}
+					c="dark.9"
+					className="hover:text-green-800 transition-colors"
+					lineClamp={2}
+				>
+					{blog.title}
+				</Title>
 
+				<Text size="sm" c="dimmed" lh={1.6} lineClamp={4}>
+					{truncatedText}
+				</Text>
+			</Stack>
 
-            <Stack mt="md" gap="xs" style={{ flex: 1 }}>
-                <Text
-                    component={Link}
-                    href={`/blog/${slug}`}
-                    fw={600}
-                    size="lg"
-                    className="leading-tight hover:text-blue-600 transition-colors"
-                    lineClamp={2}
-                >
-                    {blog.title}
-                </Text>
-
-                <Text size="sm" c="dimmed" lineClamp={4}>
-                    {truncatedText}
-                </Text>
-            </Stack>
-
-
-            <Group justify="flex-start" mt="xl">
-                <Text
-                    component={Link}
-                    href={`/blog/${slug}`}
-                    size="sm"
-                    fw={500}
-                    c="blue.6"
-                    className="hover:underline"
-                >
-                    Read more →
-                </Text>
-            </Group>
-        </Card>
-    );
+			<Box>
+				<Button
+					component={Link}
+					href={`/blog/${slug}`}
+					onClick={() => setBlogFeedItem(blog)}
+					variant="filled"
+					color="gray.0"
+					c="dark.8"
+					radius={0}
+					size="md"
+					px="xl"
+					fw={600}
+					rightSection={<ChevronRight size={14} />}
+					styles={{
+						root: {
+							backgroundColor: '#f8f9fa',
+							'&:hover': {
+								backgroundColor: '#f1f3f5'
+							}
+						},
+						label: {
+							textTransform: 'uppercase',
+							letterSpacing: rem(1)
+						}
+					}}
+				>
+					Read More
+				</Button>
+			</Box>
+		</Stack>
+	);
 };
 
 export default BlogCard;

@@ -23,102 +23,23 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
-/**
- * 
- * @export
- * @interface AccountInfo
- */
 export interface AccountInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'firstName': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'lastName': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'phoneNumber': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'state': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'city': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'role': AccountInfoRoleEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'status': AccountInfoStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'referralCode': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountInfo
-     */
     'isProfileUpdated': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountInfo
-     */
     'isAccountDisabled': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountInfo
-     */
     'isProductUploadSubscriptionActive': boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof AccountInfo
-     */
     'productUploadLimit': number;
+    'referralSource': string;
 }
 
 export const AccountInfoRoleEnum = {
@@ -138,140 +59,80 @@ export const AccountInfoStatusEnum = {
 
 export type AccountInfoStatusEnum = typeof AccountInfoStatusEnum[keyof typeof AccountInfoStatusEnum];
 
-/**
- * 
- * @export
- * @interface Bank
- */
 export interface Bank {
     /**
      * Unique identifier slug for the bank
-     * @type {string}
-     * @memberof Bank
      */
     'slug': string;
     /**
      * Name of the bank
-     * @type {string}
-     * @memberof Bank
      */
     'name': string;
     /**
      * Unique identifier for the bank
-     * @type {number}
-     * @memberof Bank
      */
     'id': number;
 }
-/**
- * 
- * @export
- * @interface ChargeResponse
- */
+export interface BusinessPromotionAdInfo {
+    'id': string;
+    'ad_image_url': string;
+    'user': string;
+    'vendor': string;
+    'storeSlug': string;
+    'storeName': string;
+}
 export interface ChargeResponse {
     /**
      * Indicates if the request was successful
-     * @type {boolean}
-     * @memberof ChargeResponse
      */
     'status': boolean;
     /**
      * Message describing the result of the operation
-     * @type {string}
-     * @memberof ChargeResponse
      */
     'message': string;
     /**
      * The charge attempt details
-     * @type {ChargeResponseData}
-     * @memberof ChargeResponse
      */
     'data': ChargeResponseData;
 }
-/**
- * 
- * @export
- * @interface ChargeResponseData
- */
 export interface ChargeResponseData {
     /**
      * Current status of the charge attempt
-     * @type {string}
-     * @memberof ChargeResponseData
      */
     'status': string;
     /**
      * Human readable message about the charge
-     * @type {string}
-     * @memberof ChargeResponseData
      */
     'display_text': string;
     /**
      * Unique reference for this transaction
-     * @type {string}
-     * @memberof ChargeResponseData
      */
     'reference': string;
     /**
      * Amount to be charged in smallest currency unit
-     * @type {number}
-     * @memberof ChargeResponseData
      */
     'amount': number;
     /**
      * Name of the account to transfer to
-     * @type {string}
-     * @memberof ChargeResponseData
      */
     'account_name': string;
     /**
      * Account number to transfer to
-     * @type {string}
-     * @memberof ChargeResponseData
      */
     'account_number': string;
     /**
      * Bank details for the transfer
-     * @type {Bank}
-     * @memberof ChargeResponseData
      */
     'bank': Bank;
     /**
      * ISO timestamp when the account details expire
-     * @type {string}
-     * @memberof ChargeResponseData
      */
     'account_expires_at': string;
 }
-/**
- * 
- * @export
- * @interface CreatePremiumSubscriptionDto
- */
 export interface CreatePremiumSubscriptionDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePremiumSubscriptionDto
-     */
     'payment_gateway': CreatePremiumSubscriptionDtoPaymentGatewayEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePremiumSubscriptionDto
-     */
     'payment_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePremiumSubscriptionDto
-     */
     'payment_reference': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePremiumSubscriptionDto
-     */
     'payment_method': string;
 }
 
@@ -284,58 +145,37 @@ export const CreatePremiumSubscriptionDtoPaymentGatewayEnum = {
 
 export type CreatePremiumSubscriptionDtoPaymentGatewayEnum = typeof CreatePremiumSubscriptionDtoPaymentGatewayEnum[keyof typeof CreatePremiumSubscriptionDtoPaymentGatewayEnum];
 
-/**
- * 
- * @export
- * @interface CreateProductDto
- */
 export interface CreateProductDto {
     /**
      * The name of the product
-     * @type {string}
-     * @memberof CreateProductDto
      */
     'name': string;
     /**
      * The price of the product
-     * @type {string}
-     * @memberof CreateProductDto
      */
     'price': string;
     /**
      * The discount price of the product
-     * @type {string}
-     * @memberof CreateProductDto
      */
     'discountPrice': string;
     /**
      * Whether the product is negotiable
-     * @type {boolean}
-     * @memberof CreateProductDto
      */
     'isNegotiable': boolean;
     /**
      * Whether the product is in stock
-     * @type {boolean}
-     * @memberof CreateProductDto
      */
     'inStock': boolean;
     /**
      * Array of product media
-     * @type {Array<ProductMediaDto>}
-     * @memberof CreateProductDto
      */
     'media': Array<ProductMediaDto>;
     /**
      * The category of the product
-     * @type {string}
-     * @memberof CreateProductDto
      */
     'category': CreateProductDtoCategoryEnum;
     /**
      * The description of the product
-     * @type {string}
-     * @memberof CreateProductDto
      */
     'description': string;
 }
@@ -359,29 +199,9 @@ export const CreateProductDtoCategoryEnum = {
 
 export type CreateProductDtoCategoryEnum = typeof CreateProductDtoCategoryEnum[keyof typeof CreateProductDtoCategoryEnum];
 
-/**
- * 
- * @export
- * @interface CreateProductUploadSubscriptionDto
- */
 export interface CreateProductUploadSubscriptionDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProductUploadSubscriptionDto
-     */
     'payment_gateway': CreateProductUploadSubscriptionDtoPaymentGatewayEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProductUploadSubscriptionDto
-     */
     'payment_reference': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreateProductUploadSubscriptionDto
-     */
     'payment_method': string;
 }
 
@@ -394,47 +214,12 @@ export const CreateProductUploadSubscriptionDtoPaymentGatewayEnum = {
 
 export type CreateProductUploadSubscriptionDtoPaymentGatewayEnum = typeof CreateProductUploadSubscriptionDtoPaymentGatewayEnum[keyof typeof CreateProductUploadSubscriptionDtoPaymentGatewayEnum];
 
-/**
- * 
- * @export
- * @interface CreatePromotionDto
- */
 export interface CreatePromotionDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePromotionDto
-     */
     'payment_gateway': CreatePromotionDtoPaymentGatewayEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePromotionDto
-     */
     'payment_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePromotionDto
-     */
     'payment_reference': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePromotionDto
-     */
     'amount_paid': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CreatePromotionDto
-     */
     'payment_method': string;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof CreatePromotionDto
-     */
     'product_ids': Array<number>;
 }
 
@@ -447,47 +232,15 @@ export const CreatePromotionDtoPaymentGatewayEnum = {
 
 export type CreatePromotionDtoPaymentGatewayEnum = typeof CreatePromotionDtoPaymentGatewayEnum[keyof typeof CreatePromotionDtoPaymentGatewayEnum];
 
-/**
- * 
- * @export
- * @interface InitializePaymentSessionResponse
- */
 export interface InitializePaymentSessionResponse {
-    /**
-     * 
-     * @type {string}
-     * @memberof InitializePaymentSessionResponse
-     */
     'secureUrl': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof InitializePaymentSessionResponse
-     */
     'reference': string;
 }
-/**
- * 
- * @export
- * @interface MediaInfo
- */
 export interface MediaInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof MediaInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof MediaInfo
-     */
     'mediaUrl': string;
     /**
      * The type of media
-     * @type {string}
-     * @memberof MediaInfo
      */
     'mediaType': MediaInfoMediaTypeEnum;
 }
@@ -500,29 +253,23 @@ export const MediaInfoMediaTypeEnum = {
 
 export type MediaInfoMediaTypeEnum = typeof MediaInfoMediaTypeEnum[keyof typeof MediaInfoMediaTypeEnum];
 
-/**
- * 
- * @export
- * @interface PaymentMethod
- */
+export interface PaymentFeedbackDTO {
+    /**
+     * Account Id
+     */
+    'accountId': number;
+    /**
+     * User payment feedback
+     */
+    'feedback': string;
+    /**
+     * Payment type
+     */
+    'paymentType': string;
+}
 export interface PaymentMethod {
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentMethod
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentMethod
-     */
     'value': PaymentMethodValueEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof PaymentMethod
-     */
     'gateway': PaymentMethodGatewayEnum;
 }
 
@@ -545,261 +292,57 @@ export const PaymentMethodGatewayEnum = {
 
 export type PaymentMethodGatewayEnum = typeof PaymentMethodGatewayEnum[keyof typeof PaymentMethodGatewayEnum];
 
-/**
- * 
- * @export
- * @interface PremiumSubscriptionInfo
- */
 export interface PremiumSubscriptionInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionInfo
-     */
     'subscription_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionInfo
-     */
     'expiration_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionInfo
-     */
     'payment_method': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PremiumSubscriptionInfo
-     */
     'amount_paid': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionInfo
-     */
     'payment_reference': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionInfo
-     */
     'payment_gateway': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionInfo
-     */
     'payment_date': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PremiumSubscriptionInfo
-     */
     'isExpired': boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof PremiumSubscriptionInfo
-     */
     'user': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PremiumSubscriptionInfo
-     */
     'plan': number;
 }
-/**
- * 
- * @export
- * @interface PremiumSubscriptionPlanDescription
- */
 export interface PremiumSubscriptionPlanDescription {
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'description'?: string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'price': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'duration': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'duration_days': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'bonus_days': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'position': number;
-    /**
-     * 
-     * @type {Array<PremiumSubscriptionPlanInfoDescription>}
-     * @memberof PremiumSubscriptionPlanDescription
-     */
     'info': Array<PremiumSubscriptionPlanInfoDescription>;
 }
-/**
- * 
- * @export
- * @interface PremiumSubscriptionPlanInfoDescription
- */
 export interface PremiumSubscriptionPlanInfoDescription {
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionPlanInfoDescription
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionPlanInfoDescription
-     */
     'title': string;
 }
-/**
- * 
- * @export
- * @interface PremiumSubscriptionResponse
- */
 export interface PremiumSubscriptionResponse {
-    /**
-     * 
-     * @type {PremiumSubscriptionInfo}
-     * @memberof PremiumSubscriptionResponse
-     */
     'subscription': PremiumSubscriptionInfo;
-    /**
-     * 
-     * @type {VendorInfo}
-     * @memberof PremiumSubscriptionResponse
-     */
     'vendorInfo': VendorInfo;
 }
-/**
- * 
- * @export
- * @interface PremiumSubscriptionUpdateVendorProfileDto
- */
 export interface PremiumSubscriptionUpdateVendorProfileDto {
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'address'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'phoneNumber': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'slug'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'state'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'city'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'facebookUrl'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'instagramUrl'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PremiumSubscriptionUpdateVendorProfileDto
-     */
     'twitterUrl'?: string;
 }
-/**
- * 
- * @export
- * @interface ProductMediaDto
- */
 export interface ProductMediaDto {
     /**
      * The URL of the product image
-     * @type {string}
-     * @memberof ProductMediaDto
      */
     'mediaUrl': string;
     /**
      * The type of the product media
-     * @type {string}
-     * @memberof ProductMediaDto
      */
     'mediaType': ProductMediaDtoMediaTypeEnum;
 }
@@ -812,145 +355,30 @@ export const ProductMediaDtoMediaTypeEnum = {
 
 export type ProductMediaDtoMediaTypeEnum = typeof ProductMediaDtoMediaTypeEnum[keyof typeof ProductMediaDtoMediaTypeEnum];
 
-/**
- * 
- * @export
- * @interface ProductUploadSubscriptionInfo
- */
 export interface ProductUploadSubscriptionInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'subscription_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'expiration_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'payment_method': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'amount_paid': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'payment_reference': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'payment_gateway': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'payment_date': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'user': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductUploadSubscriptionInfo
-     */
     'plan': number;
 }
-/**
- * 
- * @export
- * @interface ProductUploadSubscriptionPlanInfo
- */
 export interface ProductUploadSubscriptionPlanInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionPlanInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionPlanInfo
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof ProductUploadSubscriptionPlanInfo
-     */
     'description': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductUploadSubscriptionPlanInfo
-     */
     'price': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof ProductUploadSubscriptionPlanInfo
-     */
     'position': number;
 }
-/**
- * 
- * @export
- * @interface PromotionDescriptionPlanInfo
- */
 export interface PromotionDescriptionPlanInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionDescriptionPlanInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionDescriptionPlanInfo
-     */
     'duration': PromotionDescriptionPlanInfoDurationEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionDescriptionPlanInfo
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionDescriptionPlanInfo
-     */
     'description': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof PromotionDescriptionPlanInfo
-     */
     'price': number;
 }
 
@@ -962,77 +390,17 @@ export const PromotionDescriptionPlanInfoDurationEnum = {
 
 export type PromotionDescriptionPlanInfoDurationEnum = typeof PromotionDescriptionPlanInfoDurationEnum[keyof typeof PromotionDescriptionPlanInfoDurationEnum];
 
-/**
- * 
- * @export
- * @interface PromotionInfo
- */
 export interface PromotionInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'subscription_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'expiration_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'payment_method': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'amount_paid': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'payment_reference': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'payment_gateway': PromotionInfoPaymentGatewayEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionInfo
-     */
     'payment_date': string;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof PromotionInfo
-     */
     'products': Array<number>;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof PromotionInfo
-     */
     'isReferral': boolean;
-    /**
-     * 
-     * @type {PromotionDescriptionPlanInfo}
-     * @memberof PromotionInfo
-     */
     'plan': PromotionDescriptionPlanInfo;
 }
 
@@ -1045,83 +413,18 @@ export const PromotionInfoPaymentGatewayEnum = {
 
 export type PromotionInfoPaymentGatewayEnum = typeof PromotionInfoPaymentGatewayEnum[keyof typeof PromotionInfoPaymentGatewayEnum];
 
-/**
- * 
- * @export
- * @interface PromotionPlanDescription
- */
 export interface PromotionPlanDescription {
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanDescription
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanDescription
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanDescription
-     */
     'description': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanDescription
-     */
     'duration': PromotionPlanDescriptionDurationEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof PromotionPlanDescription
-     */
     'price': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PromotionPlanDescription
-     */
     'discount_price': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PromotionPlanDescription
-     */
     'product_count': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PromotionPlanDescription
-     */
     'duration_days': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PromotionPlanDescription
-     */
     'bonus_days': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof PromotionPlanDescription
-     */
     'position': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanDescription
-     */
     'createdAt': string;
-    /**
-     * 
-     * @type {Array<PromotionPlanInfoDescription>}
-     * @memberof PromotionPlanDescription
-     */
     'info': Array<PromotionPlanInfoDescription>;
 }
 
@@ -1133,164 +436,58 @@ export const PromotionPlanDescriptionDurationEnum = {
 
 export type PromotionPlanDescriptionDurationEnum = typeof PromotionPlanDescriptionDurationEnum[keyof typeof PromotionPlanDescriptionDurationEnum];
 
-/**
- * 
- * @export
- * @interface PromotionPlanInfoDescription
- */
 export interface PromotionPlanInfoDescription {
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanInfoDescription
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanInfoDescription
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PromotionPlanInfoDescription
-     */
     'description': string;
 }
-/**
- * 
- * @export
- * @interface PromotionsInfo
- */
 export interface PromotionsInfo {
-    /**
-     * 
-     * @type {Array<PromotionInfo>}
-     * @memberof PromotionsInfo
-     */
     'promotions': Array<PromotionInfo>;
 }
-/**
- * 
- * @export
- * @interface SubscriptionInfo
- */
 export interface SubscriptionInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionInfo
-     */
     'title': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof SubscriptionInfo
-     */
     'isExpired': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionInfo
-     */
     'subscription_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionInfo
-     */
     'expiration_date': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionInfo
-     */
     'payment_method': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof SubscriptionInfo
-     */
     'amount_paid': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionInfo
-     */
     'payment_reference': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionInfo
-     */
     'payment_gateway': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof SubscriptionInfo
-     */
     'payment_date': string;
 }
-/**
- * 
- * @export
- * @interface UpdateProductDto
- */
 export interface UpdateProductDto {
     /**
      * The name of the product
-     * @type {string}
-     * @memberof UpdateProductDto
      */
     'name': string;
     /**
      * The price of the product
-     * @type {string}
-     * @memberof UpdateProductDto
      */
     'price': string;
     /**
      * The discount price of the product
-     * @type {string}
-     * @memberof UpdateProductDto
      */
     'discountPrice': string;
     /**
      * Whether the product is negotiable
-     * @type {boolean}
-     * @memberof UpdateProductDto
      */
     'isNegotiable': boolean;
     /**
      * Whether the product is in stock
-     * @type {boolean}
-     * @memberof UpdateProductDto
      */
     'inStock': boolean;
     /**
      * Array of product media
-     * @type {Array<ProductMediaDto>}
-     * @memberof UpdateProductDto
      */
     'media': Array<ProductMediaDto>;
     /**
      * The category of the product
-     * @type {string}
-     * @memberof UpdateProductDto
      */
     'category': UpdateProductDtoCategoryEnum;
     /**
      * The description of the product
-     * @type {string}
-     * @memberof UpdateProductDto
      */
     'description': string;
-    /**
-     * 
-     * @type {Array<number>}
-     * @memberof UpdateProductDto
-     */
     'removedMediaIds': Array<number>;
 }
 
@@ -1313,146 +510,55 @@ export const UpdateProductDtoCategoryEnum = {
 
 export type UpdateProductDtoCategoryEnum = typeof UpdateProductDtoCategoryEnum[keyof typeof UpdateProductDtoCategoryEnum];
 
-/**
- * 
- * @export
- * @interface UpdateUserRoleResponse
- */
 export interface UpdateUserRoleResponse {
-    /**
-     * 
-     * @type {VendorInfo}
-     * @memberof UpdateUserRoleResponse
-     */
     'vendorInfo': VendorInfo;
-    /**
-     * 
-     * @type {AccountInfo}
-     * @memberof UpdateUserRoleResponse
-     */
     'accountInfo': AccountInfo;
 }
-/**
- * 
- * @export
- * @interface UpdateVendorProfileDto
- */
 export interface UpdateVendorProfileDto {
     /**
      * The name of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileDto
      */
     'name': string;
     /**
      * The address of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileDto
      */
     'address': string;
     /**
      * The avatar of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileDto
      */
     'avatar': string;
     /**
      * The phone number of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileDto
      */
     'phoneNumber': string;
     /**
      * The email of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileDto
      */
     'email': string;
     /**
      * The zip postal code of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileDto
      */
     'state': string;
     /**
      * The zip postal code of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileDto
      */
     'city': string;
 }
-/**
- * 
- * @export
- * @interface UpdateVendorProfileLogoDto
- */
 export interface UpdateVendorProfileLogoDto {
     /**
      * The avatar of the vendor
-     * @type {string}
-     * @memberof UpdateVendorProfileLogoDto
      */
     'avatar': string;
 }
-/**
- * 
- * @export
- * @interface UserPromotionPlanDescription
- */
 export interface UserPromotionPlanDescription {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserPromotionPlanDescription
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserPromotionPlanDescription
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserPromotionPlanDescription
-     */
     'description': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserPromotionPlanDescription
-     */
     'duration': UserPromotionPlanDescriptionDurationEnum;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserPromotionPlanDescription
-     */
     'price': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserPromotionPlanDescription
-     */
     'discount_price': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserPromotionPlanDescription
-     */
     'product_count': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserPromotionPlanDescription
-     */
     'duration_days': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof UserPromotionPlanDescription
-     */
     'bonus_days': number;
 }
 
@@ -1464,229 +570,44 @@ export const UserPromotionPlanDescriptionDurationEnum = {
 
 export type UserPromotionPlanDescriptionDurationEnum = typeof UserPromotionPlanDescriptionDurationEnum[keyof typeof UserPromotionPlanDescriptionDurationEnum];
 
-/**
- * 
- * @export
- * @interface UserPromotionPlanInfo
- */
 export interface UserPromotionPlanInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof UserPromotionPlanInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof UserPromotionPlanInfo
-     */
     'user': string;
-    /**
-     * 
-     * @type {UserPromotionPlanDescription}
-     * @memberof UserPromotionPlanInfo
-     */
     'plan': UserPromotionPlanDescription;
 }
-/**
- * 
- * @export
- * @interface VendorInfo
- */
 export interface VendorInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'vendorId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'name': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'state': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'city': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'address': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'phoneNumber': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VendorInfo
-     */
     'isUpdated': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'slug': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorInfo
-     */
     'user': string;
 }
-/**
- * 
- * @export
- * @interface VendorProductInfo
- */
 export interface VendorProductInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'productId': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'name': string;
-    /**
-     * 
-     * @type {number}
-     * @memberof VendorProductInfo
-     */
     'price': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VendorProductInfo
-     */
     'discountPrice': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'category': VendorProductInfoCategoryEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'description': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VendorProductInfo
-     */
     'isNegotiable': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VendorProductInfo
-     */
     'inStock': boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof VendorProductInfo
-     */
     'viewCount': number;
-    /**
-     * 
-     * @type {number}
-     * @memberof VendorProductInfo
-     */
     'likeCount': number;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'impressionCount': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'coverPhoto': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'videoUrl'?: string;
-    /**
-     * 
-     * @type {Array<MediaInfo>}
-     * @memberof VendorProductInfo
-     */
     'media': Array<MediaInfo>;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'createdAt': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VendorProductInfo
-     */
     'updatedAt': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VendorProductInfo
-     */
     'isFlagged': boolean;
 }
 
@@ -1709,60 +630,113 @@ export const VendorProductInfoCategoryEnum = {
 
 export type VendorProductInfoCategoryEnum = typeof VendorProductInfoCategoryEnum[keyof typeof VendorProductInfoCategoryEnum];
 
-/**
- * 
- * @export
- * @interface VendorProductsResponse
- */
 export interface VendorProductsResponse {
-    /**
-     * 
-     * @type {Array<VendorProductInfo>}
-     * @memberof VendorProductsResponse
-     */
     'products': Array<VendorProductInfo>;
-    /**
-     * 
-     * @type {number}
-     * @memberof VendorProductsResponse
-     */
     'totalPages': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VendorProductsResponse
-     */
     'hasNextPage': boolean;
 }
-/**
- * 
- * @export
- * @interface VerifyPaymentSessionResponse
- */
 export interface VerifyPaymentSessionResponse {
-    /**
-     * 
-     * @type {boolean}
-     * @memberof VerifyPaymentSessionResponse
-     */
     'status': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof VerifyPaymentSessionResponse
-     */
     'paid_at': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof VerifyPaymentSessionResponse
-     */
     'channel': string;
 }
 
 /**
+ * BusinessPromotionApi - axios parameter creator
+ */
+export const BusinessPromotionApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        businessPromotionSubscriptionControllerFetchBusinessPromotionAds: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/v1/vendor/business-promotion/fetch-business-promotion-ads`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * BusinessPromotionApi - functional programming interface
+ */
+export const BusinessPromotionApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = BusinessPromotionApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async businessPromotionSubscriptionControllerFetchBusinessPromotionAds(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<BusinessPromotionAdInfo>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.businessPromotionSubscriptionControllerFetchBusinessPromotionAds(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['BusinessPromotionApi.businessPromotionSubscriptionControllerFetchBusinessPromotionAds']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * BusinessPromotionApi - factory interface
+ */
+export const BusinessPromotionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = BusinessPromotionApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        businessPromotionSubscriptionControllerFetchBusinessPromotionAds(options?: RawAxiosRequestConfig): AxiosPromise<Array<BusinessPromotionAdInfo>> {
+            return localVarFp.businessPromotionSubscriptionControllerFetchBusinessPromotionAds(options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * BusinessPromotionApi - object-oriented interface
+ */
+export class BusinessPromotionApi extends BaseAPI {
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public businessPromotionSubscriptionControllerFetchBusinessPromotionAds(options?: RawAxiosRequestConfig) {
+        return BusinessPromotionApiFp(this.configuration).businessPromotionSubscriptionControllerFetchBusinessPromotionAds(options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * PayableApi - axios parameter creator
- * @export
  */
 export const PayableApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1938,7 +912,6 @@ export const PayableApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * PayableApi - functional programming interface
- * @export
  */
 export const PayableApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PayableApiAxiosParamCreator(configuration)
@@ -1997,7 +970,6 @@ export const PayableApiFp = function(configuration?: Configuration) {
 
 /**
  * PayableApi - factory interface
- * @export
  */
 export const PayableApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PayableApiFp(configuration)
@@ -2044,9 +1016,6 @@ export const PayableApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * PayableApi - object-oriented interface
- * @export
- * @class PayableApi
- * @extends {BaseAPI}
  */
 export class PayableApi extends BaseAPI {
     /**
@@ -2054,7 +1023,6 @@ export class PayableApi extends BaseAPI {
      * @param {number} planId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PayableApi
      */
     public payableControllerInitializePremiumSubscriptionTransferSession(planId: number, options?: RawAxiosRequestConfig) {
         return PayableApiFp(this.configuration).payableControllerInitializePremiumSubscriptionTransferSession(planId, options).then((request) => request(this.axios, this.basePath));
@@ -2065,7 +1033,6 @@ export class PayableApi extends BaseAPI {
      * @param {number} planId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PayableApi
      */
     public payableControllerInitializeProductUploadSubscriptionTransferSession(planId: number, options?: RawAxiosRequestConfig) {
         return PayableApiFp(this.configuration).payableControllerInitializeProductUploadSubscriptionTransferSession(planId, options).then((request) => request(this.axios, this.basePath));
@@ -2077,7 +1044,6 @@ export class PayableApi extends BaseAPI {
      * @param {Array<string>} productIds 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PayableApi
      */
     public payableControllerInitializePromotionSubscriptionTransferSession(planId: number, productIds: Array<string>, options?: RawAxiosRequestConfig) {
         return PayableApiFp(this.configuration).payableControllerInitializePromotionSubscriptionTransferSession(planId, productIds, options).then((request) => request(this.axios, this.basePath));
@@ -2088,7 +1054,6 @@ export class PayableApi extends BaseAPI {
      * @param {string} paymentReference 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PayableApi
      */
     public payableControllerVerifyPaymentSession(paymentReference: string, options?: RawAxiosRequestConfig) {
         return PayableApiFp(this.configuration).payableControllerVerifyPaymentSession(paymentReference, options).then((request) => request(this.axios, this.basePath));
@@ -2099,7 +1064,6 @@ export class PayableApi extends BaseAPI {
 
 /**
  * PaymentApi - axios parameter creator
- * @export
  */
 export const PaymentApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -2392,6 +1356,45 @@ export const PaymentApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {PaymentFeedbackDTO} paymentFeedbackDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentControllerUnsuccessfulPaymentFeedback: async (paymentFeedbackDTO: PaymentFeedbackDTO, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'paymentFeedbackDTO' is not null or undefined
+            assertParamExists('paymentControllerUnsuccessfulPaymentFeedback', 'paymentFeedbackDTO', paymentFeedbackDTO)
+            const localVarPath = `/v1/vendor/payment/unsuccessful-payment-feedback`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(paymentFeedbackDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} paymentReference 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2475,7 +1478,6 @@ export const PaymentApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * PaymentApi - functional programming interface
- * @export
  */
 export const PaymentApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PaymentApiAxiosParamCreator(configuration)
@@ -2567,6 +1569,18 @@ export const PaymentApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {PaymentFeedbackDTO} paymentFeedbackDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async paymentControllerUnsuccessfulPaymentFeedback(paymentFeedbackDTO: PaymentFeedbackDTO, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.paymentControllerUnsuccessfulPaymentFeedback(paymentFeedbackDTO, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentApi.paymentControllerUnsuccessfulPaymentFeedback']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} paymentReference 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2594,7 +1608,6 @@ export const PaymentApiFp = function(configuration?: Configuration) {
 
 /**
  * PaymentApi - factory interface
- * @export
  */
 export const PaymentApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PaymentApiFp(configuration)
@@ -2665,6 +1678,15 @@ export const PaymentApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @param {PaymentFeedbackDTO} paymentFeedbackDTO 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        paymentControllerUnsuccessfulPaymentFeedback(paymentFeedbackDTO: PaymentFeedbackDTO, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.paymentControllerUnsuccessfulPaymentFeedback(paymentFeedbackDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {string} paymentReference 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -2686,16 +1708,12 @@ export const PaymentApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * PaymentApi - object-oriented interface
- * @export
- * @class PaymentApi
- * @extends {BaseAPI}
  */
 export class PaymentApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerFetchPaymentMethods(options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerFetchPaymentMethods(options).then((request) => request(this.axios, this.basePath));
@@ -2706,7 +1724,6 @@ export class PaymentApi extends BaseAPI {
      * @param {number} planId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerInitializePostAdSubscription(planId: number, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerInitializePostAdSubscription(planId, options).then((request) => request(this.axios, this.basePath));
@@ -2717,7 +1734,6 @@ export class PaymentApi extends BaseAPI {
      * @param {number} planId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerInitializePremiumSubscription(planId: number, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerInitializePremiumSubscription(planId, options).then((request) => request(this.axios, this.basePath));
@@ -2728,7 +1744,6 @@ export class PaymentApi extends BaseAPI {
      * @param {number} planId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerInitializePremiumSubscriptionTransferSession(planId: number, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerInitializePremiumSubscriptionTransferSession(planId, options).then((request) => request(this.axios, this.basePath));
@@ -2739,7 +1754,6 @@ export class PaymentApi extends BaseAPI {
      * @param {number} planId 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerInitializeProductUploadTransferSession(planId: number, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerInitializeProductUploadTransferSession(planId, options).then((request) => request(this.axios, this.basePath));
@@ -2751,7 +1765,6 @@ export class PaymentApi extends BaseAPI {
      * @param {Array<string>} productIds 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerInitializePromotionSubscription(planId: number, productIds: Array<string>, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerInitializePromotionSubscription(planId, productIds, options).then((request) => request(this.axios, this.basePath));
@@ -2763,7 +1776,6 @@ export class PaymentApi extends BaseAPI {
      * @param {Array<string>} productIds 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerInitializePromotionTransferSession(planId: number, productIds: Array<string>, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerInitializePromotionTransferSession(planId, productIds, options).then((request) => request(this.axios, this.basePath));
@@ -2771,10 +1783,19 @@ export class PaymentApi extends BaseAPI {
 
     /**
      * 
+     * @param {PaymentFeedbackDTO} paymentFeedbackDTO 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public paymentControllerUnsuccessfulPaymentFeedback(paymentFeedbackDTO: PaymentFeedbackDTO, options?: RawAxiosRequestConfig) {
+        return PaymentApiFp(this.configuration).paymentControllerUnsuccessfulPaymentFeedback(paymentFeedbackDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {string} paymentReference 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerVerifyBankPaymentTransfer(paymentReference: string, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerVerifyBankPaymentTransfer(paymentReference, options).then((request) => request(this.axios, this.basePath));
@@ -2785,7 +1806,6 @@ export class PaymentApi extends BaseAPI {
      * @param {string} paymentReference 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PaymentApi
      */
     public paymentControllerVerifyPaymentSession(paymentReference: string, options?: RawAxiosRequestConfig) {
         return PaymentApiFp(this.configuration).paymentControllerVerifyPaymentSession(paymentReference, options).then((request) => request(this.axios, this.basePath));
@@ -2796,7 +1816,6 @@ export class PaymentApi extends BaseAPI {
 
 /**
  * PremiumSubscriptionApi - axios parameter creator
- * @export
  */
 export const PremiumSubscriptionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -2996,7 +2015,6 @@ export const PremiumSubscriptionApiAxiosParamCreator = function (configuration?:
 
 /**
  * PremiumSubscriptionApi - functional programming interface
- * @export
  */
 export const PremiumSubscriptionApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PremiumSubscriptionApiAxiosParamCreator(configuration)
@@ -3065,7 +2083,6 @@ export const PremiumSubscriptionApiFp = function(configuration?: Configuration) 
 
 /**
  * PremiumSubscriptionApi - factory interface
- * @export
  */
 export const PremiumSubscriptionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PremiumSubscriptionApiFp(configuration)
@@ -3119,9 +2136,6 @@ export const PremiumSubscriptionApiFactory = function (configuration?: Configura
 
 /**
  * PremiumSubscriptionApi - object-oriented interface
- * @export
- * @class PremiumSubscriptionApi
- * @extends {BaseAPI}
  */
 export class PremiumSubscriptionApi extends BaseAPI {
     /**
@@ -3130,7 +2144,6 @@ export class PremiumSubscriptionApi extends BaseAPI {
      * @param {CreatePremiumSubscriptionDto} createPremiumSubscriptionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PremiumSubscriptionApi
      */
     public premiumSubscriptionControllerCreatePremiumSubscription(plan: number, createPremiumSubscriptionDto: CreatePremiumSubscriptionDto, options?: RawAxiosRequestConfig) {
         return PremiumSubscriptionApiFp(this.configuration).premiumSubscriptionControllerCreatePremiumSubscription(plan, createPremiumSubscriptionDto, options).then((request) => request(this.axios, this.basePath));
@@ -3140,7 +2153,6 @@ export class PremiumSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PremiumSubscriptionApi
      */
     public premiumSubscriptionControllerFetchPremiumSubscriptionPlans(options?: RawAxiosRequestConfig) {
         return PremiumSubscriptionApiFp(this.configuration).premiumSubscriptionControllerFetchPremiumSubscriptionPlans(options).then((request) => request(this.axios, this.basePath));
@@ -3150,7 +2162,6 @@ export class PremiumSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PremiumSubscriptionApi
      */
     public premiumSubscriptionControllerFetchUserPremiumSubscription(options?: RawAxiosRequestConfig) {
         return PremiumSubscriptionApiFp(this.configuration).premiumSubscriptionControllerFetchUserPremiumSubscription(options).then((request) => request(this.axios, this.basePath));
@@ -3160,7 +2171,6 @@ export class PremiumSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PremiumSubscriptionApi
      */
     public premiumSubscriptionControllerRegisterSubscriptionInquiry(options?: RawAxiosRequestConfig) {
         return PremiumSubscriptionApiFp(this.configuration).premiumSubscriptionControllerRegisterSubscriptionInquiry(options).then((request) => request(this.axios, this.basePath));
@@ -3172,7 +2182,6 @@ export class PremiumSubscriptionApi extends BaseAPI {
      * @param {PremiumSubscriptionUpdateVendorProfileDto} premiumSubscriptionUpdateVendorProfileDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PremiumSubscriptionApi
      */
     public premiumSubscriptionControllerUpdateVendorProfile(plan: number, premiumSubscriptionUpdateVendorProfileDto: PremiumSubscriptionUpdateVendorProfileDto, options?: RawAxiosRequestConfig) {
         return PremiumSubscriptionApiFp(this.configuration).premiumSubscriptionControllerUpdateVendorProfile(plan, premiumSubscriptionUpdateVendorProfileDto, options).then((request) => request(this.axios, this.basePath));
@@ -3183,7 +2192,6 @@ export class PremiumSubscriptionApi extends BaseAPI {
 
 /**
  * ProductApi - axios parameter creator
- * @export
  */
 export const ProductApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -3397,7 +2405,6 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * ProductApi - functional programming interface
- * @export
  */
 export const ProductApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductApiAxiosParamCreator(configuration)
@@ -3468,7 +2475,6 @@ export const ProductApiFp = function(configuration?: Configuration) {
 
 /**
  * ProductApi - factory interface
- * @export
  */
 export const ProductApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProductApiFp(configuration)
@@ -3524,9 +2530,6 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * ProductApi - object-oriented interface
- * @export
- * @class ProductApi
- * @extends {BaseAPI}
  */
 export class ProductApi extends BaseAPI {
     /**
@@ -3534,7 +2537,6 @@ export class ProductApi extends BaseAPI {
      * @param {CreateProductDto} createProductDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public vendorProductControllerCreateProduct(createProductDto: CreateProductDto, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).vendorProductControllerCreateProduct(createProductDto, options).then((request) => request(this.axios, this.basePath));
@@ -3545,7 +2547,6 @@ export class ProductApi extends BaseAPI {
      * @param {number} productId Product Id
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public vendorProductControllerDeleteProduct(productId: number, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).vendorProductControllerDeleteProduct(productId, options).then((request) => request(this.axios, this.basePath));
@@ -3557,7 +2558,6 @@ export class ProductApi extends BaseAPI {
      * @param {number} pageSize Page size
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public vendorProductControllerFetchProducts(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).vendorProductControllerFetchProducts(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -3567,7 +2567,6 @@ export class ProductApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public vendorProductControllerGenerateProductId(options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).vendorProductControllerGenerateProductId(options).then((request) => request(this.axios, this.basePath));
@@ -3579,7 +2578,6 @@ export class ProductApi extends BaseAPI {
      * @param {UpdateProductDto} updateProductDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductApi
      */
     public vendorProductControllerUpdateProduct(productId: number, updateProductDto: UpdateProductDto, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).vendorProductControllerUpdateProduct(productId, updateProductDto, options).then((request) => request(this.axios, this.basePath));
@@ -3590,7 +2588,6 @@ export class ProductApi extends BaseAPI {
 
 /**
  * ProductUploadSubscriptionApi - axios parameter creator
- * @export
  */
 export const ProductUploadSubscriptionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -3744,7 +2741,6 @@ export const ProductUploadSubscriptionApiAxiosParamCreator = function (configura
 
 /**
  * ProductUploadSubscriptionApi - functional programming interface
- * @export
  */
 export const ProductUploadSubscriptionApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProductUploadSubscriptionApiAxiosParamCreator(configuration)
@@ -3800,7 +2796,6 @@ export const ProductUploadSubscriptionApiFp = function(configuration?: Configura
 
 /**
  * ProductUploadSubscriptionApi - factory interface
- * @export
  */
 export const ProductUploadSubscriptionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProductUploadSubscriptionApiFp(configuration)
@@ -3844,9 +2839,6 @@ export const ProductUploadSubscriptionApiFactory = function (configuration?: Con
 
 /**
  * ProductUploadSubscriptionApi - object-oriented interface
- * @export
- * @class ProductUploadSubscriptionApi
- * @extends {BaseAPI}
  */
 export class ProductUploadSubscriptionApi extends BaseAPI {
     /**
@@ -3855,7 +2847,6 @@ export class ProductUploadSubscriptionApi extends BaseAPI {
      * @param {CreateProductUploadSubscriptionDto} createProductUploadSubscriptionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductUploadSubscriptionApi
      */
     public productUploadSubscriptionControllerCreateProductUploadSubscriptionPlan(plan: number, createProductUploadSubscriptionDto: CreateProductUploadSubscriptionDto, options?: RawAxiosRequestConfig) {
         return ProductUploadSubscriptionApiFp(this.configuration).productUploadSubscriptionControllerCreateProductUploadSubscriptionPlan(plan, createProductUploadSubscriptionDto, options).then((request) => request(this.axios, this.basePath));
@@ -3865,7 +2856,6 @@ export class ProductUploadSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductUploadSubscriptionApi
      */
     public productUploadSubscriptionControllerFetchProductUploadSubscriptionPlan(options?: RawAxiosRequestConfig) {
         return ProductUploadSubscriptionApiFp(this.configuration).productUploadSubscriptionControllerFetchProductUploadSubscriptionPlan(options).then((request) => request(this.axios, this.basePath));
@@ -3875,7 +2865,6 @@ export class ProductUploadSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductUploadSubscriptionApi
      */
     public productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options?: RawAxiosRequestConfig) {
         return ProductUploadSubscriptionApiFp(this.configuration).productUploadSubscriptionControllerFetchProductUploadSubscriptionPlans(options).then((request) => request(this.axios, this.basePath));
@@ -3885,7 +2874,6 @@ export class ProductUploadSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProductUploadSubscriptionApi
      */
     public productUploadSubscriptionControllerFetchUserProductUploadSubscription(options?: RawAxiosRequestConfig) {
         return ProductUploadSubscriptionApiFp(this.configuration).productUploadSubscriptionControllerFetchUserProductUploadSubscription(options).then((request) => request(this.axios, this.basePath));
@@ -3896,7 +2884,6 @@ export class ProductUploadSubscriptionApi extends BaseAPI {
 
 /**
  * ProfileApi - axios parameter creator
- * @export
  */
 export const ProfileApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -4055,7 +3042,6 @@ export const ProfileApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * ProfileApi - functional programming interface
- * @export
  */
 export const ProfileApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ProfileApiAxiosParamCreator(configuration)
@@ -4112,7 +3098,6 @@ export const ProfileApiFp = function(configuration?: Configuration) {
 
 /**
  * ProfileApi - factory interface
- * @export
  */
 export const ProfileApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ProfileApiFp(configuration)
@@ -4157,16 +3142,12 @@ export const ProfileApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * ProfileApi - object-oriented interface
- * @export
- * @class ProfileApi
- * @extends {BaseAPI}
  */
 export class ProfileApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProfileApi
      */
     public vendorProfileControllerFetchVendorProfile(options?: RawAxiosRequestConfig) {
         return ProfileApiFp(this.configuration).vendorProfileControllerFetchVendorProfile(options).then((request) => request(this.axios, this.basePath));
@@ -4177,7 +3158,6 @@ export class ProfileApi extends BaseAPI {
      * @param {UpdateVendorProfileDto} updateVendorProfileDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProfileApi
      */
     public vendorProfileControllerUpdateUserRole(updateVendorProfileDto: UpdateVendorProfileDto, options?: RawAxiosRequestConfig) {
         return ProfileApiFp(this.configuration).vendorProfileControllerUpdateUserRole(updateVendorProfileDto, options).then((request) => request(this.axios, this.basePath));
@@ -4188,7 +3168,6 @@ export class ProfileApi extends BaseAPI {
      * @param {UpdateVendorProfileDto} updateVendorProfileDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProfileApi
      */
     public vendorProfileControllerUpdateVendorProfile(updateVendorProfileDto: UpdateVendorProfileDto, options?: RawAxiosRequestConfig) {
         return ProfileApiFp(this.configuration).vendorProfileControllerUpdateVendorProfile(updateVendorProfileDto, options).then((request) => request(this.axios, this.basePath));
@@ -4199,7 +3178,6 @@ export class ProfileApi extends BaseAPI {
      * @param {UpdateVendorProfileLogoDto} updateVendorProfileLogoDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ProfileApi
      */
     public vendorProfileControllerUpdateVendorProfileLogo(updateVendorProfileLogoDto: UpdateVendorProfileLogoDto, options?: RawAxiosRequestConfig) {
         return ProfileApiFp(this.configuration).vendorProfileControllerUpdateVendorProfileLogo(updateVendorProfileLogoDto, options).then((request) => request(this.axios, this.basePath));
@@ -4210,7 +3188,6 @@ export class ProfileApi extends BaseAPI {
 
 /**
  * PromotionSubscriptionApi - axios parameter creator
- * @export
  */
 export const PromotionSubscriptionApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -4484,7 +3461,6 @@ export const PromotionSubscriptionApiAxiosParamCreator = function (configuration
 
 /**
  * PromotionSubscriptionApi - functional programming interface
- * @export
  */
 export const PromotionSubscriptionApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = PromotionSubscriptionApiAxiosParamCreator(configuration)
@@ -4576,7 +3552,6 @@ export const PromotionSubscriptionApiFp = function(configuration?: Configuration
 
 /**
  * PromotionSubscriptionApi - factory interface
- * @export
  */
 export const PromotionSubscriptionApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = PromotionSubscriptionApiFp(configuration)
@@ -4647,9 +3622,6 @@ export const PromotionSubscriptionApiFactory = function (configuration?: Configu
 
 /**
  * PromotionSubscriptionApi - object-oriented interface
- * @export
- * @class PromotionSubscriptionApi
- * @extends {BaseAPI}
  */
 export class PromotionSubscriptionApi extends BaseAPI {
     /**
@@ -4657,7 +3629,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
      * @param {CreatePromotionDto} createPromotionDto 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PromotionSubscriptionApi
      */
     public promotionSubscriptionControllerCreatePromotionSubscription(createPromotionDto: CreatePromotionDto, options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerCreatePromotionSubscription(createPromotionDto, options).then((request) => request(this.axios, this.basePath));
@@ -4668,7 +3639,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
      * @param {string} productIds Product IDs
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PromotionSubscriptionApi
      */
     public promotionSubscriptionControllerFetchProductsInfo(productIds: string, options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerFetchProductsInfo(productIds, options).then((request) => request(this.axios, this.basePath));
@@ -4678,7 +3648,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PromotionSubscriptionApi
      */
     public promotionSubscriptionControllerFetchPromotionPlans(options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerFetchPromotionPlans(options).then((request) => request(this.axios, this.basePath));
@@ -4690,7 +3659,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
      * @param {number} pageSize Page size
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PromotionSubscriptionApi
      */
     public promotionSubscriptionControllerFetchUserProducts(page: number, pageSize: number, options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerFetchUserProducts(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -4700,7 +3668,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PromotionSubscriptionApi
      */
     public promotionSubscriptionControllerFetchUserPromotionPlan(options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerFetchUserPromotionPlan(options).then((request) => request(this.axios, this.basePath));
@@ -4710,7 +3677,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PromotionSubscriptionApi
      */
     public promotionSubscriptionControllerFetchUserPromotions(options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerFetchUserPromotions(options).then((request) => request(this.axios, this.basePath));
@@ -4721,7 +3687,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
      * @param {number} planId Plan ID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof PromotionSubscriptionApi
      */
     public promotionSubscriptionControllerUpdateUserPromotionPlan(planId: number, options?: RawAxiosRequestConfig) {
         return PromotionSubscriptionApiFp(this.configuration).promotionSubscriptionControllerUpdateUserPromotionPlan(planId, options).then((request) => request(this.axios, this.basePath));
@@ -4732,7 +3697,6 @@ export class PromotionSubscriptionApi extends BaseAPI {
 
 /**
  * SubscriptionsApi - axios parameter creator
- * @export
  */
 export const SubscriptionsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -4774,7 +3738,6 @@ export const SubscriptionsApiAxiosParamCreator = function (configuration?: Confi
 
 /**
  * SubscriptionsApi - functional programming interface
- * @export
  */
 export const SubscriptionsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SubscriptionsApiAxiosParamCreator(configuration)
@@ -4795,7 +3758,6 @@ export const SubscriptionsApiFp = function(configuration?: Configuration) {
 
 /**
  * SubscriptionsApi - factory interface
- * @export
  */
 export const SubscriptionsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SubscriptionsApiFp(configuration)
@@ -4813,16 +3775,12 @@ export const SubscriptionsApiFactory = function (configuration?: Configuration, 
 
 /**
  * SubscriptionsApi - object-oriented interface
- * @export
- * @class SubscriptionsApi
- * @extends {BaseAPI}
  */
 export class SubscriptionsApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SubscriptionsApi
      */
     public subscriptionControllerFetchSubscriptions(options?: RawAxiosRequestConfig) {
         return SubscriptionsApiFp(this.configuration).subscriptionControllerFetchSubscriptions(options).then((request) => request(this.axios, this.basePath));
@@ -4833,7 +3791,6 @@ export class SubscriptionsApi extends BaseAPI {
 
 /**
  * WebhookApi - axios parameter creator
- * @export
  */
 export const WebhookApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -4875,7 +3832,6 @@ export const WebhookApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * WebhookApi - functional programming interface
- * @export
  */
 export const WebhookApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = WebhookApiAxiosParamCreator(configuration)
@@ -4896,7 +3852,6 @@ export const WebhookApiFp = function(configuration?: Configuration) {
 
 /**
  * WebhookApi - factory interface
- * @export
  */
 export const WebhookApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = WebhookApiFp(configuration)
@@ -4914,16 +3869,12 @@ export const WebhookApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * WebhookApi - object-oriented interface
- * @export
- * @class WebhookApi
- * @extends {BaseAPI}
  */
 export class WebhookApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof WebhookApi
      */
     public payableControllerPayableWebhookSession(options?: RawAxiosRequestConfig) {
         return WebhookApiFp(this.configuration).payableControllerPayableWebhookSession(options).then((request) => request(this.axios, this.basePath));

@@ -98,27 +98,23 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { IconExternalLink, IconSearch } from '@tabler/icons-react';
 import { Box, Button, Flex, Image, Stack, TextInput, Title } from '@mantine/core';
-import useSearch from '@/core/hooks/search/use-search';
 
 const HomeHeader = () => {
+  const router = useRouter();
   const [searchInput, setSearchInput] = useState('');
-  const [activeQuery, setActiveQuery] = useState('');
-  const [isClimateButtonHovered, setIsClimateButtonHovered] = useState(false);
-
-  const { isFetching } = useSearch({
-    currentPage: 1,
-    pageSize: 20,
-    searchQuery: activeQuery,
-    state: '',
-    city: '',
-  });
+  const [isNavigating, setIsNavigating] = useState(false);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsNavigating(true);
+    
     if (searchInput.trim()) {
-      setActiveQuery(searchInput);
+      router.push(`/search?query=${encodeURIComponent(searchInput.trim())}`);
+    } else {
+      router.push('/search');
     }
   };
 
@@ -146,7 +142,7 @@ const HomeHeader = () => {
           Best Deals. Everything Animals
         </Title>
 
-        <Flex w="100%" justify="flex-start" align="flex-start" px={{ base: 16, md: 32 }}>
+        <Flex w="100%" justify="center" align="center" px={{ base: 16, md: 32 }}>
           <Button
             type="button"
             onClick={() => {
@@ -176,9 +172,9 @@ const HomeHeader = () => {
                 <IconExternalLink size={18} />
               </Box>
 
-              <span style={{ fontSize: 11, textDecoration: 'underline', opacity: 0.9 }}>
+              {/* <span style={{ fontSize: 11, textDecoration: 'underline', opacity: 0.9 }}>
                 Learn More
-              </span>
+              </span> */}
             </Box>
           </Button>
         </Flex>
@@ -207,13 +203,13 @@ const HomeHeader = () => {
                   mr={5}
                   variant="filled"
                   type="submit"
-                  loading={isFetching}
+                  loading={isNavigating}
                   style={{
                     borderRadius: '100px',
                     backgroundColor: '#317549'
                   }}
                 >
-                  <IconSearch size={16} color="white" />
+                  <IconSearch size={12} color="white" />
                 </Button>
               }
               rightSectionWidth={70}

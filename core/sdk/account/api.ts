@@ -23,102 +23,23 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
-/**
- * 
- * @export
- * @interface AccountInfo
- */
 export interface AccountInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'firstName': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'lastName': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'phoneNumber': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'state': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'city': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'role': AccountInfoRoleEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'status': AccountInfoStatusEnum;
-    /**
-     * 
-     * @type {string}
-     * @memberof AccountInfo
-     */
     'referralCode': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountInfo
-     */
     'isProfileUpdated': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountInfo
-     */
     'isAccountDisabled': boolean;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof AccountInfo
-     */
     'isProductUploadSubscriptionActive': boolean;
-    /**
-     * 
-     * @type {number}
-     * @memberof AccountInfo
-     */
     'productUploadLimit': number;
+    'referralSource': string;
 }
 
 export const AccountInfoRoleEnum = {
@@ -138,28 +59,17 @@ export const AccountInfoStatusEnum = {
 
 export type AccountInfoStatusEnum = typeof AccountInfoStatusEnum[keyof typeof AccountInfoStatusEnum];
 
-/**
- * 
- * @export
- * @interface AddListItemDTO
- */
 export interface AddListItemDTO {
     /**
      * ID of the item.
-     * @type {string}
-     * @memberof AddListItemDTO
      */
     'itemId': string;
     /**
      * Type of the list item.
-     * @type {string}
-     * @memberof AddListItemDTO
      */
     'itemType': AddListItemDTOItemTypeEnum;
     /**
      * Type of the list entity.
-     * @type {string}
-     * @memberof AddListItemDTO
      */
     'entityType': AddListItemDTOEntityTypeEnum;
 }
@@ -180,185 +90,73 @@ export const AddListItemDTOEntityTypeEnum = {
 
 export type AddListItemDTOEntityTypeEnum = typeof AddListItemDTOEntityTypeEnum[keyof typeof AddListItemDTOEntityTypeEnum];
 
-/**
- * 
- * @export
- * @interface CommunityInfo
- */
 export interface CommunityInfo {
-    /**
-     * 
-     * @type {Array<CommunityUserInfo>}
-     * @memberof CommunityInfo
-     */
     'followers': Array<CommunityUserInfo>;
-    /**
-     * 
-     * @type {Array<CommunityUserInfo>}
-     * @memberof CommunityInfo
-     */
     'following': Array<CommunityUserInfo>;
 }
-/**
- * 
- * @export
- * @interface CommunityUserInfo
- */
 export interface CommunityUserInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof CommunityUserInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommunityUserInfo
-     */
     'email': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommunityUserInfo
-     */
     'phoneNumber': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommunityUserInfo
-     */
     'role': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommunityUserInfo
-     */
     'avatar': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof CommunityUserInfo
-     */
     'name': string;
 }
-/**
- * 
- * @export
- * @interface ContactUsDTO
- */
 export interface ContactUsDTO {
     /**
      * The name of the user
-     * @type {string}
-     * @memberof ContactUsDTO
      */
     'name': string;
     /**
      * The email of the user
-     * @type {string}
-     * @memberof ContactUsDTO
      */
     'email': string;
     /**
      * The subject of the message
-     * @type {string}
-     * @memberof ContactUsDTO
      */
     'subject': string;
     /**
      * The message from the user
-     * @type {string}
-     * @memberof ContactUsDTO
      */
     'message': string;
 }
-/**
- * 
- * @export
- * @interface DeleteAccountDTO
- */
 export interface DeleteAccountDTO {
     /**
      * Current account password.
-     * @type {string}
-     * @memberof DeleteAccountDTO
      */
     'password': string;
 }
-/**
- * 
- * @export
- * @interface FileUploadResult
- */
 export interface FileUploadResult {
-    /**
-     * 
-     * @type {string}
-     * @memberof FileUploadResult
-     */
     'url': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof FileUploadResult
-     */
     'public_id': string;
 }
-/**
- * 
- * @export
- * @interface FollowCommunityUserContactsDTO
- */
 export interface FollowCommunityUserContactsDTO {
     /**
      * String Array of phone contacts
-     * @type {string}
-     * @memberof FollowCommunityUserContactsDTO
      */
     'phoneContacts': string;
 }
-/**
- * 
- * @export
- * @interface FollowCommunityUserContactsWithNamesDTO
- */
 export interface FollowCommunityUserContactsWithNamesDTO {
     /**
      * Array of phone contacts
-     * @type {Array<PhoneContactDto>}
-     * @memberof FollowCommunityUserContactsWithNamesDTO
      */
     'phoneContacts': Array<PhoneContactDto>;
 }
-/**
- * 
- * @export
- * @interface ListItemInfo
- */
 export interface ListItemInfo {
     /**
      * List Item ID
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'id': string;
     /**
      * List Item Type
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'itemType': ListItemInfoItemTypeEnum;
     /**
      * ID of the item.
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'itemId': string;
     /**
      * Type of the list entity.
-     * @type {string}
-     * @memberof ListItemInfo
      */
     'entityType': ListItemInfoEntityTypeEnum;
 }
@@ -379,300 +177,117 @@ export const ListItemInfoEntityTypeEnum = {
 
 export type ListItemInfoEntityTypeEnum = typeof ListItemInfoEntityTypeEnum[keyof typeof ListItemInfoEntityTypeEnum];
 
-/**
- * 
- * @export
- * @interface NotificationInfo
- */
 export interface NotificationInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationInfo
-     */
     'title': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationInfo
-     */
     'message': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationInfo
-     */
     'notificationType': string;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof NotificationInfo
-     */
     'isRead': boolean;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationInfo
-     */
     'createdAt': string;
-    /**
-     * 
-     * @type {NotificationProductInfo}
-     * @memberof NotificationInfo
-     */
     'product'?: NotificationProductInfo;
 }
-/**
- * 
- * @export
- * @interface NotificationProductInfo
- */
 export interface NotificationProductInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationProductInfo
-     */
     'id'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationProductInfo
-     */
     'name'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationProductInfo
-     */
     'description'?: string;
-    /**
-     * 
-     * @type {string}
-     * @memberof NotificationProductInfo
-     */
     'price'?: string;
 }
-/**
- * 
- * @export
- * @interface NotificationsResponse
- */
 export interface NotificationsResponse {
-    /**
-     * 
-     * @type {Array<NotificationInfo>}
-     * @memberof NotificationsResponse
-     */
     'notifications': Array<NotificationInfo>;
-    /**
-     * 
-     * @type {number}
-     * @memberof NotificationsResponse
-     */
     'totalPages': number;
-    /**
-     * 
-     * @type {boolean}
-     * @memberof NotificationsResponse
-     */
     'hasNextPage': boolean;
 }
-/**
- * 
- * @export
- * @interface PhoneContactDto
- */
 export interface PhoneContactDto {
     /**
      * Name of the phone contact
-     * @type {string}
-     * @memberof PhoneContactDto
      */
     'name': string;
     /**
      * Phone number of the phone contact
-     * @type {string}
-     * @memberof PhoneContactDto
      */
     'phone': string;
 }
-/**
- * 
- * @export
- * @interface PhoneContactInfo
- */
 export interface PhoneContactInfo {
-    /**
-     * 
-     * @type {string}
-     * @memberof PhoneContactInfo
-     */
     'id': string;
-    /**
-     * 
-     * @type {string}
-     * @memberof PhoneContactInfo
-     */
     'phoneNumber': string;
 }
-/**
- * 
- * @export
- * @interface UpdateAccountEmailDTO
- */
 export interface UpdateAccountEmailDTO {
     /**
      * New account email.
-     * @type {string}
-     * @memberof UpdateAccountEmailDTO
      */
     'newEmail': string;
 }
-/**
- * 
- * @export
- * @interface UpdateAccountLocationDTO
- */
 export interface UpdateAccountLocationDTO {
     /**
      * User state.
-     * @type {string}
-     * @memberof UpdateAccountLocationDTO
      */
     'state': string;
     /**
      * User city.
-     * @type {string}
-     * @memberof UpdateAccountLocationDTO
      */
     'city': string;
 }
-/**
- * 
- * @export
- * @interface UpdateAccountNameDTO
- */
 export interface UpdateAccountNameDTO {
     /**
      * New account first name.
-     * @type {string}
-     * @memberof UpdateAccountNameDTO
      */
     'firstName': string;
     /**
      * New account last name.
-     * @type {string}
-     * @memberof UpdateAccountNameDTO
      */
     'lastName': string;
 }
-/**
- * 
- * @export
- * @interface UpdateAccountPasswordDTO
- */
 export interface UpdateAccountPasswordDTO {
     /**
      * Current account password.
-     * @type {string}
-     * @memberof UpdateAccountPasswordDTO
      */
     'currentPassword': string;
     /**
      * New account password.
-     * @type {string}
-     * @memberof UpdateAccountPasswordDTO
      */
     'newPassword': string;
 }
-/**
- * 
- * @export
- * @interface UpdateAccountPhoneDTO
- */
 export interface UpdateAccountPhoneDTO {
     /**
      * New account phone.
-     * @type {string}
-     * @memberof UpdateAccountPhoneDTO
      */
     'newPhone': string;
     /**
      * Account password.
-     * @type {string}
-     * @memberof UpdateAccountPhoneDTO
      */
     'password': string;
 }
-/**
- * 
- * @export
- * @interface UpdateFCMTokenDTO
- */
 export interface UpdateFCMTokenDTO {
     /**
      * FCM token for push notifications generated by mobile device.
-     * @type {string}
-     * @memberof UpdateFCMTokenDTO
      */
     'fcmToken': string;
 }
-/**
- * 
- * @export
- * @interface UpdateLocationCoordinatesDTO
- */
 export interface UpdateLocationCoordinatesDTO {
     /**
      * Latitude of the user.
-     * @type {string}
-     * @memberof UpdateLocationCoordinatesDTO
      */
     'latitude': string;
     /**
      * Longitude of the user.
-     * @type {string}
-     * @memberof UpdateLocationCoordinatesDTO
      */
     'longitude': string;
 }
-/**
- * 
- * @export
- * @interface UpdateProfileImageDTO
- */
 export interface UpdateProfileImageDTO {
     /**
      * URL of the image to be uploaded.
-     * @type {string}
-     * @memberof UpdateProfileImageDTO
      */
     'imageUrl': string;
 }
-/**
- * 
- * @export
- * @interface VerifyNewAccountEmailDTO
- */
 export interface VerifyNewAccountEmailDTO {
     /**
      * Activation token (OTP)
-     * @type {string}
-     * @memberof VerifyNewAccountEmailDTO
      */
     'otp': string;
 }
 
 /**
  * CommunityApi - axios parameter creator
- * @export
  */
 export const CommunityApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -865,7 +480,6 @@ export const CommunityApiAxiosParamCreator = function (configuration?: Configura
 
 /**
  * CommunityApi - functional programming interface
- * @export
  */
 export const CommunityApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = CommunityApiAxiosParamCreator(configuration)
@@ -933,7 +547,6 @@ export const CommunityApiFp = function(configuration?: Configuration) {
 
 /**
  * CommunityApi - factory interface
- * @export
  */
 export const CommunityApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = CommunityApiFp(configuration)
@@ -986,16 +599,12 @@ export const CommunityApiFactory = function (configuration?: Configuration, base
 
 /**
  * CommunityApi - object-oriented interface
- * @export
- * @class CommunityApi
- * @extends {BaseAPI}
  */
 export class CommunityApi extends BaseAPI {
     /**
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CommunityApi
      */
     public communityControllerFetchCommunityRecords(options?: RawAxiosRequestConfig) {
         return CommunityApiFp(this.configuration).communityControllerFetchCommunityRecords(options).then((request) => request(this.axios, this.basePath));
@@ -1005,7 +614,6 @@ export class CommunityApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CommunityApi
      */
     public communityControllerFetchExistingUsers(options?: RawAxiosRequestConfig) {
         return CommunityApiFp(this.configuration).communityControllerFetchExistingUsers(options).then((request) => request(this.axios, this.basePath));
@@ -1016,7 +624,6 @@ export class CommunityApi extends BaseAPI {
      * @param {number} userId Followed user id.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CommunityApi
      */
     public communityControllerFollowCommunityUser(userId: number, options?: RawAxiosRequestConfig) {
         return CommunityApiFp(this.configuration).communityControllerFollowCommunityUser(userId, options).then((request) => request(this.axios, this.basePath));
@@ -1027,7 +634,6 @@ export class CommunityApi extends BaseAPI {
      * @param {FollowCommunityUserContactsDTO} followCommunityUserContactsDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CommunityApi
      */
     public communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO: FollowCommunityUserContactsDTO, options?: RawAxiosRequestConfig) {
         return CommunityApiFp(this.configuration).communityControllerFollowCommunityUserContacts(followCommunityUserContactsDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1038,7 +644,6 @@ export class CommunityApi extends BaseAPI {
      * @param {FollowCommunityUserContactsWithNamesDTO} followCommunityUserContactsWithNamesDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof CommunityApi
      */
     public communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO: FollowCommunityUserContactsWithNamesDTO, options?: RawAxiosRequestConfig) {
         return CommunityApiFp(this.configuration).communityControllerFollowCommunityUserContactsWithNames(followCommunityUserContactsWithNamesDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1049,7 +654,6 @@ export class CommunityApi extends BaseAPI {
 
 /**
  * ManageContactInfoApi - axios parameter creator
- * @export
  */
 export const ManageContactInfoApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1253,7 +857,6 @@ export const ManageContactInfoApiAxiosParamCreator = function (configuration?: C
 
 /**
  * ManageContactInfoApi - functional programming interface
- * @export
  */
 export const ManageContactInfoApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = ManageContactInfoApiAxiosParamCreator(configuration)
@@ -1323,7 +926,6 @@ export const ManageContactInfoApiFp = function(configuration?: Configuration) {
 
 /**
  * ManageContactInfoApi - factory interface
- * @export
  */
 export const ManageContactInfoApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = ManageContactInfoApiFp(configuration)
@@ -1378,9 +980,6 @@ export const ManageContactInfoApiFactory = function (configuration?: Configurati
 
 /**
  * ManageContactInfoApi - object-oriented interface
- * @export
- * @class ManageContactInfoApi
- * @extends {BaseAPI}
  */
 export class ManageContactInfoApi extends BaseAPI {
     /**
@@ -1388,7 +987,6 @@ export class ManageContactInfoApi extends BaseAPI {
      * @param {UpdateAccountEmailDTO} updateAccountEmailDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ManageContactInfoApi
      */
     public accountControllerUpdateAccountEmail(updateAccountEmailDTO: UpdateAccountEmailDTO, options?: RawAxiosRequestConfig) {
         return ManageContactInfoApiFp(this.configuration).accountControllerUpdateAccountEmail(updateAccountEmailDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1399,7 +997,6 @@ export class ManageContactInfoApi extends BaseAPI {
      * @param {UpdateAccountLocationDTO} updateAccountLocationDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ManageContactInfoApi
      */
     public accountControllerUpdateAccountLocation(updateAccountLocationDTO: UpdateAccountLocationDTO, options?: RawAxiosRequestConfig) {
         return ManageContactInfoApiFp(this.configuration).accountControllerUpdateAccountLocation(updateAccountLocationDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1410,7 +1007,6 @@ export class ManageContactInfoApi extends BaseAPI {
      * @param {UpdateAccountNameDTO} updateAccountNameDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ManageContactInfoApi
      */
     public accountControllerUpdateAccountName(updateAccountNameDTO: UpdateAccountNameDTO, options?: RawAxiosRequestConfig) {
         return ManageContactInfoApiFp(this.configuration).accountControllerUpdateAccountName(updateAccountNameDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1421,7 +1017,6 @@ export class ManageContactInfoApi extends BaseAPI {
      * @param {UpdateAccountPhoneDTO} updateAccountPhoneDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ManageContactInfoApi
      */
     public accountControllerUpdateAccountPhone(updateAccountPhoneDTO: UpdateAccountPhoneDTO, options?: RawAxiosRequestConfig) {
         return ManageContactInfoApiFp(this.configuration).accountControllerUpdateAccountPhone(updateAccountPhoneDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1432,7 +1027,6 @@ export class ManageContactInfoApi extends BaseAPI {
      * @param {VerifyNewAccountEmailDTO} verifyNewAccountEmailDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof ManageContactInfoApi
      */
     public accountControllerVerifyNewAccountEmail(verifyNewAccountEmailDTO: VerifyNewAccountEmailDTO, options?: RawAxiosRequestConfig) {
         return ManageContactInfoApiFp(this.configuration).accountControllerVerifyNewAccountEmail(verifyNewAccountEmailDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1443,7 +1037,6 @@ export class ManageContactInfoApi extends BaseAPI {
 
 /**
  * MeApi - axios parameter creator
- * @export
  */
 export const MeApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1680,7 +1273,6 @@ export const MeApiAxiosParamCreator = function (configuration?: Configuration) {
 
 /**
  * MeApi - functional programming interface
- * @export
  */
 export const MeApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = MeApiAxiosParamCreator(configuration)
@@ -1761,7 +1353,6 @@ export const MeApiFp = function(configuration?: Configuration) {
 
 /**
  * MeApi - factory interface
- * @export
  */
 export const MeApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = MeApiFp(configuration)
@@ -1824,9 +1415,6 @@ export const MeApiFactory = function (configuration?: Configuration, basePath?: 
 
 /**
  * MeApi - object-oriented interface
- * @export
- * @class MeApi
- * @extends {BaseAPI}
  */
 export class MeApi extends BaseAPI {
     /**
@@ -1834,7 +1422,6 @@ export class MeApi extends BaseAPI {
      * @param {DeleteAccountDTO} deleteAccountDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeApi
      */
     public accountControllerDeleteAccount(deleteAccountDTO: DeleteAccountDTO, options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).accountControllerDeleteAccount(deleteAccountDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1844,7 +1431,6 @@ export class MeApi extends BaseAPI {
      * 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeApi
      */
     public accountControllerGetDetailedAccountInfo(options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).accountControllerGetDetailedAccountInfo(options).then((request) => request(this.axios, this.basePath));
@@ -1855,7 +1441,6 @@ export class MeApi extends BaseAPI {
      * @param {UpdateAccountPasswordDTO} updateAccountPasswordDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeApi
      */
     public accountControllerUpdateAccountPassword(updateAccountPasswordDTO: UpdateAccountPasswordDTO, options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).accountControllerUpdateAccountPassword(updateAccountPasswordDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1866,7 +1451,6 @@ export class MeApi extends BaseAPI {
      * @param {UpdateFCMTokenDTO} updateFCMTokenDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeApi
      */
     public accountControllerUpdateFcmToken(updateFCMTokenDTO: UpdateFCMTokenDTO, options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).accountControllerUpdateFcmToken(updateFCMTokenDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1877,7 +1461,6 @@ export class MeApi extends BaseAPI {
      * @param {UpdateLocationCoordinatesDTO} updateLocationCoordinatesDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeApi
      */
     public accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO: UpdateLocationCoordinatesDTO, options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).accountControllerUpdateLocationCoordinates(updateLocationCoordinatesDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1888,7 +1471,6 @@ export class MeApi extends BaseAPI {
      * @param {UpdateProfileImageDTO} updateProfileImageDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof MeApi
      */
     public accountControllerUpdateProfileImage(updateProfileImageDTO: UpdateProfileImageDTO, options?: RawAxiosRequestConfig) {
         return MeApiFp(this.configuration).accountControllerUpdateProfileImage(updateProfileImageDTO, options).then((request) => request(this.axios, this.basePath));
@@ -1899,7 +1481,6 @@ export class MeApi extends BaseAPI {
 
 /**
  * NotificationsApi - axios parameter creator
- * @export
  */
 export const NotificationsApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -1989,7 +1570,6 @@ export const NotificationsApiAxiosParamCreator = function (configuration?: Confi
 
 /**
  * NotificationsApi - functional programming interface
- * @export
  */
 export const NotificationsApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = NotificationsApiAxiosParamCreator(configuration)
@@ -2024,7 +1604,6 @@ export const NotificationsApiFp = function(configuration?: Configuration) {
 
 /**
  * NotificationsApi - factory interface
- * @export
  */
 export const NotificationsApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = NotificationsApiFp(configuration)
@@ -2053,9 +1632,6 @@ export const NotificationsApiFactory = function (configuration?: Configuration, 
 
 /**
  * NotificationsApi - object-oriented interface
- * @export
- * @class NotificationsApi
- * @extends {BaseAPI}
  */
 export class NotificationsApi extends BaseAPI {
     /**
@@ -2064,7 +1640,6 @@ export class NotificationsApi extends BaseAPI {
      * @param {number} [pageSize] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationsApi
      */
     public accountNotificationControllerGetNotifications(page?: number, pageSize?: number, options?: RawAxiosRequestConfig) {
         return NotificationsApiFp(this.configuration).accountNotificationControllerGetNotifications(page, pageSize, options).then((request) => request(this.axios, this.basePath));
@@ -2075,7 +1650,6 @@ export class NotificationsApi extends BaseAPI {
      * @param {number} [notificationId] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof NotificationsApi
      */
     public accountNotificationControllerReadNotification(notificationId?: number, options?: RawAxiosRequestConfig) {
         return NotificationsApiFp(this.configuration).accountNotificationControllerReadNotification(notificationId, options).then((request) => request(this.axios, this.basePath));
@@ -2085,8 +1659,111 @@ export class NotificationsApi extends BaseAPI {
 
 
 /**
+ * ReferralSourceApi - axios parameter creator
+ */
+export const ReferralSourceApiAxiosParamCreator = function (configuration?: Configuration) {
+    return {
+        /**
+         * 
+         * @param {string} referralSource Referral Source e.g Facebook, Twitter
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountControllerUpdateAccountInfo: async (referralSource: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'referralSource' is not null or undefined
+            assertParamExists('accountControllerUpdateAccountInfo', 'referralSource', referralSource)
+            const localVarPath = `/v1/account/me/update-referral-source`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (referralSource !== undefined) {
+                localVarQueryParameter['referralSource'] = referralSource;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+    }
+};
+
+/**
+ * ReferralSourceApi - functional programming interface
+ */
+export const ReferralSourceApiFp = function(configuration?: Configuration) {
+    const localVarAxiosParamCreator = ReferralSourceApiAxiosParamCreator(configuration)
+    return {
+        /**
+         * 
+         * @param {string} referralSource Referral Source e.g Facebook, Twitter
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async accountControllerUpdateAccountInfo(referralSource: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AccountInfo>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.accountControllerUpdateAccountInfo(referralSource, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ReferralSourceApi.accountControllerUpdateAccountInfo']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+    }
+};
+
+/**
+ * ReferralSourceApi - factory interface
+ */
+export const ReferralSourceApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
+    const localVarFp = ReferralSourceApiFp(configuration)
+    return {
+        /**
+         * 
+         * @param {string} referralSource Referral Source e.g Facebook, Twitter
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        accountControllerUpdateAccountInfo(referralSource: string, options?: RawAxiosRequestConfig): AxiosPromise<AccountInfo> {
+            return localVarFp.accountControllerUpdateAccountInfo(referralSource, options).then((request) => request(axios, basePath));
+        },
+    };
+};
+
+/**
+ * ReferralSourceApi - object-oriented interface
+ */
+export class ReferralSourceApi extends BaseAPI {
+    /**
+     * 
+     * @param {string} referralSource Referral Source e.g Facebook, Twitter
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public accountControllerUpdateAccountInfo(referralSource: string, options?: RawAxiosRequestConfig) {
+        return ReferralSourceApiFp(this.configuration).accountControllerUpdateAccountInfo(referralSource, options).then((request) => request(this.axios, this.basePath));
+    }
+}
+
+
+
+/**
  * SupportApi - axios parameter creator
- * @export
  */
 export const SupportApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -2130,7 +1807,6 @@ export const SupportApiAxiosParamCreator = function (configuration?: Configurati
 
 /**
  * SupportApi - functional programming interface
- * @export
  */
 export const SupportApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SupportApiAxiosParamCreator(configuration)
@@ -2152,7 +1828,6 @@ export const SupportApiFp = function(configuration?: Configuration) {
 
 /**
  * SupportApi - factory interface
- * @export
  */
 export const SupportApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = SupportApiFp(configuration)
@@ -2171,9 +1846,6 @@ export const SupportApiFactory = function (configuration?: Configuration, basePa
 
 /**
  * SupportApi - object-oriented interface
- * @export
- * @class SupportApi
- * @extends {BaseAPI}
  */
 export class SupportApi extends BaseAPI {
     /**
@@ -2181,7 +1853,6 @@ export class SupportApi extends BaseAPI {
      * @param {ContactUsDTO} contactUsDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof SupportApi
      */
     public supportControllerContactUs(contactUsDTO: ContactUsDTO, options?: RawAxiosRequestConfig) {
         return SupportApiFp(this.configuration).supportControllerContactUs(contactUsDTO, options).then((request) => request(this.axios, this.basePath));
@@ -2192,7 +1863,6 @@ export class SupportApi extends BaseAPI {
 
 /**
  * UploadApi - axios parameter creator
- * @export
  */
 export const UploadApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -2294,7 +1964,6 @@ export const UploadApiAxiosParamCreator = function (configuration?: Configuratio
 
 /**
  * UploadApi - functional programming interface
- * @export
  */
 export const UploadApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UploadApiAxiosParamCreator(configuration)
@@ -2333,7 +2002,6 @@ export const UploadApiFp = function(configuration?: Configuration) {
 
 /**
  * UploadApi - factory interface
- * @export
  */
 export const UploadApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UploadApiFp(configuration)
@@ -2366,9 +2034,6 @@ export const UploadApiFactory = function (configuration?: Configuration, basePat
 
 /**
  * UploadApi - object-oriented interface
- * @export
- * @class UploadApi
- * @extends {BaseAPI}
  */
 export class UploadApi extends BaseAPI {
     /**
@@ -2378,7 +2043,6 @@ export class UploadApi extends BaseAPI {
      * @param {File} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UploadApi
      */
     public imageUploadControllerUploadFile(fileName?: string, file?: File, options?: RawAxiosRequestConfig) {
         return UploadApiFp(this.configuration).imageUploadControllerUploadFile(fileName, file, options).then((request) => request(this.axios, this.basePath));
@@ -2392,16 +2056,12 @@ export class UploadApi extends BaseAPI {
      * @param {File} [file] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UploadApi
      */
     public imageUploadControllerUploadImage(type?: ImageUploadControllerUploadImageTypeEnum, fileName?: string, file?: File, options?: RawAxiosRequestConfig) {
         return UploadApiFp(this.configuration).imageUploadControllerUploadImage(type, fileName, file, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
-/**
- * @export
- */
 export const ImageUploadControllerUploadImageTypeEnum = {
     Thumbnail: 'thumbnail',
     Logo: 'logo',
@@ -2415,7 +2075,6 @@ export type ImageUploadControllerUploadImageTypeEnum = typeof ImageUploadControl
 
 /**
  * UserListApi - axios parameter creator
- * @export
  */
 export const UserListApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
@@ -2536,7 +2195,6 @@ export const UserListApiAxiosParamCreator = function (configuration?: Configurat
 
 /**
  * UserListApi - functional programming interface
- * @export
  */
 export const UserListApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = UserListApiAxiosParamCreator(configuration)
@@ -2584,7 +2242,6 @@ export const UserListApiFp = function(configuration?: Configuration) {
 
 /**
  * UserListApi - factory interface
- * @export
  */
 export const UserListApiFactory = function (configuration?: Configuration, basePath?: string, axios?: AxiosInstance) {
     const localVarFp = UserListApiFp(configuration)
@@ -2623,9 +2280,6 @@ export const UserListApiFactory = function (configuration?: Configuration, baseP
 
 /**
  * UserListApi - object-oriented interface
- * @export
- * @class UserListApi
- * @extends {BaseAPI}
  */
 export class UserListApi extends BaseAPI {
     /**
@@ -2634,7 +2288,6 @@ export class UserListApi extends BaseAPI {
      * @param {AddListItemDTO} addListItemDTO 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserListApi
      */
     public listItemControllerAddItemToList(addListItemDTO: AddListItemDTO, options?: RawAxiosRequestConfig) {
         return UserListApiFp(this.configuration).listItemControllerAddItemToList(addListItemDTO, options).then((request) => request(this.axios, this.basePath));
@@ -2645,7 +2298,6 @@ export class UserListApi extends BaseAPI {
      * @summary Get all list items for the current user
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserListApi
      */
     public listItemControllerGetUserList(options?: RawAxiosRequestConfig) {
         return UserListApiFp(this.configuration).listItemControllerGetUserList(options).then((request) => request(this.axios, this.basePath));
@@ -2657,7 +2309,6 @@ export class UserListApi extends BaseAPI {
      * @param {number} itemId ID of the list item to remove
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
-     * @memberof UserListApi
      */
     public listItemControllerRemoveItemFromList(itemId: number, options?: RawAxiosRequestConfig) {
         return UserListApiFp(this.configuration).listItemControllerRemoveItemFromList(itemId, options).then((request) => request(this.axios, this.basePath));

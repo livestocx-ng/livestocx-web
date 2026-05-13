@@ -1,3 +1,4 @@
+import { BlogInfo } from '../sdk/communication';
 import { ProductInfo } from '../sdk/marketplace';
 import { VendorInfo } from '../sdk/vendor';
 import { BlogItem } from '../types/types';
@@ -16,7 +17,7 @@ export function formatVendorSlug(vendor: VendorInfo): string {
   return vendor?.slug.toLowerCase();
 }
 
-export function formatBlogSlug(blog: BlogItem): string {
+export function formatBlogSlug(blog: BlogInfo): string {
   const formattedTitle = blog?.title?.replace(/,/g, '').replace(/\s+/g, '-').toLowerCase() ?? '';
   return `${formattedTitle}_${blog?.id}`.toLowerCase();
 }

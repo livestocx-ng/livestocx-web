@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -7,12 +8,14 @@ import {
   IconLocation,
   IconMail,
   IconPhone,
+  IconChevronDown
 } from '@tabler/icons-react';
 import {
   Accordion,
   Box,
   Button,
-  Flex,
+  Container,
+  Grid,
   Group,
   Paper,
   Stack,
@@ -20,6 +23,10 @@ import {
   Textarea,
   TextInput,
   Title,
+  Badge,
+  ThemeIcon,
+  SimpleGrid,
+  rem,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
@@ -32,7 +39,6 @@ const ContactUs = () => {
   const { isPending, mutate } = useContactUsMutation();
 
   const form = useForm({
-    mode: 'uncontrolled',
     initialValues: {
       name: '',
       email: '',
@@ -57,201 +63,202 @@ const ContactUs = () => {
     mutate(payload);
   };
 
+  const contactInfo = [
+    { icon: IconPhone, label: 'Call Us', value: '+234 (0) 806 289 9590', color: 'blue' },
+    { icon: IconMail, label: 'Email Support', value: 'support@livestocx.com', color: 'orange' },
+    { icon: IconLocation, label: 'Our Office', value: 'Shimex Estate, Lugbe FCT, Nigeria', color: 'teal' },
+  ];
+
   return (
-    <Box
-      py={{ base: 100, sm: 100, md: 100 }}
-      style={{
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        background:
-          'linear-gradient(180deg, var(--mantine-color-gray-1) 30%, var(--mantine-color-gray-1) 5%)',
-      }}
-    >
-      <Title order={3} mb={40}>
-        Contact Us
-      </Title>
-      <Paper
-        shadow="lg"
-        p={{ base: 'md', sm: 'md', md: 'xl' }}
-        w={{ base: '90%', sm: '70%', md: '80%' }}
+    <Box bg="white" pb={100}>
+      {/* 1. HERO SECTION */}
+      <Box
+        pos="relative"
+        pt={{ base: 100, md: 160 }}
+        pb={{ base: 80, md: 120 }}
+        style={{
+          backgroundColor: '#0A1711',
+          overflow: 'hidden',
+        }}
       >
-        <Flex
-          direction={{ base: 'column-reverse', sm: 'column-reverse', md: 'row' }}
-          align="stretch"
-          justify="space-between"
-        >
-          <Paper
-            p={20}
-            // h='100%'
-            mt={{ base: 100, sm: 100, md: 0 }}
-            w={{ base: '100%', sm: '100%', md: '50%' }}
-            style={{
-              backgroundImage: 'url(/images/image_contact_us.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundRepeat: 'no-repeat',
-            }}
-          >
-            <Stack gap={80}>
-              <Title order={4} c="white">
-                Contact Information
-              </Title>
+        {/* Subtle Grid Background */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `
+              linear-gradient(#ffffff08 1px, transparent 1px),
+              linear-gradient(90deg, #ffffff08 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+            backgroundPosition: 'center center',
+            pointerEvents: 'none',
+          }}
+        />
 
-              <Stack gap={40}>
-                <Flex>
-                  <IconPhone color="white" />{' '}
-                  <Text c="white" fz={{ base: 14, sm: 14, md: 16 }}>
-                    +234 (0) 806 289 9590
-                  </Text>
-                </Flex>
-                <Flex>
-                  <IconMail color="white" />{' '}
-                  <Text c="white" fz={{ base: 14, sm: 14, md: 16 }}>
-                    support@livestocx.com
-                  </Text>
-                </Flex>
-                <Flex>
-                  <IconLocation color="white" />{' '}
-                  <Text c="white" fz={{ base: 14, sm: 14, md: 16 }}>
-                    Shimex Estate, Lugbe FCT, Nigeria
-                  </Text>
-                </Flex>
-              </Stack>
-              <Group gap="lg">
-                <IconBrandFacebook size={24} color="white" />
-                <IconBrandLinkedin size={24} color="white" />
-                <IconBrandInstagram size={24} color="white" />
-              </Group>
-            </Stack>
-          </Paper>
-
-          <Box w={{ base: '100%', sm: '100%', md: '45%' }}>
-            <form
-              style={{ width: '100%' }}
-              onSubmit={form.onSubmit((values) => {
-                submitHandler(values);
-              })}
+        <Container size="xl" pos="relative">
+          <Stack align="center" gap="xl" ta="center">
+            <Badge 
+              variant="outline" 
+              size="lg" 
+              radius="sm"
+              styles={{
+                root: {
+                  backgroundColor: '#4ade8015',
+                  border: '1px solid #4ade8040',
+                  color: '#4ade80',
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  letterSpacing: '1px'
+                },
+              }}
             >
-              <Stack gap={10}>
-                <TextInput
-                  size="lg"
-                  radius="0px"
-                  withAsterisk
-                  label="Name"
-                  style={{
-                    border: '0px',
-                  }}
-                  styles={{
-                    label: { fontSize: '16px' },
-                    root: { fontSize: '14px' },
-                    input: {
-                      fontSize: '14px',
-                      border: 'none',
-                      borderBottom: '1px solid #ced4da', // Adds only bottom border
-                      borderRadius: 0,
-                    },
-                  }}
-                  // key={form.key('email')}
-                  placeholder="Name"
-                  {...form.getInputProps('name')}
-                />
-                <TextInput
-                  size="lg"
-                  radius="0px"
-                  withAsterisk
-                  label="Email"
-                  style={{
-                    border: '0px',
-                  }}
-                  styles={{
-                    label: { fontSize: '16px' },
-                    root: { fontSize: '14px' },
-                    input: {
-                      fontSize: '14px',
-                      border: 'none',
-                      borderBottom: '1px solid #ced4da', // Adds only bottom border
-                      borderRadius: 0,
-                    },
-                  }}
-                  // key={form.key('email')}
-                  placeholder="tunde@gmail.com"
-                  {...form.getInputProps('email')}
-                />
-                <TextInput
-                  size="lg"
-                  radius="0px"
-                  withAsterisk
-                  label="Subject"
-                  style={{
-                    border: '0px',
-                  }}
-                  styles={{
-                    label: { fontSize: '16px' },
-                    root: { fontSize: '14px' },
-                    input: {
-                      fontSize: '14px',
-                      border: 'none',
-                      borderBottom: '1px solid #ced4da', // Adds only bottom border
-                      borderRadius: 0,
-                    },
-                  }}
-                  // key={form.key('email')}
-                  placeholder="Subject"
-                  {...form.getInputProps('subject')}
-                />
+              Get in Touch
+            </Badge>
+            
+            <Title 
+              order={1} 
+              lh={1.1} 
+              c="white"
+              style={{ fontSize: 'clamp(2.5rem, 6vw, 4rem)', fontWeight: 800, maxWidth: 800 }}
+            >
+              We're Here to Support Your <span style={{ color: '#4ade80' }}>Agricultural Journey</span>
+            </Title>
+            
+            <Text size="xl" c="gray.4" style={{ maxWidth: 600, lineHeight: 1.6 }}>
+              Have questions about our platform or need assistance with your livestock trade? Our team is ready to help.
+            </Text>
+          </Stack>
+        </Container>
+      </Box>
 
-                <Textarea
-                  withAsterisk
-                  label="Message"
-                  placeholder="Message"
-                  {...form.getInputProps('message')}
-                  styles={{
-                    label: { fontSize: '16px' },
-                    root: { fontSize: '14px' },
-                    input: {
-                      fontSize: '14px',
-                      border: 'none',
-                      borderBottom: '1px solid #ced4da', // Adds only bottom border
-                      borderRadius: 0,
-                    },
-                  }}
-                />
+      <Container size="xl" mt={-60} pos="relative">
+        <Grid gutter={40}>
+          {/* 2. CONTACT INFO CARDS */}
+          <Grid.Col span={{ base: 12, md: 4 }}>
+            <Stack gap="lg">
+              {contactInfo.map((info) => (
+                <Paper key={info.label} p="xl" withBorder>
+                  <Group align="flex-start">
+                    <ThemeIcon size={48} radius="md" variant="light" color={info.color}>
+                      <info.icon size={24} />
+                    </ThemeIcon>
+                    <Box style={{ flex: 1 }}>
+                      <Text fw={700} size="lg" mb={4}>{info.label}</Text>
+                      <Text c="dimmed" size="md">{info.value}</Text>
+                    </Box>
+                  </Group>
+                </Paper>
+              ))}
 
-                <Button
-                  radius="lg"
-                  h={50}
-                  variant="filled"
-                  mt={10}
-                  type="submit"
-                  loading={isPending}
-                >
-                  Submit
-                </Button>
-              </Stack>
-            </form>
-          </Box>
-        </Flex>
+              {/* <Paper p="xl" radius="md" withBorder shadow="md" bg="primary.9">
+                <Text fw={700} c="white" mb="md">Follow Our Community</Text>
+                <Group gap="md">
+                  {[IconBrandFacebook, IconBrandLinkedin, IconBrandInstagram].map((Icon, i) => (
+                    <ThemeIcon key={i} size={40} radius="xl" variant="filled" color="primary.8" style={{ cursor: 'pointer' }}>
+                      <Icon size={20} />
+                    </ThemeIcon>
+                  ))}
+                </Group>
+              </Paper> */}
+            </Stack>
+          </Grid.Col>
 
-        <Flex justify="center">
-          {' '}
-          <Title order={3} mt={100}>
-            FAQs
-          </Title>
-        </Flex>
-        <Accordion>
-          {platformFaqs.map((item) => (
-            <Accordion.Item key={item.value} value={item.value}>
-              <Accordion.Control fw={500} ff="heading" fz={16}>
-                {item.value}
-              </Accordion.Control>
-              <Accordion.Panel fz={14}>{item.description}</Accordion.Panel>
-            </Accordion.Item>
-          ))}
-        </Accordion>
-      </Paper>
+          {/* 3. CONTACT FORM */}
+          <Grid.Col span={{ base: 12, md: 8 }}>
+            <Paper p={{ base: 'xl', md: 50 }} radius="md" withBorder shadow="xl">
+              <Title order={2} mb="xs" style={{ fontSize: rem(32), fontWeight: 800 }}>Send Us a Message</Title>
+              <Text c="dimmed" mb={40}>Fields marked with an asterisk (*) are required.</Text>
+
+              <form onSubmit={form.onSubmit(submitHandler)}>
+                <Stack gap="xl">
+                  <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="xl">
+                    <TextInput
+                      label="Full Name"
+                      placeholder="John Doe"
+                      required
+                      size="md"
+                      {...form.getInputProps('name')}
+                    />
+                    <TextInput
+                      label="Email Address"
+                      placeholder="john@example.com"
+                      required
+                      size="md"
+                      {...form.getInputProps('email')}
+                    />
+                  </SimpleGrid>
+
+                  <TextInput
+                    label="Subject"
+                    placeholder="How can we help?"
+                    required
+                    size="md"
+                    {...form.getInputProps('subject')}
+                  />
+
+                  <Textarea
+                    label="Your Message"
+                    placeholder="Tell us more about your inquiry..."
+                    required
+                    minRows={5}
+                    size="md"
+                    {...form.getInputProps('message')}
+                  />
+
+                  <Button
+                    type="submit"
+                    size="lg"
+                    radius="md"
+                    loading={isPending}
+                    style={{
+                      height: rem(54),
+                      fontSize: rem(18),
+                      boxShadow: '0 10px 20px rgba(0,0,0,0.1)'
+                    }}
+                  >
+                    Send Message
+                  </Button>
+                </Stack>
+              </form>
+            </Paper>
+          </Grid.Col>
+        </Grid>
+
+        {/* 4. FAQ SECTION */}
+        <Box mt={120}>
+          <Stack align="center" gap="sm" mb={60} ta="center">
+            <Badge variant="filled" color="orange" radius="sm">Support Center</Badge>
+            <Title order={2} style={{ fontSize: rem(40), fontWeight: 800 }}>Frequently Asked Questions</Title>
+            <Text c="dimmed" size="lg" style={{ maxWidth: 600 }}>
+              Quick answers to common questions about the Livestocx platform.
+            </Text>
+          </Stack>
+
+          <Paper radius="md" withBorder p="md" mx={40}>
+            <Accordion 
+              variant="separated" 
+              chevron={<IconChevronDown size={20} />}
+              styles={{
+                item: { border: 'none', backgroundColor: 'transparent' },
+                control: { padding: rem(20), '&:hover': { backgroundColor: 'var(--mantine-color-gray-0)' } },
+                panel: { padding: rem(20), color: 'var(--mantine-color-gray-7)' }
+              }}
+            >
+              {platformFaqs.map((item) => (
+                <Accordion.Item key={item.value} value={item.value}>
+                  <Accordion.Control>
+                    <Text fw={600} size="lg">{item.value}</Text>
+                  </Accordion.Control>
+                  <Accordion.Panel>
+                    <Text lh={1.7}>{item.description}</Text>
+                  </Accordion.Panel>
+                </Accordion.Item>
+              ))}
+            </Accordion>
+          </Paper>
+        </Box>
+      </Container>
     </Box>
   );
 };

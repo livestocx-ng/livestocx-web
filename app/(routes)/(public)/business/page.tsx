@@ -226,7 +226,7 @@ const Business = () => {
               <Table style={{ minWidth: 150 }} w={800}>
                 <Table.Thead>
                   <Table.Tr>
-                    <Table.Th>{}</Table.Th>
+                    <Table.Th>{ }</Table.Th>
                     <Table.Th>Feature</Table.Th>
                     <Table.Th>Custom Business Website</Table.Th>
                     <Table.Th>Livestocx Platform</Table.Th>

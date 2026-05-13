@@ -1,260 +1,322 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 import { platformFeatures, teamMembers } from '@/core/utilities';
-import { IconBrandLinkedin, IconWallet } from '@tabler/icons-react';
-import { Anchor, Box, Card, Flex, Group, Paper, Stack, Text, Title } from '@mantine/core';
+import { 
+  IconBrandLinkedin, 
+  IconTarget, 
+  IconEye, 
+  IconChevronRight 
+} from '@tabler/icons-react';
+import { 
+  Box, 
+  Container, 
+  Title, 
+  Text, 
+  Stack, 
+  Grid, 
+  Paper, 
+  Group, 
+  Anchor, 
+  Badge, 
+  ThemeIcon, 
+  Card, 
+  SimpleGrid,
+  rem
+} from '@mantine/core';
 
 const AboutUs = () => {
   return (
-    <Box
-      py={{ base: 100, sm: 100, md: 100 }}
-      style={{
-        display: 'flex',
-        minHeight: '100vh',
-        alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        background:
-          'linear-gradient(180deg, var(--mantine-color-gray-1) 30%, var(--mantine-color-gray-1) 5%)',
-      }}
-    >
-      <Title order={3} mb={40}>
-        About Us
-      </Title>
-      <Stack gap={50}>
-        <Box px={20}>
-          <Text fz={{ base: 14, sm: 14, md: 16 }}>
-            Livestocx is an AI-powered livestock marketplace connecting small-holder livestock
-            farmers directly to sellers, evading middlemen and managing all their logistics while
-            reducing trade inefficiencies, low customer reach, unsustainable transport services, and
-            hence losses. Our platform provides a centralized, transparent, and efficient
-            marketplace where local livestock farmers connect with buyers from anywhere around
-            Nigeria, carry out transactions, and coordinate logistics.
-          </Text>
-        </Box>
-        <Flex
-          w="100%"
-          py={30}
-          gap={50}
-          direction={{ base: 'column', sm: 'column', md: 'row' }}
-          justify="center"
-          align="center"
-          style={{ backgroundColor: '#D0F8E6' }}
-        >
-          <Paper
-            c="white"
-            shadow="lg"
-            radius={20}
-            w={{ base: 300, sm: 300, md: 350 }}
-            h={230}
-            p={20}
-            style={{ display: 'flex', justifyContent: 'space-between', flexDirection: 'column' }}
-          >
-            <IconWallet color="black" />
-            <Title order={4} c="black">
-              Earn money in a few clicks
-            </Title>
-            <Text c="black" fz={14}>
-              Our platform provides a centralized, transparent, and efficient marketplace where
-              local livestock farmers connect with buyers from anywhere around Nigeria, carry out
-              transactions, and coordinate logistics.
-            </Text>
-          </Paper>
+    <Box bg="white" pb={100}>
+      {/* 1. HERO SECTION */}
+      <Box
+        pos="relative"
+        pt={{ base: 100, md: 160 }}
+        pb={{ base: 80, md: 120 }}
+        style={{
+          backgroundColor: '#0A1711',
+          overflow: 'hidden',
+        }}
+      >
+        {/* Subtle Grid Background */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `
+              linear-gradient(#ffffff08 1px, transparent 1px),
+              linear-gradient(90deg, #ffffff08 1px, transparent 1px)
+            `,
+            backgroundSize: '40px 40px',
+            backgroundPosition: 'center center',
+            pointerEvents: 'none',
+          }}
+        />
 
-          <Image
-            width={250}
-            height={200}
-            src="/images/image_about_art_1.png"
-            alt=""
-            objectFit="cover"
-          />
-        </Flex>
-
-        <Box>
-          <Flex justify="center" direction="column" align="center" w="100%" mb={20} px={20}>
-            <Title order={3}>Key Features</Title>
-            <Text fz={16} c="black" ta="center">
-              We have the following key features to support local, small-holder livestock keepers
-            </Text>
-          </Flex>
-
-          <Box>
-            <Flex
-              wrap="wrap"
-              gap="lg"
-              justify="center"
-              // align="stretch"
-              px="md"
-              py="xl"
+        <Container size="xl" pos="relative">
+          <Stack align="center" gap="xl" ta="center">
+            <Badge 
+              variant="outline" 
+              size="lg" 
+              radius="sm"
+              styles={{
+                root: {
+                  backgroundColor: '#4ade8015',
+                  border: '1px solid #4ade8040',
+                  color: '#4ade80',
+                  textTransform: 'uppercase',
+                  fontWeight: 600,
+                  letterSpacing: '1px'
+                },
+              }}
             >
-              {/* <Grid > */}
-              {platformFeatures.map((feature) => (
-                // <Grid.Col key={feature.title} span={{ base: 12, sm: 6 }}>
-                <Card
-                  shadow="sm"
-                  radius="md"
-                  padding="lg"
-                  withBorder
-                  key={feature.title}
-                  w={{ base: '100%', sm: '100%', md: 500 }}
-                >
-                  <Group align="flex-start" mb="md">
-                    <feature.icon size={32} color="orange" />
-                  </Group>
-                  <Title order={4} c="primary" mb={10}>
-                    {feature.title}
-                  </Title>
-                  <Text size="sm" c="black" lh={2}>
-                    {feature.description}
-                  </Text>
-                </Card>
-                // </Grid.Col>
-              ))}
-              {/* </Grid> */}
-            </Flex>
-          </Box>
-        </Box>
-
-        <Box>
-          <Flex
-            py={30}
-            gap={50}
-            // px={20}
-            direction={{ base: 'column', sm: 'column', md: 'row' }}
-            justify="center"
-            align="center"
-            style={{ backgroundColor: '#0EBE52' }}
-          >
-            <Text c="black" fz={{ base: 14, sm: 14, md: 16 }} pl={20}>
-              Our platform provides a centralized, transparent, and efficient marketplace where
-              local livestock farmers connect with buyers from anywhere around Nigeria, carry out
-              transactions, and coordinate logistics.
+              Our Journey & Purpose
+            </Badge>
+            
+            <Title 
+              order={1} 
+              lh={1.1} 
+              c="white"
+              style={{ fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', fontWeight: 800, maxWidth: 900 }}
+            >
+              Revolutionizing <span style={{ color: '#4ade80' }}>Livestock</span> Infrastructure Across Africa
+            </Title>
+            
+            <Text size="xl" c="gray.4" style={{ maxWidth: 750, lineHeight: 1.6 }}>
+              Livestocx is an AI-powered marketplace connecting over 50 million small-holder farmers directly to buyers, eliminating middlemen and building a resilient agricultural ecosystem.
             </Text>
+          </Stack>
+        </Container>
+      </Box>
 
-            <Image
-              width={350}
-              height={250}
-              src="/images/image_about_art_3.svg"
-              alt=""
-              style={{ paddingRight: '20px' }}
-              objectFit="cover"
-            />
-          </Flex>
+      {/* 2. THE PROBLEM & SOLUTION (NARRATIVE) */}
+      <Container size="xl" py={100}>
+        <Grid gutter={80} align="center">
+          <Grid.Col span={{ base: 12, md: 6 }}>
+            <Stack gap="xl">
+              <Title order={2} style={{ fontSize: rem(40), fontWeight: 800, lineHeight: 1.2 }}>
+                Empowering Farmers, <br />
+                <span style={{ color: '#006838' }}>Eliminating Trade Inefficiencies</span>
+              </Title>
+              <Text size="lg" c="gray.7" lh={1.8}>
+                Traditional livestock trade in Nigeria has long been plagued by fragmented markets, excessive transaction costs, and unsustainable logistics. Small-holder farmers often struggle with limited customer reach and losses due to trade inefficiencies.
+              </Text>
+              <Text size="lg" c="gray.7" lh={1.8}>
+                At Livestocx, we provide a centralized, transparent, and efficient digital platform. By leveraging AI and real-time data analytics, we ensure that local livestock farmers can connect with buyers anywhere, conduct secure transactions, and coordinate optimized logistics with unprecedented ease.
+              </Text>
+              
+              <Group gap="sm" mt="md">
+                <Badge variant="dot" color="primary" size="lg">Transparent Marketplace</Badge>
+                <Badge variant="dot" color="primary" size="lg">AI-Powered Insights</Badge>
+                <Badge variant="dot" color="primary" size="lg">Optimized Logistics</Badge>
+              </Group>
+            </Stack>
+          </Grid.Col>
+          <Grid.Col span={{ base: 12, md: 6 }}>
+             <Paper radius="32px" style={{ overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.1)' }}>
+               <Image 
+                 src="/images/image_about_art_1.png" 
+                 alt="Livestock farmers" 
+                 width={800} 
+                 height={600} 
+                 style={{ width: '100%', height: 'auto', display: 'block' }}
+               />
+             </Paper>
+          </Grid.Col>
+        </Grid>
+      </Container>
 
-          <Box
-            py={30}
-            w="100%"
-            px={{ base: 20, sm: 20, md: 100 }}
-            style={{
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              backgroundImage: 'url("/images/image_about_art_4.png")', // Replace with actual path
-            }}
-          >
-            <Flex justify="space-between">
-              <Stack gap="xl" w="100%">
-                <Paper
-                  p={{ base: 20, sm: 20, md: 'lg' }}
-                  radius="md"
-                  w={{ base: '100%', sm: '100%', md: '50%' }}
-                  style={{
-                    backdropFilter: 'blur(8px)', // <-- adds the blur effect
-                    WebkitBackdropFilter: 'blur(8px)', // for Safari support
-                    border: `1px solid primary`,
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                  }}
-                >
-                  <Title order={4} c="orange" mb="sm">
-                    Our Vision
-                  </Title>
-                  <Text c="white" size="sm">
-                    Our grand vision for Livestocx is to become the go-to livestock marketplace
-                    across Africa, transforming the livestock industry by connecting over 50 million
-                    small-holder farmers directly to sellers. In 5–10 years, we aim to have expanded
-                    our reach continent-wide, facilitating 10 million monthly sustainable and
-                    efficient livestock trade while significantly impacting the livelihoods of
-                    farmers.
-                  </Text>
-                </Paper>
-
-                <Paper
-                  radius="md"
-                  p={{ base: 20, sm: 20, md: 'lg' }}
-                  w={{ base: '100%', sm: '100%', md: '50%' }}
-                  style={{
-                    backdropFilter: 'blur(8px)', // <-- adds the blur effect
-                    WebkitBackdropFilter: 'blur(8px)', // for Safari support
-                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                    border: `1px solid primary`,
-                  }}
-                >
-                  <Title order={4} c="orange" mb="sm">
-                    Our Mission
-                  </Title>
-                  <Text c="white" size="sm">
-                    We are on a mission to revolutionize the livestock industry across Africa. Our
-                    mission is to empower small-holder farmers by connecting them directly to
-                    sellers, eliminating inefficiencies and middlemen. We leverage AI and innovative
-                    technologies to provide a transparent and sustainable marketplace, fostering
-                    economic growth, environmental responsibility, and community development.
-                    Through our commitment to inclusivity and customer-centric practices, we aim to
-                    create a lasting positive impact and contribute to the establishment of a more
-                    resilient and prosperous agricultural ecosystem in Africa.
-                  </Text>
-                </Paper>
-              </Stack>
-            </Flex>
-          </Box>
-        </Box>
-
-        <Box py={30}>
-          <Title order={2} mb="xl" ta="center">
-            Meet the Team
-          </Title>
-          <Flex
-            wrap="wrap"
-            gap="lg"
-            justify="center"
-            // align="stretch"
-            px="md"
-            py="xl"
-          >
-            {teamMembers.map((member) => (
-              <Card
-                withBorder
-                shadow="lg"
-                radius="md"
-                padding="lg"
-                key={member.name}
-                w={{ base: '100%', sm: '100%', md: 500 }}
+      {/* 3. MISSION & VISION (GLASSMORPHIC) */}
+      <Box 
+        py={120} 
+        pos="relative"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(10, 23, 17, 0.92), rgba(10, 23, 17, 0.92)), url("/images/image_about_art_4.png")',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <Container size="xl">
+          <Grid gutter={60}>
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              <Paper
+                p={40}
+                radius="24px"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  height: '100%'
+                }}
               >
-                <Flex direction={{ base: 'column', sm: 'row' }} justify="space-between" gap="lg">
-                  <Image
-                    alt={member.name}
-                    src={member.image}
-                    width={150}
-                    height={150}
-                    objectFit="cover"
-                  />
-                  <Stack gap="xs">
-                    <Title order={5} c="primary">
-                      {member.name}
-                    </Title>
-                    <Text fw={500}>{member.role}</Text>
-                    <Text size="sm" c="dimmed">
-                      {member.bio}
+                <Stack gap="xl">
+                  <ThemeIcon size={60} radius="xl" variant="filled" color="orange.6">
+                    <IconTarget size={32} />
+                  </ThemeIcon>
+                  <Box>
+                    <Title order={3} c="white" mb="md" style={{ fontSize: rem(28) }}>Our Mission</Title>
+                    <Text size="lg" c="gray.3" lh={1.8}>
+                      To revolutionize the livestock industry across Africa by empowering small-holder farmers. We leverage AI and innovative technologies to provide a transparent, sustainable marketplace that fosters economic growth, environmental responsibility, and community development.
                     </Text>
-                    <Anchor href={member.linkedin} target="_blank" rel="noopener">
-                      <IconBrandLinkedin color="primary" />
-                    </Anchor>
-                  </Stack>
-                </Flex>
+                  </Box>
+                  <Group gap={8} c="orange.4" style={{ cursor: 'default' }}>
+                    <Text fw={600}>Innovation First</Text>
+                    <IconChevronRight size={16} />
+                  </Group>
+                </Stack>
+              </Paper>
+            </Grid.Col>
+            
+            <Grid.Col span={{ base: 12, md: 6 }}>
+              <Paper
+                p={40}
+                radius="24px"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.03)',
+                  backdropFilter: 'blur(16px)',
+                  WebkitBackdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  height: '100%'
+                }}
+              >
+                <Stack gap="xl">
+                  <ThemeIcon size={60} radius="xl" variant="filled" color="orange.6">
+                    <IconEye size={32} />
+                  </ThemeIcon>
+                  <Box>
+                    <Title order={3} c="white" mb="md" style={{ fontSize: rem(28) }}>Our Vision</Title>
+                    <Text size="lg" c="gray.3" lh={1.8}>
+                      To become the leading livestock marketplace across Africa, facilitating 10 million monthly trades for 50 million farmers within the next decade. We aim to transform livelihoods and build a resilient agricultural ecosystem continent-wide.
+                    </Text>
+                  </Box>
+                  <Group gap={8} c="orange.4" style={{ cursor: 'default' }}>
+                    <Text fw={600}>Scaling Impact</Text>
+                    <IconChevronRight size={16} />
+                  </Group>
+                </Stack>
+              </Paper>
+            </Grid.Col>
+          </Grid>
+        </Container>
+      </Box>
+
+      {/* 4. KEY FEATURES SECTION */}
+      <Box py={100} bg="#f8fdfa">
+        <Container size="xl">
+          <Stack align="center" gap="sm" mb={80} ta="center">
+            <Badge variant="filled" color="primary" radius="sm">Our Strengths</Badge>
+            <Title order={2} style={{ fontSize: rem(40), fontWeight: 800 }}>Purpose-Built Features</Title>
+            <Text c="dimmed" size="lg" style={{ maxWidth: 650, lineHeight: 1.6 }}>
+              Strategic modules designed to optimize the livestock agricultural value chain and maximize farmer profitability.
+            </Text>
+          </Stack>
+          
+          <SimpleGrid cols={{ base: 1, md: 2 }} spacing={40}>
+            {platformFeatures.map((feature) => (
+              <Card 
+                key={feature.title} 
+                p={40} 
+                radius="20px" 
+                withBorder 
+                shadow="xs"
+                styles={{
+                  root: {
+                    backgroundColor: 'white',
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                      transform: 'translateY(-8px)',
+                      boxShadow: '0 20px 40px rgba(0,0,0,0.06)',
+                      borderColor: 'var(--mantine-color-primary-3)'
+                    }
+                  }
+                }}
+              >
+                <Group align="center" mb="xl">
+                  <ThemeIcon size={56} radius="lg" variant="light" color="primary">
+                    <feature.icon size={32} />
+                  </ThemeIcon>
+                  <Title order={4} c="primary.9" style={{ fontSize: rem(22) }}>{feature.title}</Title>
+                </Group>
+                <Text size="lg" c="gray.7" lh={1.8}>
+                  {feature.description}
+                </Text>
               </Card>
             ))}
-          </Flex>
-        </Box>
-      </Stack>
+          </SimpleGrid>
+        </Container>
+      </Box>
+
+      {/* 5. TEAM SECTION */}
+      <Container size="xl" py={120}>
+        <Stack align="center" gap="sm" mb={80} ta="center">
+          <Badge variant="filled" color="primary" radius="sm">The Innovators</Badge>
+          <Title order={2} style={{ fontSize: rem(40), fontWeight: 800 }}>Meet the Team</Title>
+          <Text c="dimmed" size="lg" style={{ maxWidth: 650, lineHeight: 1.6 }}>
+            A dedicated team of experts in sales, agriculture, technology, and design working together to redefine livestock trade.
+          </Text>
+        </Stack>
+
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing={30}>
+          {teamMembers.map((member) => (
+            <Paper 
+              key={member.name} 
+              p={30} 
+              radius="24px" 
+              withBorder 
+              shadow="md"
+              style={{
+                backgroundColor: 'white',
+                borderColor: '#f1f3f5'
+              }}
+            >
+              <Grid gutter="xl" align="center">
+                <Grid.Col span={{ base: 12, sm: 4 }}>
+                  <Box 
+                    pos="relative" 
+                    w={160} 
+                    h={160} 
+                    mx="auto"
+                    style={{
+                      borderRadius: '100%',
+                      overflow: 'hidden',
+                      border: '6px solid #f8f9fa',
+                      boxShadow: '0 8px 24px rgba(0,0,0,0.12)'
+                    }}
+                  >
+                    <Image
+                      alt={member.name}
+                      src={member.image}
+                      fill
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </Box>
+                </Grid.Col>
+                <Grid.Col span={{ base: 12, sm: 8 }}>
+                  <Stack gap={8}>
+                    <Group justify="space-between" align="center">
+                      <Title order={4} c="primary.9" style={{ fontSize: rem(20) }}>{member.name}</Title>
+                      <Anchor href={member.linkedin} target="_blank" rel="noopener">
+                        <ThemeIcon size={32} radius="xl" variant="light" color="blue">
+                          <IconBrandLinkedin size={20} />
+                        </ThemeIcon>
+                      </Anchor>
+                    </Group>
+                    <Text fw={700} size="sm" color="orange.7" tt="uppercase">
+                      {member.role}
+                    </Text>
+                    <Text size="md" c="gray.7" mt="sm" lh={1.6}>
+                      {member.bio}
+                    </Text>
+                  </Stack>
+                </Grid.Col>
+              </Grid>
+            </Paper>
+          ))}
+        </SimpleGrid>
+      </Container>
     </Box>
   );
 };

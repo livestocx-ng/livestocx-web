@@ -1,22 +1,24 @@
-import React, { createContext, useContext } from 'react';
-import { MantineTheme, useMantineTheme } from '@mantine/core';
-import { useLocalStorage } from '@mantine/hooks';
-import { AccountInfo, ListItemInfo } from '../sdk/account';
-import { AvailableStateInfo } from '../sdk/auth';
-import { TestimonialInfo } from '../sdk/communication';
-import { ProductDetails, ProductInfo, StoreInfo } from '../sdk/marketplace';
 import {
-  ChargeResponse,
-  PaymentMethod,
-  PremiumSubscriptionPlanDescription,
-  ProductUploadSubscriptionPlanInfo,
-  PromotionPlanDescription,
   VendorInfo,
+  PaymentMethod,
+  ChargeResponse,
   VendorProductInfo,
+  PromotionPlanDescription,
+  ProductUploadSubscriptionPlanInfo,
+  PremiumSubscriptionPlanDescription,
 } from '../sdk/vendor';
+import { useLocalStorage } from '@mantine/hooks';
+import { AvailableStateInfo } from '../sdk/auth';
+import React, { createContext, useContext } from 'react';
+import { AccountInfo, ListItemInfo } from '../sdk/account';
+import { MantineTheme, useMantineTheme } from '@mantine/core';
+import { BlogInfo, TestimonialInfo } from '../sdk/communication';
+import { ProductDetails, ProductInfo, StoreInfo } from '../sdk/marketplace';
 
 interface AppContextProps {
   authToken: string;
+  blogFeed: BlogInfo[];
+  blogFeedItem: BlogInfo | null;
   listItems: ListItemInfo[];
   productInfo: ProductInfo | null;
   storeInfo: StoreInfo | null;
@@ -41,6 +43,8 @@ interface AppContextProps {
   promotionPlans: PromotionPlanDescription[];
   productUploadSubscriptionPlans: ProductUploadSubscriptionPlanInfo[];
   paymentChargeSession: ChargeResponse | null;
+  setBlogFeed: (items: BlogInfo[]) => void;
+  setBlogFeedItem: (item: BlogInfo | null) => void;
   setPaymentChargeSession: (chargeSession: ChargeResponse | null) => void;
   setProductUploadSubscriptionPlans: (plans: ProductUploadSubscriptionPlanInfo[]) => void;
   setAuthToken: (authToken: string) => void;
@@ -73,6 +77,8 @@ interface AppContextProps {
 
 export const AppContext = createContext<AppContextProps>({
   theme: null,
+  blogFeed: [],
+  blogFeedItem: null,
   authToken: '',
   listItems: [],
   vendorProducts: [],
@@ -99,6 +105,8 @@ export const AppContext = createContext<AppContextProps>({
   marketPlaceProductsTotalPages: 0,
   productUploadSubscriptionPlans: [],
   paymentChargeSession: null,
+  setBlogFeed: () => {},
+  setBlogFeedItem: () => {},
   setPaymentChargeSession: () => {},
   setProductUploadSubscriptionPlans: () => {},
   setVendorProducts: () => {},
@@ -132,6 +140,22 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
 
   const [authToken, setAuthToken] = useLocalStorage<string>({
     key: 'authToken',
+  });
+
+  const [blogFeed, setBlogFeed] = useLocalStorage<BlogInfo[]>({
+    defaultValue: [],
+    key: 'blogFeed',
+    deserialize(value) {
+      return JSON.parse(value ?? '');
+    },
+  });
+
+  const [blogFeedItem, setBlogFeedItem] = useLocalStorage<BlogInfo | null>({
+    defaultValue: undefined,
+    key: 'blogFeedItem',
+    deserialize(value) {
+      return JSON.parse(value ?? '');
+    },
   });
 
   const [testimonials, setTestimonials] = useLocalStorage<TestimonialInfo[]>({
@@ -347,11 +371,15 @@ export const AppContextProvider = ({ children }: { children: React.ReactNode }) 
     <AppContext.Provider
       value={{
         theme,
+        blogFeed,
+        blogFeedItem,
         storeInfo,
         storeProducts,
         vendorProducts,
         productInfo,
         productDetails,
+        setBlogFeed,
+        setBlogFeedItem,
         setProductInfo,
         setVendorProducts,
         setProductDetails,

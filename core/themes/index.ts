@@ -56,7 +56,8 @@ export const theme = createTheme({
 
     return defaultResolvedColors;
   },
-  fontFamily: '"Roboto", sans-serif',
+  fontFamily: '"Poppins", sans-serif',
+  // fontFamily: '"Roboto", sans-serif',
   headings: {
     fontFamily: 'Gotham',
     sizes: {
