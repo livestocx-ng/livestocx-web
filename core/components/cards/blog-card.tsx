@@ -27,8 +27,8 @@ const BlogCard = ({ blog }: BlogCardProps) => {
 
 	return (
 		<Stack gap="md" style={{ height: '100%' }}>
-			<Link 
-				href={`/blog/${slug}`} 
+			<Link
+				href={`/blog/${slug}`}
 				style={{ display: 'block' }}
 				onClick={() => setBlogFeedItem(blog)}
 			>
@@ -57,23 +57,20 @@ const BlogCard = ({ blog }: BlogCardProps) => {
 					</Group>
 				</Group>
 
-				<Link 
-					href={`/blog/${slug}`} 
-					style={{ textDecoration: 'none' }}
+				<Title
+					order={3}
+					component={Link}
+					href={`/blog/${slug}`}
 					onClick={() => setBlogFeedItem(blog)}
+					size={rem(24)}
+					fw={700}
+					lh={1.3}
+					c="dark.9"
+					className="hover:text-green-800 transition-colors"
+					lineClamp={2}
 				>
-					<Title
-						order={3}
-						size={rem(24)}
-						fw={700}
-						lh={1.3}
-						c="dark.9"
-						className="hover:text-green-800 transition-colors"
-						lineClamp={2}
-					>
-						{blog.title}
-					</Title>
-				</Link>
+					{blog.title}
+				</Title>
 
 				<Text size="sm" c="dimmed" lh={1.6} lineClamp={4}>
 					{truncatedText}

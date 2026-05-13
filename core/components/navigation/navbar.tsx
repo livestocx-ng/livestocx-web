@@ -121,7 +121,7 @@ export function Navbar() {
                           {link.links.map((item) => (
                             <Menu.Item
                               key={item.label}
-                              component={(item.link.startsWith('http') ? 'a' : Link) as any}
+                              component={item.link.startsWith('http') ? 'a' : Link}
                               href={item.link}
                               target={item.link.startsWith('http') ? '_blank' : undefined}
                             >
@@ -223,7 +223,7 @@ export function Navbar() {
                     {link.links.map((item) => (
                       <NavLink
                         key={item.label}
-                        component={(item.link.startsWith('http') ? 'a' : Link) as any}
+                        component={item.link.startsWith('http') ? 'a' : Link}
                         href={item.link}
                         label={item.label}
                         onClick={toggle}

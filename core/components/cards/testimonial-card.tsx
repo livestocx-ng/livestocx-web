@@ -2,7 +2,7 @@ import { IconStarFilled } from '@tabler/icons-react';
 import { Avatar, Box, Group, Stack, Text } from '@mantine/core';
 import { TestimonialInfo } from '@/core/sdk/communication';
 
-export function TestimonialCard({ testimonial }: { testimonial: TestimonialInfo }) {
+export function TestimonialCard({ testimonial, width, backgroundColor = 'none' }: { testimonial: TestimonialInfo, width?: string, backgroundColor?: string }) {
   return (
     <Box
       p="md"
@@ -12,8 +12,9 @@ export function TestimonialCard({ testimonial }: { testimonial: TestimonialInfo 
         borderRadius: '10px',
         border: '1px solid #ccc',
       }}
+      bg={backgroundColor}
       mb={{ base: 'md', md: 0 }}
-      w={{ base: '100%', sm: '100%', md: '350px' }}
+      w={{ base: '100%', sm: '100%', md: width || '350px' }}
     >
       <Stack gap="md">
         <Group align="center" gap="sm">
