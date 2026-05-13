@@ -57,20 +57,23 @@ const BlogCard = ({ blog }: BlogCardProps) => {
 					</Group>
 				</Group>
 
-				<Title
-					order={3}
-					component={Link}
+				<Link
 					href={`/blog/${slug}`}
+					style={{ textDecoration: 'none' }}
 					onClick={() => setBlogFeedItem(blog)}
-					size={rem(24)}
-					fw={700}
-					lh={1.3}
-					c="dark.9"
-					className="hover:text-green-800 transition-colors"
-					lineClamp={2}
 				>
-					{blog.title}
-				</Title>
+					<Title
+						order={3}
+						size={rem(24)}
+						fw={700}
+						lh={1.3}
+						c="dark.9"
+						className="hover:text-green-800 transition-colors"
+						lineClamp={2}
+					>
+						{blog.title}
+					</Title>
+				</Link>
 
 				<Text size="sm" c="dimmed" lh={1.6} lineClamp={4}>
 					{truncatedText}
