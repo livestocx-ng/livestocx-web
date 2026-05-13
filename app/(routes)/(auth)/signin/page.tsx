@@ -387,7 +387,7 @@ const Signin = () => {
                 <Text c="gray.3" size="xs" tt="uppercase" fw={700}>Active Users</Text>
               </Box>
               <Box style={{ borderLeft: '3px solid #138C48', paddingLeft: 16 }}>
-                <Text fw={900} size="xl" c="white">50k+</Text>
+                <Text fw={900} size="xl" c="white">4k+</Text>
                 <Text c="gray.3" size="xs" tt="uppercase" fw={700}>Listings</Text>
               </Box>
             </Flex>
