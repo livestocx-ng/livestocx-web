@@ -433,7 +433,7 @@ const Signin = () => {
       >
         <Box
           style={{
-            background: '#fff',
+            // background: '#fff',
             borderRadius: 32,
             padding: '40px 24px',
             width: '100%',

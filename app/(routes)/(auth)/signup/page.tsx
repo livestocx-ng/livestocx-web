@@ -496,12 +496,12 @@ const Signup = () => {
       >
         <Box
           style={{
-            background: '#fff',
+            // background: '#fff',
             borderRadius: 32,
             padding: '32px 24px',
             width: '100%',
             maxWidth: 480,
-            boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
+            // boxShadow: '0 10px 40px rgba(0,0,0,0.06)',
           }}
         >
           <Title ta="center" order={2} mb={8} style={{ fontWeight: 800, fontSize: 26 }}>Sign Up</Title>
