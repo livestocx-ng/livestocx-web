@@ -125,7 +125,7 @@ const ResetPasswordVerification = () => {
           </Text>
           <Flex justify="center" align="center">
             <PinInput
-              length={6}
+              length={4}
               size="lg"
               gap={12}
               type={/^[0-9]*$/}
