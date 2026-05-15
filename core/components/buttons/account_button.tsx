@@ -50,6 +50,7 @@ export const AccountButton = ({ isScrolling }: { isScrolling: boolean }) => {
         onClick={handleClick}
         styles={{
           root: {
+            border: !isScrolling ? 'none' : '1px solid red',
             backgroundColor: isScrolling
               ? 'var(--mantine-color-primary-0)'
               : 'var(--mantine-color-primary-0)',

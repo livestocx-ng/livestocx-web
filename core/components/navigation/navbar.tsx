@@ -152,7 +152,7 @@ export function Navbar() {
 
             {/* Right section: Account and Sell button */}
             <Group>
-              <ChatConversationsButton isScrolling={scroll.y > 0} />
+              {/* <ChatConversationsButton isScrolling={scroll.y > 0} /> */}
               <AccountButton isScrolling={scroll.y > 0} />
               <Button
                 variant="filled"

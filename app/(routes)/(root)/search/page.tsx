@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState, Suspense } from 'react';
+import React, { useEffect, useState, Suspense, useMemo } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import {
   Box, Container, Title, Text, Flex, Loader, Pagination, Center, Grid,
@@ -9,9 +9,10 @@ import {
 import { useDisclosure } from '@mantine/hooks';
 import { IconFilter, IconSearch } from '@tabler/icons-react';
 import { useAppContext } from '@/core/context';
-import useSearch from '@/core/hooks/search/use-search';
+import useFetchMarketplaceProductsQuery from '@/core/hooks/marketplace/useSearchMarketplaceProductsQuery';
 import ProductCard from '@/core/components/cards/product_card';
 import { ProductInfo } from '@/core/sdk/marketplace';
+import { VendorProductInfoCategoryEnum } from '@/core/sdk/vendor';
 import useFetchAvailableStatesQuery from '@/core/hooks/public/useFetchAvailableStatesQuery';
 
 const SearchResults = () => {
@@ -51,9 +52,19 @@ const SearchResults = () => {
   }, [activeQuery, activeState, activeCity, activeCategory, activeInStock, activeIsNegotiable]);
 
   const {
+    authToken,
     marketplaceProducts,
     marketPlaceProductsTotalPages,
   } = useAppContext();
+
+  useEffect(() => {
+    if (!authToken) {
+      const currentPath = window.location.pathname + window.location.search;
+      // The signin page expects redirect_to without the leading slash based on its current implementation
+      const redirectTo = currentPath.startsWith('/') ? currentPath.slice(1) : currentPath;
+      router.push(`/signin?redirect_to=${encodeURIComponent(redirectTo)}`);
+    }
+  }, [authToken, router]);
 
   const getBooleanFilter = (val: string) => {
     if (val === 'Yes') return true;
@@ -67,11 +78,23 @@ const SearchResults = () => {
   const selectedStateObj = availableStates?.find(s => s.state === localFilters.state);
   const cityOptions = selectedStateObj?.lgas?.map(lga => ({ value: lga, label: lga })) || [];
 
+  const categoryOptions = useMemo(
+    () =>
+      Object.values(VendorProductInfoCategoryEnum).map((value) => ({
+        value,
+        label: value
+          .replace(/_/g, ' ')
+          .toLowerCase()
+          .replace(/(^\w|\s\w)/g, (match) => match.toUpperCase()),
+      })),
+    []
+  );
+
   // 3. Trigger search based purely on active URL parameters
-  const { isFetching } = useSearch({
-    currentPage: activePage,
-    pageSize: 20,
-    searchQuery: activeQuery,
+  const { isFetching } = useFetchMarketplaceProductsQuery({
+    page: activePage,
+    pageSize: 24,
+    query: activeQuery,
     state: activeState,
     city: activeCity,
     category: activeCategory,
@@ -125,11 +148,14 @@ const SearchResults = () => {
         // styles={{ label: { fontWeight: 600 } }}
       />
 
-      <TextInput
+      <Select
         label="Category"
-        placeholder="e.g. DOG"
-        value={localFilters.category}
-        onChange={(e) => setLocalFilters({ ...localFilters, category: e.currentTarget.value })}
+        placeholder="Select category"
+        data={categoryOptions}
+        searchable
+        clearable
+        value={localFilters.category || null}
+        onChange={(val) => setLocalFilters({ ...localFilters, category: val || '' })}
         // styles={{ label: { fontWeight: 600 } }}
       />
 
@@ -269,6 +295,11 @@ const SearchResults = () => {
                       align="flex-start"
                       justify={{ base: 'center', sm: 'flex-start' }}
                       gap={{ base: 10, sm: 10, md: 15 }}
+                      style={{ 
+                        filter: !authToken ? 'blur(8px)' : 'none',
+                        pointerEvents: !authToken ? 'none' : 'auto',
+                        transition: 'filter 0.3s ease'
+                      }}
                     >
                       {marketplaceProducts.map((item) => (
                         <ProductCard key={item.id} product={item as ProductInfo} />

@@ -141,7 +141,7 @@ const ProductDescriptionPage = ({ params }: PageProps) => {
                     Call Seller
                   </Button>
 
-                  <Button
+                  {/* <Button
                     fullWidth
                     style={{ backgroundColor: '#111111' }}
                     leftSection={<IconMessage size={16} />}
@@ -156,7 +156,7 @@ const ProductDescriptionPage = ({ params }: PageProps) => {
                     }}
                   >
                     Chat Seller
-                  </Button>
+                  </Button> */}
                 </Flex>
               </Stack>
             </Box>
