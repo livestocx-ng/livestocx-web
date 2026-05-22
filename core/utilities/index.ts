@@ -306,4 +306,15 @@ export const Sponsors: Sponsor[] = [
     name: 'Organisation of African, Caribbean and Pacific States (OACPS)',
     image: '/sponsors/oacps.jpg',
   },
+
+  {
+    name: "African Development Bank Group",
+    image:"/sponsors/adbgroup.png"
+  },
+
+  {
+    name: "Climate Investment Funds",
+    image: "/sponsors/cif.jpg"
+  }
+
 ];
