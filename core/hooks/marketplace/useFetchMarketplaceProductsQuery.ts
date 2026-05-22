@@ -17,7 +17,7 @@ export default function useFetchMarketplaceProductsQuery(payload: {
   return useQuery({
     queryKey: ['fetch-marketplace-products'],
     queryFn: async () => {
-      const pageSize = 20;
+      const pageSize = 80;
 
       if (payload.displayType === 'RECOMMENDED') {
         const response = await marketplaceApi.marketplaceControllerFetchRecommendedProducts(
