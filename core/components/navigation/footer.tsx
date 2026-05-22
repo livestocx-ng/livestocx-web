@@ -17,6 +17,7 @@ import {
   Title,
 } from '@mantine/core';
 import { Sponsors } from '@/core/utilities';
+import { shuffle } from 'lodash';
 
 export function Footer() {
   const pathname = usePathname();
@@ -51,7 +52,7 @@ export function Footer() {
             ease: 'linear',
           }}
         >
-          {[...Sponsors, ...Sponsors].map((sponsor, index) => (
+          {[...shuffle(Sponsors), ...shuffle(Sponsors)].map((sponsor, index) => (
             <Image
               key={`${sponsor.name}-${index}`}
               w={100}

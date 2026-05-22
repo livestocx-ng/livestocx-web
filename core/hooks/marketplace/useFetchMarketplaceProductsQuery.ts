@@ -25,8 +25,6 @@ export default function useFetchMarketplaceProductsQuery(payload: {
           pageSize
         );
 
-        console.log('[TOTAl--PAGES] :: ', response.data.totalPages);
-
         setMarketPlaceProductsCurrentPage(
           payload.currentPage < response.data.totalPages
             ? payload.currentPage + 1
