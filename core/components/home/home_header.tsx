@@ -110,7 +110,7 @@ const HomeHeader = () => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsNavigating(true);
-    
+
     if (searchInput.trim()) {
       router.push(`/search?query=${encodeURIComponent(searchInput.trim())}`);
     } else {
@@ -236,14 +236,21 @@ const HomeHeader = () => {
         `}
       </style>
 
-      <Stack px={20} py={{ base: 20, sm: 20, md: 40 }} gap={15} w="100%" align="center" style={{ position: 'relative', zIndex: 1 }}>
-        <Title 
-          order={3} 
-          c="white" 
-          style={{ 
+      <Stack
+        px={20}
+        py={{ base: 20, sm: 20, md: 40 }}
+        gap={15}
+        w="100%"
+        align="center"
+        style={{ position: 'relative', zIndex: 1 }}
+      >
+        <Title
+          order={3}
+          c="white"
+          style={{
             fontFamily: 'Gotham, sans-serif',
             letterSpacing: '-0.02em',
-            textShadow: '0 2px 4px rgba(0,0,0,0.1)'
+            textShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}
         >
           Best Deals. Everything Animals
@@ -270,7 +277,7 @@ const HomeHeader = () => {
                 transition: 'transform 0.2s ease',
                 '&:hover': {
                   transform: 'scale(1.02)',
-                }
+                },
               },
               inner: {
                 flexDirection: 'column',
@@ -289,15 +296,15 @@ const HomeHeader = () => {
         </Flex>
 
         <Flex gap="md">
-          <Link 
-            target="_blank" 
+          <Link
+            target="_blank"
             href="https://apps.apple.com/ng/app/livestocx/id6738842775"
             className="app-badge"
           >
             <Image src="/icons/icon_appstore.svg" alt="App Store" w={120} fit="contain" />
           </Link>
-          <Link 
-            target="_blank" 
+          <Link
+            target="_blank"
             href="https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile"
             className="app-badge"
           >
@@ -308,10 +315,7 @@ const HomeHeader = () => {
         {/* Streamlined Search Form */}
         <form style={{ width: '100%' }} onSubmit={handleSearchSubmit}>
           <Flex w="100%" justify="center">
-            <Box
-              className="animated-border-wrapper"
-              w={{ base: '100%', sm: '100%', md: '60%' }}
-            >
+            <Box className="animated-border-wrapper" w={{ base: '100%', sm: '100%', md: '60%' }}>
               <TextInput
                 size="lg"
                 placeholder="What are you looking for?"
@@ -332,7 +336,7 @@ const HomeHeader = () => {
                       boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
                       transition: 'all 0.2s ease',
                       position: 'relative',
-                      zIndex: 2
+                      zIndex: 2,
                     }}
                   >
                     <IconSearch size={16} color="white" />
@@ -343,7 +347,7 @@ const HomeHeader = () => {
                   root: {
                     position: 'relative',
                     zIndex: 2,
-                    width: '100%'
+                    width: '100%',
                   },
                   input: {
                     color: 'black',
@@ -357,8 +361,8 @@ const HomeHeader = () => {
                     boxShadow: 'none',
                     '&:focus': {
                       backgroundColor: '#ffffff',
-                    }
-                  }
+                    },
+                  },
                 }}
               />
             </Box>

@@ -1,19 +1,33 @@
 'use client';
 
-import React, { useEffect, useState, Suspense, useMemo } from 'react';
-import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import React, { Suspense, useEffect, useMemo, useState } from 'react';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { IconFilter, IconSearch } from '@tabler/icons-react';
 import {
-  Box, Container, Title, Text, Flex, Loader, Pagination, Center, Grid,
-  Paper, TextInput, Select, Button, Stack, Group, Drawer
+  Box,
+  Button,
+  Center,
+  Container,
+  Drawer,
+  Flex,
+  Grid,
+  Group,
+  Loader,
+  Pagination,
+  Paper,
+  Select,
+  Stack,
+  Text,
+  TextInput,
+  Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconFilter, IconSearch } from '@tabler/icons-react';
+import ProductCard from '@/core/components/cards/product_card';
 import { useAppContext } from '@/core/context';
 import useFetchMarketplaceProductsQuery from '@/core/hooks/marketplace/useSearchMarketplaceProductsQuery';
-import ProductCard from '@/core/components/cards/product_card';
+import useFetchAvailableStatesQuery from '@/core/hooks/public/useFetchAvailableStatesQuery';
 import { ProductInfo } from '@/core/sdk/marketplace';
 import { VendorProductInfoCategoryEnum } from '@/core/sdk/vendor';
-import useFetchAvailableStatesQuery from '@/core/hooks/public/useFetchAvailableStatesQuery';
 
 const SearchResults = () => {
   const searchParams = useSearchParams();
@@ -51,11 +65,7 @@ const SearchResults = () => {
     });
   }, [activeQuery, activeState, activeCity, activeCategory, activeInStock, activeIsNegotiable]);
 
-  const {
-    authToken,
-    marketplaceProducts,
-    marketPlaceProductsTotalPages,
-  } = useAppContext();
+  const { authToken, marketplaceProducts, marketPlaceProductsTotalPages } = useAppContext();
 
   useEffect(() => {
     if (!authToken) {
@@ -67,16 +77,20 @@ const SearchResults = () => {
   }, [authToken, router]);
 
   const getBooleanFilter = (val: string) => {
-    if (val === 'Yes') return true;
-    if (val === 'No') return false;
+    if (val === 'Yes') {
+      return true;
+    } else if (val === 'No') {
+      return false;
+    }
+
     return undefined;
   };
 
   const { data: availableStates } = useFetchAvailableStatesQuery();
 
-  const stateOptions = availableStates?.map(s => ({ value: s.state, label: s.state })) || [];
-  const selectedStateObj = availableStates?.find(s => s.state === localFilters.state);
-  const cityOptions = selectedStateObj?.lgas?.map(lga => ({ value: lga, label: lga })) || [];
+  const stateOptions = availableStates?.map((s) => ({ value: s.state, label: s.state })) || [];
+  const selectedStateObj = availableStates?.find((s) => s.state === localFilters.state);
+  const cityOptions = selectedStateObj?.lgas?.map((lga) => ({ value: lga, label: lga })) || [];
 
   const categoryOptions = useMemo(
     () =>
@@ -105,20 +119,48 @@ const SearchResults = () => {
   // Helper to update URL params
   const pushParams = (filters: typeof localFilters, newPage: number) => {
     const params = new URLSearchParams(searchParams.toString());
-    
-    if (filters.query) params.set('query', filters.query); else params.delete('query');
-    if (filters.state) params.set('state', filters.state); else params.delete('state');
-    if (filters.city) params.set('city', filters.city); else params.delete('city');
-    if (filters.category) params.set('category', filters.category); else params.delete('category');
-    
-    if (filters.inStock && filters.inStock !== 'Any') params.set('inStock', filters.inStock); 
-    else params.delete('inStock');
-    
-    if (filters.isNegotiable && filters.isNegotiable !== 'Any') params.set('isNegotiable', filters.isNegotiable); 
-    else params.delete('isNegotiable');
-    
-    if (newPage > 1) params.set('page', newPage.toString()); 
-    else params.delete('page');
+
+    if (filters.query) {
+      params.set('query', filters.query);
+    } else {
+      params.delete('query');
+    }
+
+    if (filters.state) {
+      params.set('state', filters.state);
+    } else {
+      params.delete('state');
+    }
+
+    if (filters.city) {
+      params.set('city', filters.city);
+    } else {
+      params.delete('city');
+    }
+
+    if (filters.category) {
+      params.set('category', filters.category);
+    } else {
+      params.delete('category');
+    }
+
+    if (filters.inStock && filters.inStock !== 'Any') {
+      params.set('inStock', filters.inStock);
+    } else {
+      params.delete('inStock');
+    }
+
+    if (filters.isNegotiable && filters.isNegotiable !== 'Any') {
+      params.set('isNegotiable', filters.isNegotiable);
+    } else {
+      params.delete('isNegotiable');
+    }
+
+    if (newPage > 1) {
+      params.set('page', newPage.toString());
+    } else {
+      params.delete('page');
+    }
 
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   };
@@ -130,7 +172,14 @@ const SearchResults = () => {
 
   const handlePageChange = (value: number) => {
     pushParams(
-      { query: activeQuery, state: activeState, city: activeCity, category: activeCategory, inStock: activeInStock, isNegotiable: activeIsNegotiable }, 
+      {
+        query: activeQuery,
+        state: activeState,
+        city: activeCity,
+        category: activeCategory,
+        inStock: activeInStock,
+        isNegotiable: activeIsNegotiable,
+      },
       value
     );
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -172,7 +221,7 @@ const SearchResults = () => {
 
       <Select
         label="City"
-        placeholder={localFilters.state ? "Select a city" : "Select state first"}
+        placeholder={localFilters.state ? 'Select a city' : 'Select state first'}
         data={cityOptions}
         searchable
         clearable
@@ -198,10 +247,10 @@ const SearchResults = () => {
         // styles={{ label: { fontWeight: 600 } }}
       />
 
-      <Button 
-        mt="md" 
-        fullWidth 
-        color="primary.9" 
+      <Button
+        mt="md"
+        fullWidth
+        color="primary.9"
         onClick={handleApplyFilters}
         leftSection={<IconSearch size={16} />}
       >
@@ -212,11 +261,11 @@ const SearchResults = () => {
 
   return (
     <>
-      <Drawer 
-        opened={opened} 
-        onClose={close} 
-        title={<Title order={4}>Filters</Title>} 
-        position="bottom" 
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title={<Title order={4}>Filters</Title>}
+        position="bottom"
         size="80%"
         padding="md"
         styles={{ title: { fontWeight: 700 } }}
@@ -225,103 +274,113 @@ const SearchResults = () => {
       </Drawer>
 
       <Box py={40} bg="gray.0" style={{ minHeight: '70vh', position: 'relative' }}>
-      {/* Grid Background with Bottom Fade */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: `
+        {/* Grid Background with Bottom Fade */}
+        <div
+          style={{
+            position: 'absolute',
+            inset: 0,
+            backgroundImage: `
             linear-gradient(#e5e7eb 1px, transparent 1px),
             linear-gradient(90deg, #e5e7eb 1px, transparent 1px)
           `,
-          backgroundSize: '40px 40px',
-          backgroundPosition: 'center top',
-          pointerEvents: 'none',
-          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
-          zIndex: 0,
-        }}
-      />
-      
-      <Box px={20} style={{ position: 'relative', zIndex: 1 }}>
-        <Grid gutter={20}>
-          {/* Sidebar Filters */}
-          <Grid.Col span={{ base: 12, md: 2 }} visibleFrom="md">
-            <Paper p="md" radius="md" withBorder shadow="sm">
-              <Group gap={8} mb="md">
-                <IconFilter size={20} />
-                <Title order={4}>Filters</Title>
+            backgroundSize: '40px 40px',
+            backgroundPosition: 'center top',
+            pointerEvents: 'none',
+            maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
+            zIndex: 0,
+          }}
+        />
+
+        <Box px={20} style={{ position: 'relative', zIndex: 1 }}>
+          <Grid gutter={20}>
+            {/* Sidebar Filters */}
+            <Grid.Col span={{ base: 12, md: 2 }} visibleFrom="md">
+              <Paper p="md" radius="md" withBorder shadow="sm">
+                <Group gap={8} mb="md">
+                  <IconFilter size={20} />
+                  <Title order={4}>Filters</Title>
+                </Group>
+                {renderFilters()}
+              </Paper>
+            </Grid.Col>
+
+            {/* Search Results */}
+            <Grid.Col span={{ base: 12, md: 10 }}>
+              <Group justify="space-between" align="flex-start" mb="xl">
+                <Box>
+                  <Title order={2} mb="xs" c="primary.9">
+                    Search Results
+                  </Title>
+                  <Text c="dimmed">
+                    {activeQuery
+                      ? `Showing results for "${activeQuery}"`
+                      : 'Please enter search criteria'}
+                  </Text>
+                </Box>
+
+                <Button
+                  hiddenFrom="md"
+                  // variant="light"
+                  color="black"
+                  onClick={open}
+                  leftSection={<IconFilter size={16} />}
+                >
+                  Filters
+                </Button>
               </Group>
-              {renderFilters()}
-            </Paper>
-          </Grid.Col>
 
-          {/* Search Results */}
-          <Grid.Col span={{ base: 12, md: 10 }}>
-            <Group justify="space-between" align="flex-start" mb="xl">
-              <Box>
-                <Title order={2} mb="xs" c="primary.9">Search Results</Title>
-                <Text c="dimmed">
-                  {activeQuery ? `Showing results for "${activeQuery}"` : 'Please enter search criteria'}
-                </Text>
-              </Box>
-
-              <Button 
-                hiddenFrom="md" 
-                // variant="light" 
-                color="black" 
-                onClick={open} 
-                leftSection={<IconFilter size={16} />}
-              >
-                Filters
-              </Button>
-            </Group>
-
-            {isFetching && marketplaceProducts.length === 0 ? (
-              <Center py={60}>
-                <Loader color="primary.9" />
-              </Center>
-            ) : (
-              <>
-                {marketplaceProducts.length === 0 && (activeQuery || activeCategory || activeState) && !isFetching ? (
-                  <Center py={80} style={{ flexDirection: 'column' }}>
-                    <Title order={3} c="dimmed" mb="sm">No results found</Title>
-                    <Text size="md" c="dimmed">We couldn't find any products matching your filters.</Text>
-                  </Center>
-                ) : (
-                  <>
-                    <Flex
-                      wrap="wrap"
-                      align="flex-start"
-                      justify={{ base: 'center', sm: 'flex-start' }}
-                      gap={{ base: 10, sm: 10, md: 15 }}
-                      style={{ 
-                        filter: !authToken ? 'blur(8px)' : 'none',
-                        pointerEvents: !authToken ? 'none' : 'auto',
-                        transition: 'filter 0.3s ease'
-                      }}
-                    >
-                      {marketplaceProducts.map((item) => (
-                        <ProductCard key={item.id} product={item as ProductInfo} />
-                      ))}
-                    </Flex>
-
-                    <Center mt={50} hidden={marketPlaceProductsTotalPages <= 1}>
-                      <Pagination
-                        value={activePage}
-                        onChange={handlePageChange}
-                        total={marketPlaceProductsTotalPages}
-                        color="primary.9"
-                      />
+              {isFetching && marketplaceProducts.length === 0 ? (
+                <Center py={60}>
+                  <Loader color="primary.9" />
+                </Center>
+              ) : (
+                <>
+                  {marketplaceProducts.length === 0 &&
+                  (activeQuery || activeCategory || activeState) &&
+                  !isFetching ? (
+                    <Center py={80} style={{ flexDirection: 'column' }}>
+                      <Title order={3} c="dimmed" mb="sm">
+                        No results found
+                      </Title>
+                      <Text size="md" c="dimmed">
+                        We couldn't find any products matching your filters.
+                      </Text>
                     </Center>
-                  </>
-                )}
-              </>
-            )}
-          </Grid.Col>
-        </Grid>
+                  ) : (
+                    <>
+                      <Flex
+                        wrap="wrap"
+                        align="flex-start"
+                        justify={{ base: 'center', sm: 'flex-start' }}
+                        gap={{ base: 10, sm: 10, md: 15 }}
+                        style={{
+                          filter: !authToken ? 'blur(8px)' : 'none',
+                          pointerEvents: !authToken ? 'none' : 'auto',
+                          transition: 'filter 0.3s ease',
+                        }}
+                      >
+                        {marketplaceProducts.map((item) => (
+                          <ProductCard key={item.id} product={item as ProductInfo} />
+                        ))}
+                      </Flex>
+
+                      <Center mt={50} hidden={marketPlaceProductsTotalPages <= 1}>
+                        <Pagination
+                          value={activePage}
+                          onChange={handlePageChange}
+                          total={marketPlaceProductsTotalPages}
+                          color="primary.9"
+                        />
+                      </Center>
+                    </>
+                  )}
+                </>
+              )}
+            </Grid.Col>
+          </Grid>
+        </Box>
       </Box>
-    </Box>
     </>
   );
 };
@@ -329,7 +388,13 @@ const SearchResults = () => {
 export default function SearchPage() {
   return (
     <main>
-      <Suspense fallback={<Center py={100}><Loader color="primary.9" /></Center>}>
+      <Suspense
+        fallback={
+          <Center py={100}>
+            <Loader color="primary.9" />
+          </Center>
+        }
+      >
         <SearchResults />
       </Suspense>
     </main>

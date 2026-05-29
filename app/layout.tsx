@@ -6,10 +6,10 @@ import '@mantine/dropzone/styles.css';
 import '@mantine/carousel/styles.css';
 import '@mantine/nprogress/styles.css';
 import '@mantine/notifications/styles.css';
-import { theme } from '@/core/themes';
 
 import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { ClientLayout } from '@/core/components/layout/clientLayout';
+import { theme } from '@/core/themes';
 
 export const metadata = {
   title: 'Livestocx',

@@ -1,15 +1,16 @@
 'use client';
-import { useAppContext } from '@/core/context';
-import ProductCard from '../cards/product_card';
-import { ProductDisplayType } from '@/core/types';
+
 import { useEffect, useRef, useState } from 'react';
-import { ProductInfo } from '@/core/sdk/marketplace';
-import { productDisplayTypes } from '@/core/utilities';
-import { TestimonialInfo } from '@/core/sdk/communication';
 import { Box, Button, Flex, Group, Pagination } from '@mantine/core';
 import { TestimonialCard } from '@/core/components/cards/testimonial-card';
-import { createProductGridItems } from '@/core/middlewares/display-middleware';
+import { useAppContext } from '@/core/context';
 import useFetchMarketplaceProductsQuery from '@/core/hooks/marketplace/useFetchMarketplaceProductsQuery';
+import { createProductGridItems } from '@/core/middlewares/display-middleware';
+import { TestimonialInfo } from '@/core/sdk/communication';
+import { ProductInfo } from '@/core/sdk/marketplace';
+import { ProductDisplayType } from '@/core/types';
+import { productDisplayTypes } from '@/core/utilities';
+import ProductCard from '../cards/product_card';
 
 const HomeProductsSection = () => {
   const [activePage, setPage] = useState(1);
@@ -37,8 +38,27 @@ const HomeProductsSection = () => {
   }, [formData.productDisplayType, activePage]);
 
   return (
-    <Box px={20} py={10} ref={productsRef}>
-      <Flex gap={10} align="center">
+    <Box px={20} py={10} ref={productsRef} style={{ position: 'relative', overflow: 'hidden' }}>
+      {/* Grid Background with Bottom Fade */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `
+            linear-gradient(#e5e7eb 1px, transparent 1px),
+            linear-gradient(90deg, #e5e7eb 1px, transparent 1px)
+          `,
+          backgroundSize: '40px 40px',
+          backgroundPosition: 'center top',
+          pointerEvents: 'none',
+          maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%)',
+          zIndex: 0,
+          opacity: 0.35,
+        }}
+      />
+
+      <Flex gap={10} align="center" style={{ position: 'relative', zIndex: 1 }}>
         {productDisplayTypes.map((item) => (
           <Button
             fz={12}
