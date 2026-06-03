@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IconBrandFacebook, IconBrandInstagram, IconBrandLinkedin } from '@tabler/icons-react';
 import { motion } from 'framer-motion';
+import { shuffle } from 'lodash';
 import {
   Anchor,
   Box,
@@ -17,7 +18,6 @@ import {
   Title,
 } from '@mantine/core';
 import { Sponsors } from '@/core/utilities';
-import { shuffle } from 'lodash';
 
 export function Footer() {
   const pathname = usePathname();
@@ -72,7 +72,7 @@ export function Footer() {
         <Container size="xxl">
           <Grid gutter={{ base: 'xl', sm: 'xl' }} justify="space-between">
             {/* Left Section - Company Info */}
-            <Grid.Col span={{ base: 12, sm: 6 }} mb={{ base: 'xl', sm: 0 }}>
+            <Grid.Col span={{ base: 12, sm: 7 }} mb={{ base: 'xl', sm: 0 }}>
               <Stack gap="md">
                 <Flex align="center" gap="xs">
                   <Image
@@ -87,42 +87,70 @@ export function Footer() {
                   </Title>
                 </Flex>
 
-                <Box>
-                  <Text size="xs" fw={700} c="gray.3" style={{ letterSpacing: '0.5px' }} tt="uppercase" mb={2}>
-                    US Office
-                  </Text>
-                  <Text size="sm" c="white">
-                    1680 East Barstow Avenue,
-                    <br />
-                    Fresno California, United States
-                  </Text>
-                  <Text size="sm" c="white" mt={2}>
-                    +1 (559) 668 3783
-                  </Text>
-                </Box>
+                <Flex
+                  direction={{ base: 'column', md: 'row' }}
+                  gap={{ base: 'md', md: 'xl' }}
+                  justify="space-between"
+                  align="flex-start"
+                >
+                  <Box style={{ flex: 1 }}>
+                    <Text
+                      size="xs"
+                      fw={800}
+                      c="gray.3"
+                      style={{ letterSpacing: '0.5px' }}
+                      tt="uppercase"
+                      mb={2}
+                    >
+                      US Office
+                    </Text>
+                    <Text size="sm" c="white">
+                      1680 East Barstow Avenue,
+                      <br />
+                      Fresno California, United States
+                    </Text>
+                    <Text size="sm" c="white" mt={2}>
+                      +1 (559) 668 3783
+                    </Text>
+                  </Box>
 
-                <Box>
-                  <Text size="xs" fw={700} c="gray.3" style={{ letterSpacing: '0.5px' }} tt="uppercase" mb={2}>
-                    Abuja Office
-                  </Text>
-                  <Text size="sm" c="white">
-                    Shimex Estate, Lugbe FCT, Nigeria
-                  </Text>
-                </Box>
+                  <Box style={{ flex: 1 }}>
+                    <Text
+                      size="xs"
+                      fw={800}
+                      c="gray.3"
+                      style={{ letterSpacing: '0.5px' }}
+                      tt="uppercase"
+                      mb={2}
+                    >
+                      Abuja Office
+                    </Text>
+                    <Text size="sm" c="white">
+                      Shimex Estate, Lugbe FCT, Nigeria
+                    </Text>
+                  </Box>
 
-                <Box>
-                  <Text size="xs" fw={700} c="gray.3" style={{ letterSpacing: '0.5px' }} tt="uppercase" mb={2}>
-                    Asaba Office
-                  </Text>
-                  <Text size="sm" c="white">
-                    Opposite Infant Jesus,
-                    <br />
-                    Old Anwai Road, Asaba, Delta State
-                  </Text>
-                  <Text size="sm" c="white" mt={2}>
-                    +234 813 254 9273
-                  </Text>
-                </Box>
+                  <Box style={{ flex: 1 }}>
+                    <Text
+                      size="xs"
+                      fw={800}
+                      c="gray.3"
+                      style={{ letterSpacing: '0.5px' }}
+                      tt="uppercase"
+                      mb={2}
+                    >
+                      Asaba Office
+                    </Text>
+                    <Text size="sm" c="white">
+                      Opposite Infant Jesus,
+                      <br />
+                      Old Anwai Road, Asaba, Delta State
+                    </Text>
+                    <Text size="sm" c="white" mt={2}>
+                      +234 813 254 9273
+                    </Text>
+                  </Box>
+                </Flex>
 
                 <Anchor href="mailto:support@livestocx.com" size="sm" c="gray.2">
                   support@livestocx.com
@@ -131,7 +159,7 @@ export function Footer() {
             </Grid.Col>
 
             {/* Right Section - Links and Social */}
-            <Grid.Col span={{ base: 12, sm: 6 }}>
+            <Grid.Col span={{ base: 12, sm: 5 }}>
               <Grid>
                 {/* Helps */}
                 <Grid.Col span={{ base: 12, sm: 4 }} mb={{ base: 'xl', sm: 0 }}>
