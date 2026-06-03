@@ -87,20 +87,43 @@ export function Footer() {
                   </Title>
                 </Flex>
 
-                <Text size="sm" c="white">
-                  1680 East Barstow Avenue,
-                  <br />
-                  Fresno California, United States
-                </Text>
-                <Text size="sm" c="white">
-                  +1 (559) 668 3783
-                </Text>
-                <Text size="sm" c="white">
-                  Shimex Estate, Lugbe FCT, Nigeria
-                </Text>
-                <Text size="sm" c="white">
-                  +234 813 254 9273
-                </Text>
+                <Box>
+                  <Text size="xs" fw={700} c="gray.3" style={{ letterSpacing: '0.5px' }} tt="uppercase" mb={2}>
+                    US Office
+                  </Text>
+                  <Text size="sm" c="white">
+                    1680 East Barstow Avenue,
+                    <br />
+                    Fresno California, United States
+                  </Text>
+                  <Text size="sm" c="white" mt={2}>
+                    +1 (559) 668 3783
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text size="xs" fw={700} c="gray.3" style={{ letterSpacing: '0.5px' }} tt="uppercase" mb={2}>
+                    Abuja Office
+                  </Text>
+                  <Text size="sm" c="white">
+                    Shimex Estate, Lugbe FCT, Nigeria
+                  </Text>
+                </Box>
+
+                <Box>
+                  <Text size="xs" fw={700} c="gray.3" style={{ letterSpacing: '0.5px' }} tt="uppercase" mb={2}>
+                    Asaba Office
+                  </Text>
+                  <Text size="sm" c="white">
+                    Opposite Infant Jesus,
+                    <br />
+                    Old Anwai Road, Asaba, Delta State
+                  </Text>
+                  <Text size="sm" c="white" mt={2}>
+                    +234 813 254 9273
+                  </Text>
+                </Box>
+
                 <Anchor href="mailto:support@livestocx.com" size="sm" c="gray.2">
                   support@livestocx.com
                 </Anchor>
