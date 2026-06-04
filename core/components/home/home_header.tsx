@@ -128,7 +128,7 @@ const HomeHeader = () => {
       }}
     >
       {/* Noise Texture Overlay */}
-      <Box
+      {/* <Box
         style={{
           position: 'absolute',
           top: 0,
@@ -139,10 +139,10 @@ const HomeHeader = () => {
           pointerEvents: 'none',
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
-      />
+      /> */}
 
       {/* Subtle Mesh Glow */}
-      <Box
+      {/* <Box
         style={{
           position: 'absolute',
           top: '-20%',
@@ -153,10 +153,10 @@ const HomeHeader = () => {
           filter: 'blur(60px)',
           pointerEvents: 'none',
         }}
-      />
+      /> */}
 
       {/* Subtle Grid Background */}
-      <Box
+      {/* <Box
         style={{
           position: 'absolute',
           inset: 0,
@@ -168,9 +168,9 @@ const HomeHeader = () => {
           backgroundPosition: 'center center',
           pointerEvents: 'none',
         }}
-      />
+      /> */}
 
-      <style>
+      {/* <style>
         {`
           @keyframes shimmer {
             0% { background-position: -200% 0; }
@@ -234,7 +234,7 @@ const HomeHeader = () => {
             z-index: 0;
           }
         `}
-      </style>
+      </style> */}
 
       <Stack
         px={20}

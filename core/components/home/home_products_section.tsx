@@ -40,7 +40,7 @@ const HomeProductsSection = () => {
   return (
     <Box px={20} py={10} ref={productsRef} style={{ position: 'relative', overflow: 'hidden' }}>
       {/* Grid Background with Bottom Fade */}
-      <div
+      {/* <div
         style={{
           position: 'absolute',
           inset: 0,
@@ -56,7 +56,7 @@ const HomeProductsSection = () => {
           zIndex: 0,
           opacity: 0.35,
         }}
-      />
+      /> */}
 
       <Flex gap={10} align="center" style={{ position: 'relative', zIndex: 1 }}>
         {productDisplayTypes.map((item) => (

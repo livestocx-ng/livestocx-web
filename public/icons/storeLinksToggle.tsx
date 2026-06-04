@@ -34,7 +34,7 @@ const StoreLinksToggle = () => {
 							height={60}
 							unoptimized
 							className='object-cover'
-							src='/icons/icon__appstore__2.svg'
+							src='/icons/icon_appstore_2.svg'
 						/>
 					</Link>
 					<Link
@@ -48,7 +48,7 @@ const StoreLinksToggle = () => {
 							height={60}
 							unoptimized
 							className='object-cover'
-							src='/icons/icon__playstore__2.svg'
+							src='/icons/icon_playstore_2.svg'
 						/>
 					</Link>
 				</Group>
