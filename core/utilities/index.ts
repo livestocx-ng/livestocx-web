@@ -37,8 +37,6 @@ export const navLinks = [
   { link: '/blog', label: 'Blog' },
   { link: '/about-us', label: 'About' },
   { link: '/contact-us', label: 'Contact' },
-  { link: '/privacy-policy', label: 'Privacy' },
-  { link: '/terms-of-service', label: 'Terms' },
 ];
 
 export const platformFaqs = [
