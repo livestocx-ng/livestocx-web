@@ -60,6 +60,7 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
                 height={180}
                 width="100%"
                 fit="cover"
+                loading="lazy"
                 style={{
                   width: '100%',
                   height: '180px',
