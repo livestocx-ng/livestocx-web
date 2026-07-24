@@ -133,5 +133,10 @@ dist
 
 .vscode
 
-# ./yarn.lock
-# ./package-lock.json
+# lock files
+./yarn.lock
+**yarn.lock
+**/yarn.lock
+./package-lock.json
+**package-lock.json
+**/package-lock.json
