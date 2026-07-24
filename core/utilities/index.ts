@@ -22,7 +22,6 @@ export const productDisplayTypes: ProductDisplayType[] = [
 ];
 
 export const navLinks = [
-  { link: '/', label: 'Home' },
   // { link: '/signup', label: 'Register' },
   { link: '/business', label: 'Business' },
   {
@@ -36,7 +35,7 @@ export const navLinks = [
   },
   { link: '/blog', label: 'Blog' },
   { link: '/about-us', label: 'About' },
-  { link: '/contact-us', label: 'Contact' },
+  // { link: '/contact-us', label: 'Contact' },
 ];
 
 export const platformFaqs = [

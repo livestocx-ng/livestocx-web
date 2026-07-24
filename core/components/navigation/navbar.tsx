@@ -42,6 +42,9 @@ export function Navbar() {
     { open: openUpdateBusinessProfileDrawer, close: closeUpdateBusinessProfileDrawer },
   ] = useDisclosure(false);
 
+  const isLinkActive = (link?: string) =>
+    !!link && !link.startsWith('http') && (pathname === link || pathname.startsWith(`${link}/`));
+
   useEffect(() => {
     refetchVendorInfo();
     refetchAccountInfo();
@@ -75,8 +78,8 @@ export function Navbar() {
       >
         <Container size="xxl" py={15}>
           <Group justify="space-between" align="center">
-            {/* Left section: Logo and Navigation */}
-            <Group>
+            {/* Left section: Logo */}
+            <Group style={{ flex: 1 }} justify="flex-start">
               <Link href="/">
                 <Image
                   w={30}
@@ -86,19 +89,25 @@ export function Navbar() {
                   style={{ border: '1px solid #11111120', borderRadius: '10px' }}
                 />
               </Link>
+            </Group>
 
-              {/* Desktop navigation */}
-              <Group gap={5} visibleFrom="md">
+            {/* Center section: Navigation */}
+            <Group gap={5} visibleFrom="md" justify="center">
                 {navLinks.map((link) => {
+                  const isActive = link.links
+                    ? link.links.some((item) => isLinkActive(item.link))
+                    : isLinkActive(link.link);
+
                   const commonStyle = {
                     display: 'block',
                     lineHeight: 1,
                     padding: `${rem(8)} ${rem(12)}`,
-                    borderRadius: 'var(--mantine-radius-sm)',
+                    borderRadius: 'var(--mantine-radius-xl)',
                     textDecoration: 'none',
-                    color: 'var(--mantine-color-black)',
+                    color: isActive ? 'var(--mantine-color-green-8)' : 'var(--mantine-color-black)',
+                    backgroundColor: isActive ? 'var(--mantine-color-green-0)' : 'transparent',
                     fontSize: 'var(--mantine-font-size-sm)',
-                    fontWeight: 500,
+                    fontWeight: isActive ? 600 : 500,
                     transition: 'background-color 150ms ease',
                   } as const;
 
@@ -124,6 +133,15 @@ export function Navbar() {
                               component={(item.link.startsWith('http') ? 'a' : Link) as any}
                               href={item.link}
                               target={item.link.startsWith('http') ? '_blank' : undefined}
+                              style={
+                                isLinkActive(item.link)
+                                  ? {
+                                      color: 'var(--mantine-color-green-8)',
+                                      backgroundColor: 'var(--mantine-color-green-0)',
+                                      fontWeight: 600,
+                                    }
+                                  : undefined
+                              }
                             >
                               {item.label}
                             </Menu.Item>
@@ -147,11 +165,10 @@ export function Navbar() {
                     </Link>
                   );
                 })}
-              </Group>
             </Group>
 
             {/* Right section: Account and Sell button */}
-            <Group>
+            <Group style={{ flex: 1 }} justify="flex-end">
               {/* <ChatConversationsButton isScrolling={scroll.y > 0} /> */}
               <AccountButton isScrolling={scroll.y > 0} />
               <Button
@@ -195,15 +212,20 @@ export function Navbar() {
         >
           <Stack>
             {navLinks.map((link) => {
+              const isActive = link.links
+                ? link.links.some((item) => isLinkActive(item.link))
+                : isLinkActive(link.link);
+
               const commonStyle = {
                 display: 'block',
                 lineHeight: 1,
                 padding: `${rem(8)} ${rem(12)}`,
                 borderRadius: 'var(--mantine-radius-sm)',
                 textDecoration: 'none',
-                color: 'var(--mantine-color-black)',
+                color: isActive ? 'var(--mantine-color-green-8)' : 'var(--mantine-color-black)',
+                backgroundColor: isActive ? 'var(--mantine-color-green-0)' : 'transparent',
                 fontSize: 'var(--mantine-font-size-sm)',
-                fontWeight: 500,
+                fontWeight: isActive ? 600 : 500,
                 transition: 'background-color 150ms ease',
               } as const;
 
@@ -212,11 +234,14 @@ export function Navbar() {
                   <NavLink
                     key={link.label}
                     label={link.label}
+                    defaultOpened={isActive}
                     styles={{
                        label: {
-                           fontWeight: 500,
+                           fontWeight: isActive ? 600 : 500,
                            fontSize: 'var(--mantine-font-size-sm)',
-                           color: 'var(--mantine-color-black)'
+                           color: isActive
+                             ? 'var(--mantine-color-green-8)'
+                             : 'var(--mantine-color-black)'
                        }
                     }}
                   >
@@ -227,11 +252,15 @@ export function Navbar() {
                         href={item.link}
                         label={item.label}
                         onClick={toggle}
+                        active={isLinkActive(item.link)}
+                        color="green"
                         target={item.link.startsWith('http') ? '_blank' : undefined}
                         styles={{
                            label: {
                                fontSize: 'var(--mantine-font-size-sm)',
-                               color: 'var(--mantine-color-gray-7)'
+                               color: isLinkActive(item.link)
+                                 ? 'var(--mantine-color-green-8)'
+                                 : 'var(--mantine-color-gray-7)'
                            }
                         }}
                       />
