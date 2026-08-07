@@ -319,7 +319,8 @@ export const appFeatures = [
 export const Sponsors: Sponsor[] = [
   {
     name: 'Kenya Climate Innovation Centre',
-    image: '/sponsors/kcic.png',
+    // image: '/sponsors/kcic.png',
+    image: '/sponsors/logo_KCIC.png',
   },
   {
     name: 'Global Centre on Adaptation',
