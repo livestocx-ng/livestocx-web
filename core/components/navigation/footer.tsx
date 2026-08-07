@@ -171,8 +171,8 @@ export function Footer() {
             ? shuffledSponsors.map((sponsor, index) => (
                 <Image
                   key={`${sponsor.name}-${index}`}
-                  w={160}
-                  h={80}
+                  w={120}
+                  h={60}
                   src={sponsor.image}
                   alt={`Livestocx Backed by: ${sponsor.name}`}
                   className="sponsor-logo"
@@ -186,8 +186,8 @@ export function Footer() {
               Sponsors.map((sponsor, index) => (
                 <Image
                   key={`${sponsor.name}-fallback-${index}`}
-                  w={160}
-                  h={80}
+                  w={120}
+                  h={60}
                   src={sponsor.image}
                   alt={`Livestocx Backed by: ${sponsor.name}`}
                   className="sponsor-logo"
