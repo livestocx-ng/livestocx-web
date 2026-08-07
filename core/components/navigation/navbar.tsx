@@ -3,8 +3,21 @@
 import { useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Box, Burger, Button, Container, Drawer, Group, Image, rem, Stack, Menu, NavLink } from '@mantine/core';
 import { IconChevronDown } from '@tabler/icons-react';
+import {
+  Box,
+  Burger,
+  Button,
+  Container,
+  Drawer,
+  Group,
+  Image,
+  Menu,
+  NavLink,
+  rem,
+  Stack,
+  Title,
+} from '@mantine/core';
 import { useDisclosure, useWindowScroll } from '@mantine/hooks';
 import { useAppContext } from '@/core/context';
 import useFetchAccountInfoQuery from '@/core/hooks/account/useFetchAccountInfoQuery';
@@ -76,11 +89,20 @@ export function Navbar() {
           borderBottom: scroll.y > 0 ? '1px solid var(--mantine-color-gray-3)' : '',
         }}
       >
-        <Container size="xxl" py={15}>
-          <Group justify="space-between" align="center">
+        <Container size="xxl" px={20} py={10}>
+          <Group justify="space-betwee" gap={4} align="center">
             {/* Left section: Logo */}
             <Group style={{ flex: 1 }} justify="flex-start">
-              <Link href="/">
+              <Link
+                href="/"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 8,
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
                 <Image
                   w={30}
                   h="auto"
@@ -88,83 +110,93 @@ export function Navbar() {
                   src="/icons/icon_clif.jpg"
                   style={{ border: '1px solid #11111120', borderRadius: '10px' }}
                 />
+                <Title
+                  order={6}
+                  style={{
+                    fontFamily: 'var(--mantine-font-family-headings)',
+                    letterSpacing: '0.05em',
+                  }}
+                >
+                  Livestocx
+                </Title>
               </Link>
             </Group>
 
             {/* Center section: Navigation */}
             <Group gap={5} visibleFrom="md" justify="center">
-                {navLinks.map((link) => {
-                  const isActive = link.links
-                    ? link.links.some((item) => isLinkActive(item.link))
-                    : isLinkActive(link.link);
+              {navLinks.map((link) => {
+                const isActive = link.links
+                  ? link.links.some((item) => isLinkActive(item.link))
+                  : isLinkActive(link.link);
 
-                  const commonStyle = {
-                    display: 'block',
-                    lineHeight: 1,
-                    padding: `${rem(8)} ${rem(12)}`,
-                    borderRadius: 'var(--mantine-radius-xl)',
-                    textDecoration: 'none',
-                    color: isActive ? 'var(--mantine-color-green-8)' : 'var(--mantine-color-black)',
-                    backgroundColor: isActive ? 'var(--mantine-color-green-0)' : 'transparent',
-                    fontSize: 'var(--mantine-font-size-sm)',
-                    fontWeight: isActive ? 600 : 500,
-                    transition: 'background-color 150ms ease',
-                  } as const;
+                const commonStyle = {
+                  display: 'block',
+                  lineHeight: 1,
+                  padding: `${rem(8)} ${rem(12)}`,
+                  borderRadius: 'var(--mantine-radius-xl)',
+                  textDecoration: 'none',
+                  color: isActive ? 'var(--mantine-color-green-8)' : 'var(--mantine-color-black)',
+                  backgroundColor: isActive ? 'var(--mantine-color-green-0)' : 'transparent',
+                  fontSize: 'var(--mantine-font-size-sm)',
+                  fontWeight: isActive ? 600 : 500,
+                  transition: 'background-color 150ms ease',
+                } as const;
 
-                  if (link.links) {
-                    return (
-                      <Menu key={link.label} trigger="hover" transitionProps={{ exitDuration: 0 }} withinPortal>
-                        <Menu.Target>
-                          <a
-                            href="#"
-                            style={commonStyle}
-                            onClick={(event) => event.preventDefault()}
-                          >
-                            <Group gap={5}>
-                              {link.label}
-                              <IconChevronDown size={14} />
-                            </Group>
-                          </a>
-                        </Menu.Target>
-                        <Menu.Dropdown>
-                          {link.links.map((item) => (
-                            <Menu.Item
-                              key={item.label}
-                              component={(item.link.startsWith('http') ? 'a' : Link) as any}
-                              href={item.link}
-                              target={item.link.startsWith('http') ? '_blank' : undefined}
-                              style={
-                                isLinkActive(item.link)
-                                  ? {
-                                      color: 'var(--mantine-color-green-8)',
-                                      backgroundColor: 'var(--mantine-color-green-0)',
-                                      fontWeight: 600,
-                                    }
-                                  : undefined
-                              }
-                            >
-                              {item.label}
-                            </Menu.Item>
-                          ))}
-                        </Menu.Dropdown>
-                      </Menu>
-                    );
-                  }
-
-                  if (link.link?.startsWith('http')) {
-                    return (
-                      <a key={link.label} href={link.link} style={commonStyle}>
-                        {link.label}
-                      </a>
-                    );
-                  }
-
+                if (link.links) {
                   return (
-                    <Link key={link.label} href={link.link as string} style={commonStyle}>
-                      {link.label}
-                    </Link>
+                    <Menu
+                      key={link.label}
+                      trigger="hover"
+                      transitionProps={{ exitDuration: 0 }}
+                      withinPortal
+                    >
+                      <Menu.Target>
+                        <a href="#" style={commonStyle} onClick={(event) => event.preventDefault()}>
+                          <Group gap={5}>
+                            {link.label}
+                            <IconChevronDown size={14} />
+                          </Group>
+                        </a>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        {link.links.map((item) => (
+                          <Menu.Item
+                            key={item.label}
+                            component={(item.link.startsWith('http') ? 'a' : Link) as any}
+                            href={item.link}
+                            target={item.link.startsWith('http') ? '_blank' : undefined}
+                            style={
+                              isLinkActive(item.link)
+                                ? {
+                                    color: 'var(--mantine-color-green-8)',
+                                    backgroundColor: 'var(--mantine-color-green-0)',
+                                    fontWeight: 600,
+                                  }
+                                : undefined
+                            }
+                          >
+                            {item.label}
+                          </Menu.Item>
+                        ))}
+                      </Menu.Dropdown>
+                    </Menu>
                   );
-                })}
+                }
+
+                if (link.link?.startsWith('http')) {
+                  return (
+                    <a key={link.label} href={link.link} style={commonStyle}>
+                      {link.label}
+                    </a>
+                  );
+                }
+
+                return (
+                  <Link key={link.label} href={link.link as string} style={commonStyle}>
+                    {link.label}
+                  </Link>
+                );
+              })}
             </Group>
 
             {/* Right section: Account and Sell button */}
@@ -185,7 +217,6 @@ export function Navbar() {
                     return openUpdateBusinessProfileDrawer();
                   }
                 }}
-
               >
                 Sell
               </Button>
@@ -236,13 +267,13 @@ export function Navbar() {
                     label={link.label}
                     defaultOpened={isActive}
                     styles={{
-                       label: {
-                           fontWeight: isActive ? 600 : 500,
-                           fontSize: 'var(--mantine-font-size-sm)',
-                           color: isActive
-                             ? 'var(--mantine-color-green-8)'
-                             : 'var(--mantine-color-black)'
-                       }
+                      label: {
+                        fontWeight: isActive ? 600 : 500,
+                        fontSize: 'var(--mantine-font-size-sm)',
+                        color: isActive
+                          ? 'var(--mantine-color-green-8)'
+                          : 'var(--mantine-color-black)',
+                      },
                     }}
                   >
                     {link.links.map((item) => (
@@ -256,12 +287,12 @@ export function Navbar() {
                         color="green"
                         target={item.link.startsWith('http') ? '_blank' : undefined}
                         styles={{
-                           label: {
-                               fontSize: 'var(--mantine-font-size-sm)',
-                               color: isLinkActive(item.link)
-                                 ? 'var(--mantine-color-green-8)'
-                                 : 'var(--mantine-color-gray-7)'
-                           }
+                          label: {
+                            fontSize: 'var(--mantine-font-size-sm)',
+                            color: isLinkActive(item.link)
+                              ? 'var(--mantine-color-green-8)'
+                              : 'var(--mantine-color-gray-7)',
+                          },
                         }}
                       />
                     ))}
@@ -278,7 +309,12 @@ export function Navbar() {
               }
 
               return (
-                <Link key={link.label} href={link.link as string} style={commonStyle} onClick={toggle}>
+                <Link
+                  key={link.label}
+                  href={link.link as string}
+                  style={commonStyle}
+                  onClick={toggle}
+                >
                   {link.label}
                 </Link>
               );

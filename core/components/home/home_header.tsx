@@ -152,7 +152,7 @@ const HomeHeader = () => {
           order={3}
           c="white"
           style={{
-            fontFamily: 'Gotham, sans-serif',
+            fontFamily: 'var(--mantine-font-family-headings)',
             letterSpacing: '-0.02em',
             textShadow: '0 2px 4px rgba(0,0,0,0.1)',
           }}

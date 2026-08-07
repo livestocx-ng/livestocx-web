@@ -39,7 +39,7 @@ const LivestockOutbreakPage = () => {
                             Disease outbreaks can cripple livestock-dependent communities in a matter of days. The economic impact of losing even a portion of a herd cascades into food insecurity and lost income.
                         </Text>
                         <Text size="md" c="dimmed" lh={1.8} mb="xl">
-                            At the core of our system is a digital tool that allows farmers to log daily observations—eating habits, energy levels, milk output, mobility, and temperature. When the system detects unusual patterns, it flags the animal for further observation or intervention.
+                            At the core of our system is a digital tool that allows farmers to log daily observations including eating habits, energy levels, milk output, mobility, and temperature. When the system detects unusual patterns, it flags the animal for further observation or intervention.
                         </Text>
                         
                         <Stack gap="sm">

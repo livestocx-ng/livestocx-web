@@ -1,9 +1,14 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { IconSettings as AccountSetting01Icon, IconLogout as Logout01Icon, IconMenu2 as Menu01Icon, IconUser as UserIcon, IconX } from '@tabler/icons-react';
+import {
+  IconSettings as AccountSetting01Icon,
+  IconX,
+  IconLogout as Logout01Icon,
+  IconMenu2 as Menu01Icon,
+  IconUser as UserIcon,
+} from '@tabler/icons-react';
 import {
   ActionIcon,
   AppShell,
@@ -14,9 +19,11 @@ import {
   Drawer,
   Flex,
   Group,
+  Image,
   Menu,
   Stack,
   Text,
+  Title,
 } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 // import DashboardLogoSvg from '/icons/icon_clif.jpg';
@@ -43,20 +50,35 @@ export default function DashboardShellHeader() {
               <Box hiddenFrom="sm">
                 <MobileNavigationDrawer />
               </Box>
-              <Link href="/" style={{ textDecoration: 'none' }}>
-                <Flex visibleFrom="sm" align="center" gap="sm">
+              <Group style={{ flex: 1 }} justify="flex-start">
+                <Link
+                  href="/"
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
                   <Image
-                    width={32}
-                    height={32}
-                    alt="Livestocx dashboard"
+                    w={30}
+                    h="auto"
+                    alt="lvx"
                     src="/icons/icon_clif.jpg"
-                    className="border border-slate-400 rounded-lg shadow-md"
+                    style={{ border: '1px solid #11111120', borderRadius: '10px' }}
                   />
-                  <Text size="md" c="black" fw={600}>
+                  <Title
+                    order={6}
+                    style={{
+                      fontFamily: 'var(--mantine-font-family-headings)',
+                      letterSpacing: '0.05em',
+                    }}
+                  >
                     Livestocx
-                  </Text>
-                </Flex>
-              </Link>
+                  </Title>
+                </Link>
+              </Group>
             </Group>
             <Flex align="center" gap="xl">
               <Menu>

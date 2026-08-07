@@ -8,6 +8,7 @@ export interface Sponsor {
 
 export type GridItemType = 'PRODUCT' | 'TESTIMONIAL';
 export type ProductDisplayType = 'RECOMMENDED' | 'POPULAR' | 'NEAR_YOU';
+export type HomeIntent = 'BUY' | 'SELL' | 'VET' | 'CLIMATE';
 
 export type GridItem = {
   id: string;

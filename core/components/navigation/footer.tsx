@@ -254,7 +254,10 @@ export function Footer() {
                     <Title
                       order={3}
                       c="white"
-                      style={{ fontFamily: 'Gotham, sans-serif', letterSpacing: '-0.02em' }}
+                      style={{
+                        fontFamily: 'var(--mantine-font-family-headings)',
+                        letterSpacing: '-0.02em',
+                      }}
                     >
                       Livestocx
                     </Title>

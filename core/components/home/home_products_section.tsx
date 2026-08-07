@@ -1,40 +1,52 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Box, Button, Flex, Group, Pagination, Skeleton } from '@mantine/core';
+import { useRouter } from 'next/navigation';
+import {
+  Box,
+  Flex,
+  Group,
+  Pagination,
+  Skeleton,
+  Text,
+  Title,
+  UnstyledButton,
+} from '@mantine/core';
 import { TestimonialCard } from '@/core/components/cards/testimonial-card';
 import { useAppContext } from '@/core/context';
 import useFetchMarketplaceProductsQuery from '@/core/hooks/marketplace/useFetchMarketplaceProductsQuery';
 import { createProductGridItems } from '@/core/middlewares/display-middleware';
 import { TestimonialInfo } from '@/core/sdk/communication';
 import { ProductInfo } from '@/core/sdk/marketplace';
-import { ProductDisplayType } from '@/core/types';
-import { productDisplayTypes } from '@/core/utilities';
+import { HomeIntent, ProductDisplayType } from '@/core/types';
+import { homeIntents, productSortFilters } from '@/core/utilities';
 import ProductCard from '../cards/product_card';
 
 const ProductSkeleton = () => (
   <Box
+    bg="white"
     h={320}
-    style={{
-      borderRadius: '10px',
-      border: '1px solid #eee',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-    }}
     w={{ base: '48%', sm: '48%', md: 180 }}
+    style={{
+      borderRadius: '12px',
+      boxShadow: '0 2px 12px rgba(0, 0, 0, 0.08)',
+      overflow: 'hidden',
+    }}
   >
-    <Skeleton height={180} radius="10px 10px 0 0" />
-    <Box p={10} style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <Skeleton height={15} width="40%" />
-      <Skeleton height={20} width="80%" />
-      <Skeleton height={15} width="60%" />
+    <Skeleton height={180} radius={0} />
+    <Box p={10} style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <Skeleton height={14} width="90%" />
+      <Skeleton height={16} width="50%" />
+      <Skeleton height={18} width="70%" />
+      <Skeleton height={12} width="60%" />
     </Box>
   </Box>
 );
 
 const HomeProductsSection = () => {
+  const router = useRouter();
   const [activePage, setPage] = useState(1);
+  const [activeIntent] = useState<HomeIntent>('BUY');
   const productsRef = useRef<HTMLDivElement>(null);
   const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
@@ -42,16 +54,35 @@ const HomeProductsSection = () => {
     productDisplayType: 'RECOMMENDED',
   });
 
-  const {
-    marketplaceProducts,
-    testimonials,
-    marketPlaceProductsTotalPages,
-  } = useAppContext();
+  const { authToken, marketplaceProducts, testimonials, marketPlaceProductsTotalPages } =
+    useAppContext();
 
   const { refetch } = useFetchMarketplaceProductsQuery({
     currentPage: activePage,
     displayType: formData.productDisplayType,
   });
+
+  const activeSortFilter =
+    productSortFilters.find((filter) => filter.value === formData.productDisplayType) ??
+    productSortFilters[0];
+
+  const handleIntentClick = (intent: HomeIntent) => {
+    if (intent === 'BUY') {
+      return;
+    }
+
+    if (intent === 'SELL') {
+      router.push(authToken ? '/dashboard/products' : '/signup');
+      return;
+    }
+
+    if (intent === 'VET') {
+      router.push('/veterinary-response');
+      return;
+    }
+
+    window.open('https://climateresilience.livestocx.com', '_blank');
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -80,30 +111,83 @@ const HomeProductsSection = () => {
   }, [formData.productDisplayType, activePage, hasBeenVisible, refetch]);
 
   return (
-    <Box px={20} py={10} ref={productsRef} style={{ position: 'relative', overflow: 'hidden' }}>
-      <Flex gap={10} align="center" style={{ position: 'relative', zIndex: 1 }}>
-        {productDisplayTypes.map((item) => (
-          <Button
-            fz={12}
-            radius="md"
-            key={item.value}
-            h={{ base: 30, sm: 30, md: 30 }}
-            onClick={() => {
-              setFormData({ ...formData, productDisplayType: item.value });
-            }}
-            style={{
-              backgroundColor: formData.productDisplayType === item.value ? `black` : '',
-              border:
-                formData.productDisplayType === item.value ? '1px solid black' : '1px solid green',
-            }}
-            variant={formData.productDisplayType === item.value ? 'filled' : 'outline'}
-          >
-            {item.title}
-          </Button>
-        ))}
-      </Flex>
+    <Box
+      px={20}
+      py={24}
+      ref={productsRef}
+      style={{ position: 'relative', overflow: 'hidden', backgroundColor: '#faf9f7' }}
+    >
+      {/* <Flex gap="sm" wrap="wrap" align="stretch" style={{ position: 'relative', zIndex: 1 }}>
+        {homeIntents.map((intent) => {
+          const IntentIcon = intent.icon;
+          const isActive = intent.value === activeIntent;
 
-      <Box mt={{ base: 10, sm: 10, md: 10 }}>
+          return (
+            <UnstyledButton
+              key={intent.value}
+              onClick={() => handleIntentClick(intent.value)}
+              style={{
+                flex: '1 1 140px',
+                minWidth: 140,
+                padding: '12px 16px',
+                borderRadius: 12,
+                border: isActive ? '2px solid #006838' : '1px solid var(--mantine-color-gray-3)',
+                backgroundColor: isActive ? '#00683810' : 'white',
+                boxShadow: isActive ? 'none' : '0 1px 4px rgba(0,0,0,0.04)',
+              }}
+            >
+              <Flex direction="column" align="center" gap={6}>
+                <IntentIcon size={20} color={isActive ? '#006838' : '#666'} />
+                <Text size="sm" fw={600} c={isActive ? 'primary.9' : 'dark.6'} ta="center">
+                  {intent.title}
+                </Text>
+              </Flex>
+            </UnstyledButton>
+          );
+        })}
+      </Flex> */}
+
+      <Box style={{ position: 'relative', zIndex: 1 }}>
+        <Title
+          order={3}
+          mb="xs"
+          style={{
+            fontFamily: 'var(--mantine-font-family-headings)',
+            fontSize: 22,
+            fontWeight: 700,
+          }}
+        >
+          {activeSortFilter.sectionHeading}
+        </Title>
+
+        <Group gap="lg" mb="md">
+          {productSortFilters.map((filter) => {
+            const isActive = formData.productDisplayType === filter.value;
+
+            return (
+              <UnstyledButton
+                key={filter.value}
+                onClick={() => {
+                  setFormData({ productDisplayType: filter.value });
+                  setPage(1);
+                }}
+              >
+                <Text
+                  size="sm"
+                  fw={isActive ? 700 : 500}
+                  c={isActive ? 'primary.9' : 'dimmed'}
+                  style={{
+                    borderBottom: isActive ? '2px solid #006838' : '2px solid transparent',
+                    paddingBottom: 4,
+                  }}
+                >
+                  {filter.title}
+                </Text>
+              </UnstyledButton>
+            );
+          })}
+        </Group>
+
         {!hasBeenVisible || !marketplaceProducts || marketplaceProducts.length === 0 ? (
           <Flex wrap="wrap" justify="space-evenly" gap={{ base: 10, sm: 10, md: 15 }} mt={8}>
             {Array.from({ length: 21 }).map((_, i) => (
@@ -173,7 +257,7 @@ const HomeProductsSection = () => {
         <Pagination
           mt={20}
           fz={14}
-          color="black"
+          color="primary"
           style={{
             fontSize: '12px',
           }}

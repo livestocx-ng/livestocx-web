@@ -56,10 +56,9 @@ export const theme = createTheme({
 
     return defaultResolvedColors;
   },
-  fontFamily: '"Poppins", sans-serif',
-  // fontFamily: '"Roboto", sans-serif',
+  fontFamily: '"DM Sans", sans-serif',
   headings: {
-    fontFamily: 'Gotham',
+    fontFamily: '"DM Serif Display", serif',
     sizes: {
       h1: { fontSize: rem(36) },
     },
@@ -158,7 +157,6 @@ export const theme = createTheme({
           '&:active': {
             transform: 'none',
           },
-          fontFamily: '"Roboto", sans-serif',
         },
       },
     },

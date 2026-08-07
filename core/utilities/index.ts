@@ -1,23 +1,81 @@
-import { IconCpu, IconLeaf, IconTruckDelivery, IconUsers } from '@tabler/icons-react';
-import { Sponsor } from '../types';
+import {
+  IconBuildingStore,
+  IconCpu,
+  IconLeaf,
+  IconShoppingCart,
+  IconStethoscope,
+  IconTruckDelivery,
+  IconUsers,
+} from '@tabler/icons-react';
+import { HomeIntent, ProductDisplayType, Sponsor } from '../types';
 
-interface ProductDisplayType {
-  title: string;
-  value: 'RECOMMENDED' | 'POPULAR' | 'NEAR_YOU';
+export function formatProductCategory(category: string): string {
+  return category
+    .replace(/_/g, ' ')
+    .toLowerCase()
+    .replace(/(^\w|\s\w)/g, (match) => match.toUpperCase());
 }
 
-export const productDisplayTypes: ProductDisplayType[] = [
+interface ProductSortFilter {
+  title: string;
+  value: ProductDisplayType;
+  sectionHeading: string;
+}
+
+export const productSortFilters: ProductSortFilter[] = [
   {
     title: 'Recommended',
     value: 'RECOMMENDED',
+    sectionHeading: 'Recommended listings',
   },
   {
     title: 'Popular',
     value: 'POPULAR',
+    sectionHeading: 'Popular listings',
   },
   {
     title: 'Near You',
     value: 'NEAR_YOU',
+    sectionHeading: 'Listings near you',
+  },
+];
+
+export const productDisplayTypes = productSortFilters.map(({ title, value }) => ({
+  title,
+  value,
+}));
+
+export const homeIntents: {
+  title: string;
+  value: HomeIntent;
+  icon: typeof IconShoppingCart;
+}[] = [
+  { title: 'Buy livestock', value: 'BUY', icon: IconShoppingCart },
+  { title: 'Sell livestock', value: 'SELL', icon: IconBuildingStore },
+  { title: 'Find a vet', value: 'VET', icon: IconStethoscope },
+  { title: 'Climate tools', value: 'CLIMATE', icon: IconLeaf },
+];
+
+export const howItWorksSteps = [
+  {
+    step: 1,
+    title: 'Browse listings',
+    description: 'Search and filter livestock by type and location.',
+  },
+  {
+    step: 2,
+    title: 'Connect with the seller',
+    description: 'Call or message directly in Livestocx.',
+  },
+  {
+    step: 3,
+    title: 'Agree on terms',
+    description: 'Negotiate when a listing is marked negotiable.',
+  },
+  {
+    step: 4,
+    title: 'Complete the trade',
+    description: 'Arrange pickup or delivery with the seller.',
   },
 ];
 
