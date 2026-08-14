@@ -1,6 +1,17 @@
 import React from 'react';
-import { Box, Container, Breadcrumbs, Anchor, Title, rem, Text, Badge, Group, Stack } from '@mantine/core';
-import { IconChevronRight, IconBuildingStore } from '@tabler/icons-react';
+import { IconBuildingStore, IconChevronRight } from '@tabler/icons-react';
+import {
+  Anchor,
+  Badge,
+  Box,
+  Breadcrumbs,
+  Container,
+  Group,
+  rem,
+  Stack,
+  Text,
+  Title,
+} from '@mantine/core';
 import { useAppContext } from '@/core/context';
 import { priceFormatter } from '@/core/middlewares';
 
@@ -8,27 +19,44 @@ const ProductDescriptionHeader = () => {
   const { productInfo } = useAppContext();
 
   const items = [
-    { title: 'Marketplace', href: '/marketplace', icon: <IconBuildingStore size={rem(14)} /> },
-    { title: 'Products', href: '/marketplace', icon: null },
+    { title: 'Marketplace', href: '/', icon: <IconBuildingStore size={16} stroke={1.8} /> },
+    { title: 'Products', href: '#', icon: null },
     // { title: productInfo?.name || 'Product Details', href: '#', icon: null },
   ].map((item, index) => (
-    <Anchor 
-      href={item.href} 
-      key={index} 
-      size="sm" 
-      c="white" 
-      fw={500} 
-      style={{ 
-        opacity: index === 2 ? 1 : 0.6,
-        display: 'flex',
+    <Anchor
+      href={item.href}
+      key={index}
+      size="sm"
+      c="white"
+      fw={500}
+      underline="never"
+      style={{
+        opacity: index === 1 ? 1 : 0.7,
+        display: 'inline-flex',
         alignItems: 'center',
-        gap: rem(4),
+        gap: rem(6),
         textDecoration: 'none',
-        transition: 'opacity 0.2s ease'
+        // lineHeight: 1,
+        transition: 'opacity 0.2s ease',
       }}
     >
-      {item.icon}
-      {item.title}
+      {item.icon && (
+        <Box
+          component="span"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            lineHeight: 1,
+            transform: 'translateY(1px)',
+          }}
+        >
+          {item.icon}
+        </Box>
+      )}
+      <Text component="span" size="sm" fw={500} c="inherit" style={{ lineHeight: 1 }}>
+        {item.title}
+      </Text>
     </Anchor>
   ));
 
@@ -39,7 +67,7 @@ const ProductDescriptionHeader = () => {
         backgroundColor: '#0A1711',
         position: 'relative',
         overflow: 'hidden',
-        borderBottom: '1px solid rgba(255,255,255,0.08)'
+        borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}
     >
       {/* Mesh Gradient Background */}
@@ -84,42 +112,70 @@ const ProductDescriptionHeader = () => {
 
       <Container size="xl" py={{ base: 32, md: 48 }} style={{ position: 'relative', zIndex: 1 }}>
         <Stack gap="xl">
-          <Breadcrumbs 
-            separator={<IconChevronRight size={rem(14)} color="rgba(255,255,255,0.4)" />}
+          <Breadcrumbs
+            separator={
+              <Box
+                component="span"
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  transform: 'translateY(1px)',
+                }}
+              >
+                <IconChevronRight size={14} color="rgba(255,255,255,0.4)" stroke={2} />
+              </Box>
+            }
             styles={{
-              separator: { marginLeft: rem(8), marginRight: rem(8) }
+              root: { alignItems: 'center' },
+              separator: {
+                display: 'inline-flex',
+                alignItems: 'center',
+                marginLeft: rem(8),
+                marginRight: rem(8),
+              },
+              breadcrumb: {
+                display: 'inline-flex',
+                alignItems: 'center',
+              },
             }}
           >
             {items}
           </Breadcrumbs>
-          
+
           <Group justify="space-between" align="flex-end" wrap="wrap">
             <Stack gap={rem(8)}>
               <Group gap="xs">
-                 {productInfo?.category && (
-                    <Badge 
-                      variant="filled" 
-                      color="primary.9" 
-                      size="sm" 
-                      radius="sm"
-                      style={{ textTransform: 'capitalize' }}
-                    >
-                      {productInfo.category.toLowerCase().replace(/_/g, ' ')}
-                    </Badge>
-                 )}
-                 <Text size="xs" c="dimmed" fw={700} tt="uppercase" style={{ letterSpacing: '0.1em' }}>
-                    {productInfo?.vendor?.state} • {productInfo?.vendor?.city}
-                 </Text>
+                {productInfo?.category && (
+                  <Badge
+                    variant="filled"
+                    color="primary.9"
+                    size="sm"
+                    radius="sm"
+                    style={{ textTransform: 'capitalize' }}
+                  >
+                    {productInfo.category.toLowerCase().replace(/_/g, ' ')}
+                  </Badge>
+                )}
+                <Text
+                  size="xs"
+                  c="dimmed"
+                  fw={700}
+                  tt="uppercase"
+                  style={{ letterSpacing: '0.1em' }}
+                >
+                  {productInfo?.vendor?.state} • {productInfo?.vendor?.city}
+                </Text>
               </Group>
-              <Title 
-                order={1} 
-                c="white" 
-                style={{ 
-                  fontSize: `clamp(${rem(28)}, 5vw, ${rem(42)})`, 
+              <Title
+                order={1}
+                c="white"
+                style={{
+                  fontSize: `clamp(${rem(28)}, 5vw, ${rem(42)})`,
                   fontWeight: 900,
                   letterSpacing: '-0.03em',
                   lineHeight: 1.1,
-                  textShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                  textShadow: '0 4px 12px rgba(0,0,0,0.2)',
                 }}
               >
                 {productInfo?.name}
@@ -127,20 +183,27 @@ const ProductDescriptionHeader = () => {
             </Stack>
 
             <Stack gap={rem(4)} align="flex-end">
-                <Text size="xs" c="white" opacity={0.6} fw={700} tt="uppercase" style={{ letterSpacing: '0.05em' }}>
-                  Starting Price
-                </Text>
-                <Text 
-                  size={rem(32)} 
-                  fw={900} 
-                  c="primary.4" 
-                  style={{ 
-                    lineHeight: 1,
-                    textShadow: '0 2px 4px rgba(0,0,0,0.1)'
-                  }}
-                >
-                   {priceFormatter(Number(productInfo?.price || 0))}
-                </Text>
+              <Text
+                size="xs"
+                c="white"
+                opacity={0.6}
+                fw={700}
+                tt="uppercase"
+                style={{ letterSpacing: '0.05em' }}
+              >
+                Starting Price
+              </Text>
+              <Text
+                size={rem(32)}
+                fw={900}
+                c="primary.4"
+                style={{
+                  lineHeight: 1,
+                  textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                }}
+              >
+                {priceFormatter(Number(productInfo?.price || 0))}
+              </Text>
             </Stack>
           </Group>
         </Stack>

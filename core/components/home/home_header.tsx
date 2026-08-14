@@ -1,25 +1,173 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { IconExternalLink, IconSearch } from '@tabler/icons-react';
-import { Box, Button, Flex, Image, Stack, TextInput, Title } from '@mantine/core';
+import {
+  IconBuildingCommunity,
+  IconExternalLink,
+  IconMapPin,
+  IconSearch,
+} from '@tabler/icons-react';
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Group,
+  Image,
+  Select,
+  Stack,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
+import { useAppContext } from '@/core/context';
+import useFetchAvailableStatesQuery from '@/core/hooks/public/useFetchAvailableStatesQuery';
 
 const HomeHeader = () => {
   const router = useRouter();
   const [searchInput, setSearchInput] = useState('');
+  const [selectedState, setSelectedState] = useState<string | null>(null);
+  const [selectedCity, setSelectedCity] = useState<string | null>(null);
   const [isNavigating, setIsNavigating] = useState(false);
+
+  const { data: fetchedStates } = useFetchAvailableStatesQuery();
+  const { availableStates: contextStates } = useAppContext();
+  const statesList = fetchedStates || contextStates || [];
+
+  const stateOptions = useMemo(() => {
+    if (!statesList || !Array.isArray(statesList)) {
+      return [];
+    }
+
+    return statesList.map((item) => ({
+      value: item.state,
+      label: item.state,
+    }));
+  }, [statesList]);
+
+  const cityOptions = useMemo(() => {
+    if (!selectedState || !statesList || !Array.isArray(statesList)) {
+      return [];
+    }
+
+    const stateObj = statesList.find(
+      (item) => item.state?.toLowerCase() === selectedState?.toLowerCase()
+    );
+
+    if (!stateObj || !stateObj.lgas) {
+      return [];
+    }
+
+    return stateObj.lgas.map((lga) => ({
+      value: lga,
+      label: lga,
+    }));
+  }, [selectedState, statesList]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsNavigating(true);
 
+    const params = new URLSearchParams();
+
     if (searchInput.trim()) {
-      router.push(`/search?query=${encodeURIComponent(searchInput.trim())}`);
-    } else {
-      router.push('/search');
+      params.set('query', searchInput.trim());
     }
+    if (selectedState) {
+      params.set('state', selectedState);
+    }
+    if (selectedCity) {
+      params.set('city', selectedCity);
+    }
+
+    const queryString = params.toString();
+    router.push(queryString ? `/search?${queryString}` : '/search');
+  };
+
+  const desktopInputStyles = {
+    input: {
+      height: '46px',
+      fontSize: '14px',
+      fontWeight: 500,
+      color: '#111827',
+      paddingLeft: '36px',
+      backgroundColor: 'transparent',
+      border: 'none',
+      boxShadow: 'none',
+      '&::placeholder': {
+        color: '#6b7280',
+        fontWeight: 400,
+      },
+    },
+    section: {
+      pointerEvents: 'none' as const,
+    },
+  };
+
+  const desktopSelectStyles = {
+    input: {
+      height: '46px',
+      fontSize: '14px',
+      fontWeight: 500,
+      color: '#111827',
+      paddingLeft: '34px',
+      paddingRight: '28px',
+      backgroundColor: 'transparent',
+      border: 'none',
+      boxShadow: 'none',
+      cursor: 'pointer',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      '&::placeholder': {
+        color: '#6b7280',
+        fontWeight: 400,
+      },
+      '&:disabled': {
+        backgroundColor: 'transparent',
+        color: '#9ca3af',
+        opacity: 0.6,
+        cursor: 'not-allowed',
+      },
+    },
+    section: {
+      pointerEvents: 'none' as const,
+    },
+  };
+
+  const mobileInputStyles = {
+    input: {
+      borderRadius: '12px',
+      backgroundColor: '#f9fafb',
+      border: '1px solid #e5e7eb',
+      fontSize: '14px',
+      color: '#111827',
+      '&:focus': {
+        borderColor: '#006838',
+        backgroundColor: '#ffffff',
+      },
+    },
+  };
+
+  const mobileSelectStyles = {
+    input: {
+      borderRadius: '12px',
+      backgroundColor: '#f9fafb',
+      border: '1px solid #e5e7eb',
+      fontSize: '13px',
+      color: '#111827',
+      '&:focus': {
+        borderColor: '#006838',
+        backgroundColor: '#ffffff',
+      },
+      '&:disabled': {
+        backgroundColor: '#f3f4f6',
+        color: '#9ca3af',
+        opacity: 0.7,
+      },
+    },
   };
 
   return (
@@ -31,49 +179,6 @@ const HomeHeader = () => {
         background: 'linear-gradient(135deg, #317549 0%, #1e4d30 80%, #255a38 100%)',
       }}
     >
-      {/* Noise Texture Overlay */}
-      {/* <Box
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: 0.05,
-          pointerEvents: 'none',
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
-        }}
-      /> */}
-
-      {/* Subtle Mesh Glow */}
-      {/* <Box
-        style={{
-          position: 'absolute',
-          top: '-20%',
-          right: '-10%',
-          width: '60%',
-          height: '140%',
-          background: 'radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%)',
-          filter: 'blur(60px)',
-          pointerEvents: 'none',
-        }}
-      /> */}
-
-      {/* Subtle Grid Background */}
-      {/* <Box
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundImage: `
-            linear-gradient(#ffffff08 1px, transparent 1px),
-            linear-gradient(90deg, #ffffff08 1px, transparent 1px)
-          `,
-          backgroundSize: '40px 40px',
-          backgroundPosition: 'center center',
-          pointerEvents: 'none',
-        }}
-      /> */}
-
       <style>
         {`
           @keyframes shimmer {
@@ -93,11 +198,6 @@ const HomeHeader = () => {
             transition: all 0.2s ease;
           }
 
-          .search-input-focus:focus-within {
-            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-            transition: all 0.3s ease;
-          }
-
           @keyframes rotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -106,11 +206,23 @@ const HomeHeader = () => {
           .animated-border-wrapper {
             position: relative;
             padding: 2px;
-            border-radius: 100px;
+            border-radius: 20px;
             overflow: hidden;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+          }
+
+          @media (min-width: 992px) {
+            .animated-border-wrapper {
+              border-radius: 100px;
+            }
+          }
+
+          .animated-border-wrapper:hover {
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.22);
           }
 
           .animated-border-wrapper::before {
@@ -134,11 +246,11 @@ const HomeHeader = () => {
             position: absolute;
             inset: 2px;
             background: #ffffff;
-            border-radius: 98px;
+            border-radius: inherit;
             z-index: 0;
           }
         `}
-      </style> 
+      </style>
 
       <Stack
         px={20}
@@ -209,66 +321,233 @@ const HomeHeader = () => {
           </Link>
           <Link
             target="_blank"
-            href="https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile"
+            href="https://play.google.com/store/details?id=com.livestocx.livestocx_mobile"
             className="app-badge"
           >
             <Image src="/icons/icon_playstore.svg" alt="Google Play" w={120} fit="contain" />
           </Link>
         </Flex>
 
-        {/* Streamlined Search Form */}
+        {/* Embedded Search Form */}
         <form style={{ width: '100%' }} onSubmit={handleSearchSubmit}>
           <Flex w="100%" justify="center">
-            <Box className="animated-border-wrapper" w={{ base: '100%', sm: '100%', md: '60%' }}>
-              <TextInput
-                size="lg"
-                placeholder="What are you looking for?"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.currentTarget.value)}
+            <Box
+              className="animated-border-wrapper"
+              w={{ base: '100%', sm: '100%', md: '88%', lg: '78%' }}
+              style={{ maxWidth: 960 }}
+            >
+              {/* Desktop Layout */}
+              <Box
+                visibleFrom="md"
                 w="100%"
-                rightSection={
+                p="4px 6px 4px 16px"
+                style={{ position: 'relative', zIndex: 1 }}
+              >
+                <Flex align="center" justify="space-between" w="100%" gap={6}>
+                  {/* Keyword Input */}
+                  <Box style={{ flex: 1.8, minWidth: 0 }}>
+                    <TextInput
+                      placeholder="What are you looking for?"
+                      value={searchInput}
+                      onChange={(e) => setSearchInput(e.currentTarget.value)}
+                      leftSection={<IconSearch size={18} color="#006838" stroke={2} />}
+                      leftSectionPointerEvents="none"
+                      variant="unstyled"
+                      styles={desktopInputStyles}
+                    />
+                  </Box>
+
+                  {/* Vertical Divider */}
+                  <Box
+                    style={{
+                      width: '1px',
+                      height: '28px',
+                      backgroundColor: '#e5e7eb',
+                      flexShrink: 0,
+                    }}
+                  />
+
+                  {/* State Dropdown */}
+                  <Box style={{ flex: 1.1, minWidth: 0 }}>
+                    <Select
+                      placeholder="State"
+                      data={stateOptions}
+                      value={selectedState}
+                      onChange={(val) => {
+                        setSelectedState(val);
+                        setSelectedCity(null);
+                      }}
+                      searchable
+                      clearable
+                      leftSection={<IconMapPin size={16} color="#006838" stroke={2} />}
+                      leftSectionPointerEvents="none"
+                      variant="unstyled"
+                      styles={desktopSelectStyles}
+                      comboboxProps={{
+                        withinPortal: true,
+                        transitionProps: { transition: 'fade-down', duration: 150 },
+                        shadow: 'lg',
+                        radius: 'md',
+                        zIndex: 1000,
+                      }}
+                    />
+                  </Box>
+
+                  {/* Vertical Divider */}
+                  <Box
+                    style={{
+                      width: '1px',
+                      height: '28px',
+                      backgroundColor: '#e5e7eb',
+                      flexShrink: 0,
+                    }}
+                  />
+
+                  {/* City/Town Dropdown */}
+                  <Box style={{ flex: 1.1, minWidth: 0 }}>
+                    <Select
+                      placeholder={selectedState ? 'City / Town' : 'City / Town'}
+                      data={cityOptions}
+                      value={selectedCity}
+                      onChange={(val) => setSelectedCity(val)}
+                      searchable
+                      clearable
+                      disabled={!selectedState || cityOptions.length === 0}
+                      leftSection={
+                        <IconBuildingCommunity
+                          size={16}
+                          color={selectedState ? '#006838' : '#9ca3af'}
+                          stroke={2}
+                        />
+                      }
+                      leftSectionPointerEvents="none"
+                      variant="unstyled"
+                      styles={desktopSelectStyles}
+                      comboboxProps={{
+                        withinPortal: true,
+                        transitionProps: { transition: 'fade-down', duration: 150 },
+                        shadow: 'lg',
+                        radius: 'md',
+                        zIndex: 1000,
+                      }}
+                    />
+                  </Box>
+
+                  {/* Submit Button */}
                   <Button
-                    h={38}
-                    px={18}
-                    mr={6}
-                    variant="filled"
                     type="submit"
                     loading={isNavigating}
+                    h={44}
+                    px={22}
+                    radius="xl"
                     style={{
-                      borderRadius: '100px',
-                      backgroundColor: '#317549',
-                      boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+                      backgroundColor: '#006838',
+                      flexShrink: 0,
+                      boxShadow: '0 2px 8px rgba(0,104,56,0.25)',
                       transition: 'all 0.2s ease',
-                      position: 'relative',
-                      zIndex: 2,
                     }}
                   >
-                    <IconSearch size={16} color="white" />
+                    <Group gap={6} wrap="nowrap">
+                      <IconSearch size={16} color="white" stroke={2.5} />
+                      <Text fw={600} size="sm" c="white">
+                        Search
+                      </Text>
+                    </Group>
                   </Button>
-                }
-                rightSectionWidth={80}
-                styles={{
-                  root: {
-                    position: 'relative',
-                    zIndex: 2,
-                    width: '100%',
-                  },
-                  input: {
-                    color: 'black',
-                    borderRadius: '100px',
-                    backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                    backdropFilter: 'blur(8px)',
-                    border: 'none',
-                    paddingRight: 90,
-                    height: 54,
-                    fontSize: 15,
-                    boxShadow: 'none',
-                    '&:focus': {
-                      backgroundColor: '#ffffff',
-                    },
-                  },
-                }}
-              />
+                </Flex>
+              </Box>
+
+              {/* Mobile Layout */}
+              <Box hiddenFrom="md" w="100%" p={12} style={{ position: 'relative', zIndex: 1 }}>
+                <Stack gap={10} w="100%">
+                  {/* Keyword Input */}
+                  <TextInput
+                    size="md"
+                    placeholder="What are you looking for?"
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.currentTarget.value)}
+                    leftSection={<IconSearch size={18} color="#006838" stroke={2} />}
+                    leftSectionPointerEvents="none"
+                    styles={mobileInputStyles}
+                  />
+
+                  {/* State and City row */}
+                  <Grid gutter={8}>
+                    <Grid.Col span={6}>
+                      <Select
+                        size="sm"
+                        placeholder="State"
+                        data={stateOptions}
+                        value={selectedState}
+                        onChange={(val) => {
+                          setSelectedState(val);
+                          setSelectedCity(null);
+                        }}
+                        searchable
+                        clearable
+                        leftSection={<IconMapPin size={15} color="#006838" stroke={2} />}
+                        leftSectionPointerEvents="none"
+                        styles={mobileSelectStyles}
+                        comboboxProps={{
+                          withinPortal: true,
+                          transitionProps: { transition: 'fade-down', duration: 150 },
+                          shadow: 'lg',
+                          radius: 'md',
+                          zIndex: 1000,
+                        }}
+                      />
+                    </Grid.Col>
+                    <Grid.Col span={6}>
+                      <Select
+                        size="sm"
+                        placeholder={selectedState ? 'City / Town' : 'City / Town'}
+                        data={cityOptions}
+                        value={selectedCity}
+                        onChange={(val) => setSelectedCity(val)}
+                        searchable
+                        clearable
+                        disabled={!selectedState || cityOptions.length === 0}
+                        leftSection={
+                          <IconBuildingCommunity
+                            size={15}
+                            color={selectedState ? '#006838' : '#9ca3af'}
+                            stroke={2}
+                          />
+                        }
+                        leftSectionPointerEvents="none"
+                        styles={mobileSelectStyles}
+                        comboboxProps={{
+                          withinPortal: true,
+                          transitionProps: { transition: 'fade-down', duration: 150 },
+                          shadow: 'lg',
+                          radius: 'md',
+                          zIndex: 1000,
+                        }}
+                      />
+                    </Grid.Col>
+                  </Grid>
+
+                  {/* Full-width Search Button on mobile */}
+                  <Button
+                    type="submit"
+                    loading={isNavigating}
+                    fullWidth
+                    h={44}
+                    radius="xl"
+                    style={{
+                      backgroundColor: '#006838',
+                      boxShadow: '0 2px 8px rgba(0,104,56,0.25)',
+                    }}
+                  >
+                    <Group gap={8} justify="center">
+                      <IconSearch size={16} color="white" stroke={2.5} />
+                      <Text fw={600} size="sm" c="white">
+                        Search Marketplace
+                      </Text>
+                    </Group>
+                  </Button>
+                </Stack>
+              </Box>
             </Box>
           </Flex>
         </form>

@@ -190,97 +190,107 @@ const ProductCard = ({ product }: { product: ProductInfo }) => {
           )}
         </Box>
 
-        <Box
-          px={10}
-          py={10}
-          h={140}
+        <Link
           style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: 6,
-            justifyContent: 'space-between',
-            flexShrink: 0,
+            textDecoration: 'none',
           }}
+          onClick={() => {
+            setProductInfo(product);
+          }}
+          href={`/marketplace/products/${formatProductSlug(product)}`}
         >
-          <Box style={{ display: 'flex', flexDirection: 'column', gap: 6, minHeight: 0 }}>
-            <Text
-              c="dark.8"
-              fz={{ base: 12, md: 14 }}
-              fw={600}
-              lh={1.1}
-              style={{
-                fontFamily: 'var(--mantine-font-family-headings)',
-                display: '-webkit-box',
-                WebkitBoxOrient: 'vertical',
-                WebkitLineClamp: 2,
-                overflow: 'hidden',
-                textOverflow: 'ellipsis',
-                wordBreak: 'break-word',
-              }}
-            >
-              {product.name}
-            </Text>
-
-            <Text c="dark.9" fz={{ base: 14, md: 15 }} fw={700}>
-              {priceFormatter(Number(product.price))}
-            </Text>
-
-            <Group gap={3} wrap="nowrap">
-              <Badge
-                size="xs"
-                variant="light"
-                color="gray"
-                styles={{
-                  root: {
-                    textTransform: 'none',
-                    flexShrink: 0,
-                    paddingInline: 5,
-                    height: 16,
-                    fontSize: 8,
-                    maxWidth: '100%',
-                    border: '0px',
-                  },
-                  label: {
-                    overflow: 'visible',
-                    whiteSpace: 'nowrap',
-                    fontSize: 8,
-                    lineHeight: 1,
-                  },
+          <Box
+            px={10}
+            py={10}
+            h={140}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 6,
+              justifyContent: 'space-between',
+              flexShrink: 0,
+            }}
+          >
+            <Box style={{ display: 'flex', flexDirection: 'column', gap: 6, minHeight: 0 }}>
+              <Text
+                c="dark.8"
+                fz={{ base: 12, md: 14 }}
+                fw={600}
+                lh={1.1}
+                style={{
+                  fontFamily: 'var(--mantine-font-family-headings)',
+                  display: '-webkit-box',
+                  WebkitBoxOrient: 'vertical',
+                  WebkitLineClamp: 2,
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  wordBreak: 'break-word',
                 }}
               >
-                {product.isNegotiable ? 'Negotiable' : 'Non-Negotiable'}
-              </Badge>
-              <Badge
-                size="xs"
-                variant="light"
-                color={product.inStock ? 'lime' : 'orange'}
-                styles={{
-                  root: {
-                    textTransform: 'none',
-                    flexShrink: 0,
-                    paddingInline: 5,
-                    height: 16,
-                    fontSize: 8,
-                    maxWidth: '100%',
-                    border: '0px',
-                  },
-                  label: {
-                    overflow: 'visible',
-                    whiteSpace: 'nowrap',
-                    fontSize: 8,
-                    lineHeight: 1,
-                  },
-                }}
-              >
-                {product.inStock ? 'In Stock' : 'Out of Stock'}
-              </Badge>
-            </Group>
+                {product.name}
+              </Text>
+
+              <Text c="dark.9" fz={{ base: 14, md: 15 }} fw={700}>
+                {priceFormatter(Number(product.price))}
+              </Text>
+
+              <Group gap={3} wrap="nowrap">
+                <Badge
+                  size="xs"
+                  variant="light"
+                  color="gray"
+                  styles={{
+                    root: {
+                      textTransform: 'none',
+                      flexShrink: 0,
+                      paddingInline: 5,
+                      height: 16,
+                      fontSize: 8,
+                      maxWidth: '100%',
+                      border: '0px',
+                    },
+                    label: {
+                      overflow: 'visible',
+                      whiteSpace: 'nowrap',
+                      fontSize: 8,
+                      lineHeight: 1,
+                    },
+                  }}
+                >
+                  {product.isNegotiable ? 'Negotiable' : 'Non-Negotiable'}
+                </Badge>
+                <Badge
+                  size="xs"
+                  variant="light"
+                  color={product.inStock ? 'lime' : 'orange'}
+                  styles={{
+                    root: {
+                      textTransform: 'none',
+                      flexShrink: 0,
+                      paddingInline: 5,
+                      height: 16,
+                      fontSize: 8,
+                      maxWidth: '100%',
+                      border: '0px',
+                    },
+                    label: {
+                      overflow: 'visible',
+                      whiteSpace: 'nowrap',
+                      fontSize: 8,
+                      lineHeight: 1,
+                    },
+                  }}
+                >
+                  {product.inStock ? 'In Stock' : 'Out of Stock'}
+                </Badge>
+              </Group>
+            </Box>
+
+            <Text c="gray.8" fz={11} truncate="end">
+              {product.vendor.city}, {product.vendor.state}
+            </Text>
           </Box>
-
-          <Text c="gray.8" fz={11} truncate="end">
-            {product.vendor.city}, {product.vendor.state}
-          </Text>
-        </Box>
+        </Link>
       </Box>
     </>
   );
