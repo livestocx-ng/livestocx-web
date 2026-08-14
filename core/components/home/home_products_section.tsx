@@ -2,16 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  Box,
-  Flex,
-  Group,
-  Pagination,
-  Skeleton,
-  Text,
-  Title,
-  UnstyledButton,
-} from '@mantine/core';
+import { Box, Flex, Group, Pagination, Skeleton, Text, Title, UnstyledButton } from '@mantine/core';
 import { TestimonialCard } from '@/core/components/cards/testimonial-card';
 import { useAppContext } from '@/core/context';
 import useFetchMarketplaceProductsQuery from '@/core/hooks/marketplace/useFetchMarketplaceProductsQuery';
@@ -112,8 +103,8 @@ const HomeProductsSection = () => {
 
   return (
     <Box
-      px={20}
-      py={24}
+      px={{ base: 14, sm: 16, md: 20 }}
+      py={{ base: 16, sm: 20, md: 24 }}
       ref={productsRef}
       style={{ position: 'relative', overflow: 'hidden', backgroundColor: '#faf9f7' }}
     >
@@ -150,17 +141,17 @@ const HomeProductsSection = () => {
       <Box style={{ position: 'relative', zIndex: 1 }}>
         <Title
           order={3}
+          fz={{ base: 18, sm: 20, md: 22 }}
           mb="xs"
           style={{
             fontFamily: 'var(--mantine-font-family-headings)',
-            fontSize: 22,
             fontWeight: 700,
           }}
         >
           {activeSortFilter.sectionHeading}
         </Title>
 
-        <Group gap="lg" mb="md">
+        <Group gap="md" mb="md">
           {productSortFilters.map((filter) => {
             const isActive = formData.productDisplayType === filter.value;
 
@@ -173,7 +164,7 @@ const HomeProductsSection = () => {
                 }}
               >
                 <Text
-                  size="sm"
+                  fz={{ base: 12, md: 14 }}
                   fw={isActive ? 700 : 500}
                   c={isActive ? 'primary.9' : 'dimmed'}
                   style={{
