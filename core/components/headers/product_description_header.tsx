@@ -8,15 +8,26 @@ import {
   Container,
   Group,
   rem,
+  Skeleton,
   Stack,
   Text,
   Title,
 } from '@mantine/core';
 import { useAppContext } from '@/core/context';
 import { priceFormatter } from '@/core/middlewares';
+import { ProductInfo } from '@/core/sdk/marketplace';
 
-const ProductDescriptionHeader = () => {
-  const { productInfo } = useAppContext();
+interface ProductDescriptionHeaderProps {
+  productInfo?: ProductInfo | null;
+  isLoading?: boolean;
+}
+
+const ProductDescriptionHeader = ({
+  productInfo: propProductInfo,
+  isLoading,
+}: ProductDescriptionHeaderProps = {}) => {
+  const { productInfo: contextProductInfo } = useAppContext();
+  const productInfo = propProductInfo !== undefined ? propProductInfo : contextProductInfo;
 
   const items = [
     { title: 'Marketplace', href: '/', icon: <IconBuildingStore size={16} stroke={1.8} /> },
@@ -144,42 +155,55 @@ const ProductDescriptionHeader = () => {
           </Breadcrumbs>
 
           <Group justify="space-between" align="flex-end" wrap="wrap">
-            <Stack gap={rem(8)}>
-              <Group gap="xs">
-                {productInfo?.category && (
-                  <Badge
-                    variant="filled"
-                    color="primary.9"
-                    size="sm"
-                    radius="sm"
-                    style={{ textTransform: 'capitalize' }}
+            <Stack gap={rem(8)} style={{ flex: 1, minWidth: 200 }}>
+              {isLoading && !productInfo ? (
+                <>
+                  <Skeleton height={20} width={120} radius="sm" />
+                  <Skeleton height={36} width="60%" radius="sm" />
+                </>
+              ) : (
+                <>
+                  <Group gap="xs">
+                    {productInfo?.category && (
+                      <Badge
+                        variant="filled"
+                        color="primary.9"
+                        size="sm"
+                        radius="sm"
+                        style={{ textTransform: 'capitalize' }}
+                      >
+                        {productInfo.category.toLowerCase().replace(/_/g, ' ')}
+                      </Badge>
+                    )}
+                    {(productInfo?.vendor?.state || productInfo?.vendor?.city) && (
+                      <Text
+                        size="xs"
+                        c="dimmed"
+                        fw={700}
+                        tt="uppercase"
+                        style={{ letterSpacing: '0.1em' }}
+                      >
+                        {[productInfo?.vendor?.state, productInfo?.vendor?.city]
+                          .filter(Boolean)
+                          .join(' • ')}
+                      </Text>
+                    )}
+                  </Group>
+                  <Title
+                    order={1}
+                    c="white"
+                    style={{
+                      fontSize: `clamp(${rem(28)}, 5vw, ${rem(42)})`,
+                      fontWeight: 900,
+                      letterSpacing: '-0.03em',
+                      lineHeight: 1.1,
+                      textShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                    }}
                   >
-                    {productInfo.category.toLowerCase().replace(/_/g, ' ')}
-                  </Badge>
-                )}
-                <Text
-                  size="xs"
-                  c="dimmed"
-                  fw={700}
-                  tt="uppercase"
-                  style={{ letterSpacing: '0.1em' }}
-                >
-                  {productInfo?.vendor?.state} • {productInfo?.vendor?.city}
-                </Text>
-              </Group>
-              <Title
-                order={1}
-                c="white"
-                style={{
-                  fontSize: `clamp(${rem(28)}, 5vw, ${rem(42)})`,
-                  fontWeight: 900,
-                  letterSpacing: '-0.03em',
-                  lineHeight: 1.1,
-                  textShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                }}
-              >
-                {productInfo?.name}
-              </Title>
+                    {productInfo?.name || 'Product Details'}
+                  </Title>
+                </>
+              )}
             </Stack>
 
             <Stack gap={rem(4)} align="flex-end">
@@ -193,17 +217,21 @@ const ProductDescriptionHeader = () => {
               >
                 Starting Price
               </Text>
-              <Text
-                size={rem(32)}
-                fw={900}
-                c="primary.4"
-                style={{
-                  lineHeight: 1,
-                  textShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                }}
-              >
-                {priceFormatter(Number(productInfo?.price || 0))}
-              </Text>
+              {isLoading && !productInfo ? (
+                <Skeleton height={32} width={100} radius="sm" />
+              ) : (
+                <Text
+                  size={rem(32)}
+                  fw={900}
+                  c="primary.4"
+                  style={{
+                    lineHeight: 1,
+                    textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                  }}
+                >
+                  {priceFormatter(Number(productInfo?.price || 0))}
+                </Text>
+              )}
             </Stack>
           </Group>
         </Stack>
@@ -213,3 +241,4 @@ const ProductDescriptionHeader = () => {
 };
 
 export default ProductDescriptionHeader;
+

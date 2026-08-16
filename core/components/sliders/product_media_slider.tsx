@@ -21,11 +21,13 @@ import { AddListItemDTO, MediaInfo, ProductInfo } from '@/core/sdk/marketplace';
 import ShareProductModal from '../modals/share_product_modal';
 
 interface ProductMediaSliderProps {
-  productInfo: ProductInfo;
+  productInfo?: ProductInfo | null;
 }
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString?: string) => {
+  if (!dateString) return '';
   const date = new Date(dateString);
+  if (isNaN(date.getTime())) return '';
   const now = new Date();
   const diffInSeconds = Math.floor((now.getTime() - date.getTime()) / 1000);
 
@@ -84,73 +86,104 @@ const ProductMediaSlider = ({ productInfo }: ProductMediaSliderProps) => {
     );
   };
 
-  const allMedia = (productInfo?.media || []).map((m) => m.mediaUrl);
+  const allMedia: string[] = [];
+  if (productInfo?.coverPhoto) {
+    allMedia.push(productInfo.coverPhoto);
+  }
+  if (productInfo?.videoUrl && !allMedia.includes(productInfo.videoUrl)) {
+    allMedia.push(productInfo.videoUrl);
+  }
+  if (productInfo?.media && productInfo.media.length > 0) {
+    productInfo.media.forEach((m) => {
+      if (m?.mediaUrl && !allMedia.includes(m.mediaUrl)) {
+        allMedia.push(m.mediaUrl);
+      }
+    });
+  }
+
+  const formattedDate = formatDate(productInfo?.createdAt);
 
   return (
     <>
-      <ShareProductModal
-        productInfo={productInfo}
-        isOpen={isShareProductModalOpen}
-        closeModal={closeShareProductModal}
-      />
+      {productInfo && (
+        <ShareProductModal
+          productInfo={productInfo}
+          isOpen={isShareProductModalOpen}
+          closeModal={closeShareProductModal}
+        />
+      )}
       <Box style={{ position: 'relative', width: '100%', height: '100%' }}>
-        <Carousel
-          withIndicators
-          height={500}
-          slideSize="100%"
-          slideGap="md"
-          controlSize={40}
-          onSlideChange={setActiveSlide}
-          nextControlIcon={<IconChevronRight size={16} color="black" />}
-          previousControlIcon={<IconChevronLeft size={16} color="black" />}
-          withControls
-          styles={{
-            control: {
-              backgroundColor: '#ffffff',
-              '&:hover': {
+        {allMedia.length === 0 ? (
+          <Image
+            src={productInfo?.coverPhoto || '/icons/logo.svg'}
+            height={500}
+            fallbackSrc="/icons/logo.svg"
+            style={{
+              width: '100%',
+              objectFit: 'cover',
+              borderRadius: '8px',
+            }}
+            alt={productInfo?.name || 'Product media'}
+          />
+        ) : (
+          <Carousel
+            withIndicators={allMedia.length > 1}
+            height={500}
+            slideSize="100%"
+            slideGap="md"
+            controlSize={40}
+            onSlideChange={setActiveSlide}
+            nextControlIcon={<IconChevronRight size={16} color="black" />}
+            previousControlIcon={<IconChevronLeft size={16} color="black" />}
+            withControls={allMedia.length > 1}
+            styles={{
+              control: {
                 backgroundColor: '#ffffff',
+                '&:hover': {
+                  backgroundColor: '#ffffff',
+                },
               },
-            },
-            indicators: {
-              bottom: 10,
-            },
-            indicator: {
-              width: 10,
-              height: 10,
-              border: '1px solid black',
-              backgroundColor: '#ffffff',
-              '&[data-active]': {
+              indicators: {
+                bottom: 10,
+              },
+              indicator: {
+                width: 10,
+                height: 10,
+                border: '1px solid black',
                 backgroundColor: '#ffffff',
+                '&[data-active]': {
+                  backgroundColor: '#ffffff',
+                },
               },
-            },
-          }}
-        >
-          {allMedia.map((item, index) => (
-            <Carousel.Slide key={index}>
-              {isVideo(item) ? (
-                <Box h={500} style={{ position: 'relative' }}>
-                  <ReactPlayer
-                    url={item}
-                    width="100%"
-                    height="100%"
-                    controls
-                    style={{ objectFit: 'cover' }}
+            }}
+          >
+            {allMedia.map((item, index) => (
+              <Carousel.Slide key={index}>
+                {isVideo(item) ? (
+                  <Box h={500} style={{ position: 'relative' }}>
+                    <ReactPlayer
+                      url={item}
+                      width="100%"
+                      height="100%"
+                      controls
+                      style={{ objectFit: 'cover' }}
+                    />
+                  </Box>
+                ) : (
+                  <Image
+                    src={item}
+                    height={500}
+                    style={{
+                      width: '100%',
+                      objectFit: 'cover',
+                    }}
+                    alt={`Product media ${index + 1}`}
                   />
-                </Box>
-              ) : (
-                <Image
-                  src={item}
-                  height={500}
-                  style={{
-                    width: '100%',
-                    objectFit: 'cover',
-                  }}
-                  alt={`Product media ${index + 1}`}
-                />
-              )}
-            </Carousel.Slide>
-          ))}
-        </Carousel>
+                )}
+              </Carousel.Slide>
+            ))}
+          </Carousel>
+        )}
 
         {productInfo?.isPromotion && (
           <Box
@@ -169,106 +202,110 @@ const ProductMediaSlider = ({ productInfo }: ProductMediaSliderProps) => {
           </Box>
         )}
 
-        <Box
-          px={4}
-          style={{
-            top: 0,
-            left: 0,
-            padding: '3px',
-            display: 'flex',
-            position: 'absolute',
-            borderTopRightRadius: '100px',
-            borderBottomRightRadius: '100px',
-            alignItems: 'center',
-            gap: '8px',
-            backgroundColor: '#ffffff40',
-          }}
-        >
-          <Text size="sm" c="white">
-            {formatDate(productInfo?.createdAt)}
-          </Text>
-        </Box>
-
-        <Box
-          style={{
-            right: 5,
-            bottom: 5,
-            padding: '3px',
-            display: 'flex',
-            position: 'absolute',
-            borderRadius: '100px',
-            alignItems: 'center',
-            gap: '8px',
-            backgroundColor: '#ffffff40',
-          }}
-        >
+        {formattedDate && (
           <Box
-            h={25}
-            w={25}
+            px={4}
             style={{
+              top: 0,
+              left: 0,
+              padding: '3px',
               display: 'flex',
+              position: 'absolute',
+              borderTopRightRadius: '100px',
+              borderBottomRightRadius: '100px',
               alignItems: 'center',
-              justifyContent: 'center',
+              gap: '8px',
+              backgroundColor: '#ffffff40',
             }}
           >
-            {listItems.some((item) => item.itemId === productInfo?.id) ? (
-              <IconHeartFilled
-                size={18}
-                style={{
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  const payload: AddListItemDTO = {
-                    itemId: productInfo?.id,
-                    itemType: 'like',
-                    entityType: 'product',
-                  };
-
-                  mutate(
-                    { payload, name: productInfo?.name },
-                    {
-                      onSuccess(_data: any) {
-                        useFetchUserListItemsQuery();
-                      },
-                    }
-                  );
-                }}
-                color="red"
-              />
-            ) : (
-              <IconHeart
-                size={18}
-                style={{
-                  cursor: 'pointer',
-                }}
-                onClick={() => {
-                  const payload: AddListItemDTO = {
-                    itemId: productInfo?.id,
-                    itemType: 'like',
-                    entityType: 'product',
-                  };
-
-                  mutate(
-                    { payload, name: productInfo?.name },
-                    {
-                      onSuccess(_data: any) {
-                        useFetchUserListItemsQuery();
-                      },
-                    }
-                  );
-                }}
-                color="white"
-              />
-            )}
+            <Text size="sm" c="white">
+              {formattedDate}
+            </Text>
           </Box>
+        )}
 
-          <IconShare2
-            size={20}
-            color="white"
-            style={{ cursor: 'pointer' }}
-            onClick={openShareProductModal}
-          />
-        </Box>
+        {productInfo && (
+          <Box
+            style={{
+              right: 5,
+              bottom: 5,
+              padding: '3px',
+              display: 'flex',
+              position: 'absolute',
+              borderRadius: '100px',
+              alignItems: 'center',
+              gap: '8px',
+              backgroundColor: '#ffffff40',
+            }}
+          >
+            <Box
+              h={25}
+              w={25}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              {listItems.some((item) => item.itemId === productInfo?.id) ? (
+                <IconHeartFilled
+                  size={18}
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    const payload: AddListItemDTO = {
+                      itemId: productInfo.id,
+                      itemType: 'like',
+                      entityType: 'product',
+                    };
+
+                    mutate(
+                      { payload, name: productInfo.name },
+                      {
+                        onSuccess(_data: any) {
+                          useFetchUserListItemsQuery();
+                        },
+                      }
+                    );
+                  }}
+                  color="red"
+                />
+              ) : (
+                <IconHeart
+                  size={18}
+                  style={{
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => {
+                    const payload: AddListItemDTO = {
+                      itemId: productInfo.id,
+                      itemType: 'like',
+                      entityType: 'product',
+                    };
+
+                    mutate(
+                      { payload, name: productInfo.name },
+                      {
+                        onSuccess(_data: any) {
+                          useFetchUserListItemsQuery();
+                        },
+                      }
+                    );
+                  }}
+                  color="white"
+                />
+              )}
+            </Box>
+
+            <IconShare2
+              size={20}
+              color="white"
+              style={{ cursor: 'pointer' }}
+              onClick={openShareProductModal}
+            />
+          </Box>
+        )}
       </Box>
     </>
   );

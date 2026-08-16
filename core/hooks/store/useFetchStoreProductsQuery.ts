@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { storeApi } from '@/core/api/sdk';
 import { useAppContext } from '@/core/context';
+import { ProductsResponse } from '@/core/sdk/marketplace';
 
 export default function useFetchStoreProductsQuery(payload: {
   storeId: number;
@@ -9,36 +11,44 @@ export default function useFetchStoreProductsQuery(payload: {
   const {
     setStoreProducts,
     setStoreProductsTotalPages,
-    setStoreProductsCurrentPage,
     setStoreProductsHasNextPage,
   } = useAppContext();
 
-  return useQuery({
-    queryKey: ['fetch-store-profile-products'],
+  const query = useQuery<ProductsResponse | null>({
+    queryKey: ['fetch-store-profile-products', payload.storeId, payload.currentPage],
     queryFn: async () => {
-      try {
-        const pageSize = 20;
+      if (!payload.storeId || payload.storeId <= 0) return null;
+      const pageSize = 20;
 
-        const response = await storeApi.storeControllerFetchStoreProducts(
-          payload.currentPage,
-          payload.storeId,
-          pageSize
-        );
+      const response = await storeApi.storeControllerFetchStoreProducts(
+        payload.currentPage || 1,
+        payload.storeId,
+        pageSize
+      );
 
-        console.log('[TOTAl--PAGES] :: ', response.data.totalPages);
-
-        setStoreProductsCurrentPage(
-          payload.currentPage < response.data.totalPages
-            ? payload.currentPage + 1
-            : payload.currentPage
-        );
-        setStoreProductsTotalPages(response.data.totalPages);
-        setStoreProductsHasNextPage(response.data.totalPages <= payload.currentPage);
-
-        setStoreProducts(response.data.products);
-      } catch (error) {
-        console.log(`[FETCH-STORE-PRODUCTS-ERROR] :: ${error}`);
-      }
+      return response.data;
     },
+    enabled: Boolean(payload.storeId && payload.storeId > 0),
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 30,
   });
+
+  useEffect(() => {
+    if (query.data) {
+      setStoreProducts(query.data.products || []);
+      setStoreProductsTotalPages(query.data.totalPages || 1);
+      setStoreProductsHasNextPage(
+        (query.data.totalPages || 1) > (payload.currentPage || 1)
+      );
+    }
+  }, [
+    query.data,
+    payload.currentPage,
+    setStoreProducts,
+    setStoreProductsTotalPages,
+    setStoreProductsHasNextPage,
+  ]);
+
+  return query;
 }
+

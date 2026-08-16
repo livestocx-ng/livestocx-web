@@ -3,9 +3,15 @@
 import React from 'react';
 import { Box, Stack, Title } from '@mantine/core';
 import { useAppContext } from '@/core/context';
+import { StoreInfo } from '@/core/sdk/marketplace';
 
-const StoreProfileHeader = () => {
-  const { storeInfo } = useAppContext();
+interface StoreProfileHeaderProps {
+  storeInfo?: StoreInfo | null;
+}
+
+const StoreProfileHeader = ({ storeInfo: propStoreInfo }: StoreProfileHeaderProps = {}) => {
+  const { storeInfo: contextStoreInfo } = useAppContext();
+  const storeInfo = propStoreInfo !== undefined ? propStoreInfo : contextStoreInfo;
 
   return (
     <Box
@@ -44,7 +50,7 @@ const StoreProfileHeader = () => {
         style={{ position: 'relative', zIndex: 2 }}
       >
         <Title order={2} c="white">
-          {storeInfo !== null ? storeInfo?.name : 'Store'}
+          {storeInfo ? storeInfo.name : 'Store'}
         </Title>
       </Stack>
     </Box>
@@ -52,3 +58,4 @@ const StoreProfileHeader = () => {
 };
 
 export default StoreProfileHeader;
+

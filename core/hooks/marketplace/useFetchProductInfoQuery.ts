@@ -1,32 +1,55 @@
+import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { productApi } from '@/core/api/sdk';
 import { useAppContext } from '@/core/context';
-import { ProductInfo } from '@/core/sdk/marketplace';
+import { ProductDetails, ProductInfo } from '@/core/sdk/marketplace';
 
 export default function useFetchProductInfoQuery(payload: {
   productId: string;
-  productInfo: ProductInfo | null;
+  productInfo?: ProductInfo | null;
 }) {
   const { setProductInfo, setProductDetails } = useAppContext();
 
-  return useQuery({
-    queryKey: ['fetch-product-info'],
+  const query = useQuery<{
+    productInfo: ProductInfo | null;
+    productDetails: ProductDetails | null;
+  }>({
+    queryKey: ['fetch-product-info', payload.productId],
     queryFn: async () => {
-      if (payload.productInfo !== null) {
-        return null;
+      if (!payload.productId) {
+        return { productInfo: null, productDetails: null };
       }
 
-      // Use Promise.all to make both API calls concurrently
-      const [response, response2] = await Promise.all([
+      // Concurrently fetch description and product info with individual error resilience
+      const [descResult, infoResult] = await Promise.allSettled([
         productApi.marketplaceControllerFetchProductDescription(payload.productId),
         productApi.marketplaceControllerFetchProductInfo(payload.productId),
       ]);
 
-      // console.log(`[PRODUCT-DETAILS] :: ${response2.data.moreProducts}`);
+      const productInfo =
+        descResult.status === 'fulfilled' ? descResult.value.data : null;
+      const productDetails =
+        infoResult.status === 'fulfilled' ? infoResult.value.data : null;
 
-      setProductDetails(response2.data);
-
-      return setProductInfo(response.data);
+      return {
+        productInfo,
+        productDetails,
+      };
     },
+    enabled: Boolean(payload.productId),
+    staleTime: 1000 * 60 * 5, // 5 minutes cache
+    gcTime: 1000 * 60 * 30, // 30 minutes
   });
+
+  useEffect(() => {
+    if (query.data?.productInfo) {
+      setProductInfo(query.data.productInfo);
+    }
+    if (query.data?.productDetails) {
+      setProductDetails(query.data.productDetails);
+    }
+  }, [query.data, setProductInfo, setProductDetails]);
+
+  return query;
 }
+
