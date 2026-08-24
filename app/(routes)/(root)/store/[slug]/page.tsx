@@ -32,8 +32,7 @@ const StoreProfilePage = ({ params }: PageProps) => {
 
   const isMatchingStore = Boolean(
     contextStoreInfo &&
-      (contextStoreInfo.slug?.toLowerCase() === slug.toLowerCase() ||
-        contextStoreInfo.id === slug)
+    (contextStoreInfo.slug?.toLowerCase() === slug.toLowerCase() || contextStoreInfo.id === slug)
   );
 
   const storeInfo = storeProfileData || (isMatchingStore ? contextStoreInfo : null);
@@ -111,9 +110,9 @@ const StoreProfilePage = ({ params }: PageProps) => {
 
               {/* Action Buttons */}
               <Group gap={15} mt={10}>
-                <Button color="dark" leftSection={<IconMessage size={18} />} size="md" radius="md">
+                {/* <Button color="dark" leftSection={<IconMessage size={18} />} size="md" radius="md">
                   Chat Seller
-                </Button>
+                </Button> */}
 
                 <Button
                   color="dark"
@@ -126,8 +125,16 @@ const StoreProfilePage = ({ params }: PageProps) => {
                         title: 'Message',
                         message: 'Please login to access the seller`s contact information.',
                       });
-                    } else if (storeInfo?.phoneNumber) {
-                      window.location.href = `tel:${storeInfo.phoneNumber}`;
+                    } else if (storeInfo?.hasPremiumSubscription === false) {
+                      showNotification({
+                        title: 'Warning',
+                        color: 'orange',
+                        autoClose: 4500,
+                        message:
+                          'This seller is not using premium features, so contact phone number is unavailable.',
+                      });
+                    } else {
+                      window.location.href = `tel:${storeInfo?.phoneNumber}`;
                     }
                   }}
                 >
@@ -203,4 +210,3 @@ const StoreProfilePage = ({ params }: PageProps) => {
 };
 
 export default StoreProfilePage;
-
