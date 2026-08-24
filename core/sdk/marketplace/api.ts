@@ -335,6 +335,7 @@ export interface StoreInfo {
     'isUpdated': boolean;
     'isAccountDisabled': boolean;
     'slug': string;
+    'hasPremiumSubscription': boolean;
     'createdAt': string;
 }
 

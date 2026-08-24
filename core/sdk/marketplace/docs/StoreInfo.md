@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **isUpdated** | **boolean** |  | [default to undefined]
 **isAccountDisabled** | **boolean** |  | [default to undefined]
 **slug** | **string** |  | [default to undefined]
+**hasPremiumSubscription** | **boolean** |  | [default to undefined]
 **createdAt** | **string** |  | [default to undefined]
 
 ## Example
@@ -39,6 +40,7 @@ const instance: StoreInfo = {
     isUpdated,
     isAccountDisabled,
     slug,
+    hasPremiumSubscription,
     createdAt,
 };
 ```

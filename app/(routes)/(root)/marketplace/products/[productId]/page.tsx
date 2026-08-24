@@ -156,10 +156,10 @@ const ProductDescriptionPage = ({ params }: PageProps) => {
                   mt={10}
                   mb={10}
                   style={{
-                    display:
-                      productInfo?.vendor?.isProductUploadSubscriptionActive === true
-                        ? 'block'
-                        : 'none',
+                    // display:
+                    //   productInfo?.vendor?.isProductUploadSubscriptionActive === true
+                    //     ? 'block'
+                    //     : 'none',
                   }}
                 >
                   <Title order={5}>Contact</Title>
@@ -174,6 +174,7 @@ const ProductDescriptionPage = ({ params }: PageProps) => {
                           accountInfo,
                           productInfo,
                           showNotification,
+                          router,
                           logUserCallProductVendorMutation
                         )
                       }

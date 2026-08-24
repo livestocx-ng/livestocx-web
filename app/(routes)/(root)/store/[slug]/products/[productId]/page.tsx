@@ -25,7 +25,7 @@ const StoreProfileProductDescriptionPage = ({ params }: PageProps) => {
 
   const { slug, productId } = React.use(params);
 
-  const { accountInfo, productInfo: contextProductInfo } = useAppContext();
+  const { accountInfo, storeInfo, productInfo: contextProductInfo } = useAppContext();
 
   const { data, isLoading } = useFetchProductInfoQuery({
     productId,
@@ -123,7 +123,7 @@ const StoreProfileProductDescriptionPage = ({ params }: PageProps) => {
                   </Flex>
                 </Stack>
 
-                <Divider my="xs" />
+                {/* <Divider my="xs" />
                 <Stack gap={6} mt={10} mb={10}>
                   <Title order={5}>Store</Title>
 
@@ -140,7 +140,7 @@ const StoreProfileProductDescriptionPage = ({ params }: PageProps) => {
                   >
                     Visit Store
                   </Button>
-                </Stack>
+                </Stack> */}
                 <Divider my="xs" />
                 <Stack gap={6} mt={10} mb={10}>
                   <Title order={5}>Contact</Title>
@@ -150,22 +150,21 @@ const StoreProfileProductDescriptionPage = ({ params }: PageProps) => {
                       style={{ backgroundColor: '#111111' }}
                       leftSection={<IconPhone size={16} />}
                       onClick={() =>
-                        productInfo && handleCallSeller(accountInfo, productInfo, showNotification)
+                        productInfo && handleCallSeller(accountInfo, productInfo, storeInfo, showNotification)
                       }
                     >
                       Call Seller
                     </Button>
 
-                    <Button
+                    {/* <Button
                       fullWidth
                       style={{ backgroundColor: '#111111' }}
                       leftSection={<IconMessage size={16} />}
                       onClick={() => {
-                        /* Add chat functionality */
                       }}
                     >
                       Chat Seller
-                    </Button>
+                    </Button> */}
                   </Flex>
                 </Stack>
               </Box>
