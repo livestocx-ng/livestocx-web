@@ -174,7 +174,6 @@ const ProductDescriptionPage = ({ params }: PageProps) => {
                           accountInfo,
                           productInfo,
                           showNotification,
-                          router,
                           logUserCallProductVendorMutation
                         )
                       }
