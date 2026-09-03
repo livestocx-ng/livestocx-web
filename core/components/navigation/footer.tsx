@@ -343,7 +343,7 @@ export function Footer() {
                     <Flex gap="xs" align="start" mt={10}>
                       <IconPhone size={14} color="gray.5" />
                       <Text size="xs" c="gray.4">
-                        +234 813 254 9273
+                        +234 810 859 7000
                       </Text>
                     </Flex>
                   </Box>
