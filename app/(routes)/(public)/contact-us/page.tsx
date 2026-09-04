@@ -64,7 +64,7 @@ const ContactUs = () => {
   };
 
   const contactInfo = [
-    { icon: IconPhone, label: 'Call Us', value: '+234 (0) 806 289 9590', color: 'blue' },
+    { icon: IconPhone, label: 'Call Us', value: '+234 (0) 810 859 7000', color: 'blue' },
     { icon: IconMail, label: 'Email Support', value: 'support@livestocx.com', color: 'orange' },
     { icon: IconLocation, label: 'Our Office', value: 'Shimex Estate, Lugbe FCT, Nigeria', color: 'teal' },
   ];
