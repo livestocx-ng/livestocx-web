@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -30,35 +30,17 @@ import { Sponsors } from '@/core/utilities';
 
 export function Footer() {
   const pathname = usePathname();
-  const [shuffledSponsors, setShuffledSponsors] = useState<typeof Sponsors>([]);
+  const [cycleKey, setCycleKey] = useState(0);
+  // Stable first pass (no shuffle on page visit); reshuffle only after a cycle finishes
+  const [shuffledSponsors, setShuffledSponsors] = useState<typeof Sponsors>(() => [
+    ...Sponsors,
+    ...Sponsors,
+  ]);
 
-  // Safe client-side shuffling to avoid Next.js hydration mismatch issues
-  useEffect(() => {
-    if (Sponsors.length <= 1) {
-      setShuffledSponsors([...Sponsors, ...Sponsors]);
-      return;
-    }
-
-    let list1 = shuffle(Sponsors);
-    let list2 = shuffle(Sponsors);
-
-    let attempts = 0;
-    // Ensure the boundary elements and the ends of the concatenated list do not match
-    while (attempts < 100) {
-      list1 = shuffle(Sponsors);
-      list2 = shuffle(Sponsors);
-
-      const boundaryMatch = list1[list1.length - 1].image === list2[0].image;
-      const endStartMatch = list1[0].image === list2[list2.length - 1].image;
-
-      if (!boundaryMatch && !endStartMatch) {
-        break;
-      }
-      attempts++;
-    }
-
-    setShuffledSponsors([...list1, ...list2]);
-  }, []);
+  const handleMarqueeCycleComplete = () => {
+    setShuffledSponsors([...shuffle(Sponsors), ...shuffle(Sponsors)]);
+    setCycleKey((key) => key + 1);
+  };
 
   return (
     <Box style={{ display: pathname.includes('dashboard') ? 'none' : 'block' }}>
@@ -149,6 +131,7 @@ export function Footer() {
         }}
       >
         <motion.div
+          key={cycleKey}
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -162,41 +145,24 @@ export function Footer() {
           }}
           transition={{
             duration: 35,
-            repeat: Infinity,
-            repeatType: 'loop',
             ease: 'linear',
           }}
+          onAnimationComplete={handleMarqueeCycleComplete}
         >
-          {shuffledSponsors.length > 0
-            ? shuffledSponsors.map((sponsor, index) => (
-                <Image
-                  key={`${sponsor.name}-${index}`}
-                  w={120}
-                  h={60}
-                  src={sponsor.image}
-                  alt={`Livestocx Backed by: ${sponsor.name}`}
-                  className="sponsor-logo"
-                  style={{
-                    objectFit: 'contain',
-                    marginRight: 40,
-                  }}
-                />
-              ))
-            : // Fallback content during server render / hydration to ensure layout stability
-              Sponsors.map((sponsor, index) => (
-                <Image
-                  key={`${sponsor.name}-fallback-${index}`}
-                  w={120}
-                  h={60}
-                  src={sponsor.image}
-                  alt={`Livestocx Backed by: ${sponsor.name}`}
-                  className="sponsor-logo"
-                  style={{
-                    objectFit: 'contain',
-                    marginRight: 40,
-                  }}
-                />
-              ))}
+          {shuffledSponsors.map((sponsor, index) => (
+            <Image
+              key={`${cycleKey}-${sponsor.name}-${index}`}
+              w={120}
+              h={60}
+              src={sponsor.image}
+              alt={`Livestocx Backed by: ${sponsor.name}`}
+              className="sponsor-logo"
+              style={{
+                objectFit: 'contain',
+                marginRight: 40,
+              }}
+            />
+          ))}
         </motion.div>
       </Box>
 
