@@ -379,6 +379,13 @@ export const Sponsors: Sponsor[] = [
   {
     name: "Climate Investment Funds",
     image: "/sponsors/cif.jpg"
-  }
-
+  },
+  {
+    name: "Africa Europe Innovation Program",
+    image: "/sponsors/aeip.png"
+  },
+  {
+    name: "Venture Capital for Africa",
+    image: "/sponsors/vca.jpg"
+  },
 ];
