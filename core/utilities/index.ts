@@ -386,6 +386,6 @@ export const Sponsors: Sponsor[] = [
   },
   {
     name: "Venture Capital for Africa",
-    image: "/sponsors/vca.jpg"
+    image: "/sponsors/vc4a.jpg"
   },
 ];
