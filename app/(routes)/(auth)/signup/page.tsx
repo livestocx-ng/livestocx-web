@@ -31,20 +31,21 @@ import {
   IconBriefcase,
   IconAward,
 } from '@tabler/icons-react';
-import { useForm } from '@mantine/form';
-import { showNotification } from '@mantine/notifications';
-import { TestimonialCard } from '@/core/components/cards/testimonial-card';
-import { useAppContext } from '@/core/context';
-import useCheckEmailAvailabilityMutation from '@/core/hooks/auth/useCheckEmailAvailabilityMutation';
-import useSignupMutation from '@/core/hooks/auth/useSignupMutation';
-import useFetchAvailableStatesQuery from '@/core/hooks/public/useFetchAvailableStatesQuery';
-import useFetchProductUploadSubscriptionPlanQuery from '@/core/hooks/public/useFetchProductUploadSubscriptionPlanQuery';
-import useFetchTestimonialsQuery from '@/core/hooks/public/useFetchTestimonialsQuery';
-import { priceFormatter } from '@/core/middlewares';
-import { AvailabilityCheckInfo, CreateAccountDTO } from '@/core/sdk/auth';
-import { TestimonialInfo } from '@/core/sdk/communication';
-import { validateSignUpForm } from '@/core/validations/auth.validations';
 import Link from 'next/link';
+import { useForm } from '@mantine/form';
+import { signIn } from 'next-auth/react';
+import { useAppContext } from '@/core/context';
+import { priceFormatter } from '@/core/middlewares';
+import { showNotification } from '@mantine/notifications';
+import { TestimonialInfo } from '@/core/sdk/communication';
+import useSignupMutation from '@/core/hooks/auth/useSignupMutation';
+import { validateSignUpForm } from '@/core/validations/auth.validations';
+import { AvailabilityCheckInfo, CreateAccountDTO } from '@/core/sdk/auth';
+import { TestimonialCard } from '@/core/components/cards/testimonial-card';
+import useFetchTestimonialsQuery from '@/core/hooks/public/useFetchTestimonialsQuery';
+import useFetchAvailableStatesQuery from '@/core/hooks/public/useFetchAvailableStatesQuery';
+import useCheckEmailAvailabilityMutation from '@/core/hooks/auth/useCheckEmailAvailabilityMutation';
+import useFetchProductUploadSubscriptionPlanQuery from '@/core/hooks/public/useFetchProductUploadSubscriptionPlanQuery';
 
 const Signup = () => {
   useFetchTestimonialsQuery();
@@ -145,6 +146,39 @@ const Signup = () => {
       localStorage.setItem('LIVESTOCX_AUTH_REDIRECT', params.get('redirect_to')!);
     }
   }, []);
+
+  useEffect(() => {
+    const match = document.cookie.match(/(?:^|; )LIVESTOCX_GOOGLE_PROFILE=([^;]*)/);
+    if (!match) return;
+
+    try {
+      const profile = JSON.parse(decodeURIComponent(match[1])) as {
+        email?: string;
+        firstName?: string;
+        lastName?: string;
+      };
+
+      if (profile.email) form.setFieldValue('email', profile.email);
+      if (profile.firstName) form.setFieldValue('firstName', profile.firstName);
+      if (profile.lastName) form.setFieldValue('lastName', profile.lastName);
+
+      showNotification({
+        title: 'Complete your profile',
+        message: 'Finish the remaining details to complete your signup.',
+        autoClose: 5000,
+      });
+    } catch {
+      // Ignore a malformed profile cookie and clear it below.
+    }
+
+    document.cookie = 'LIVESTOCX_GOOGLE_PROFILE=; path=/; max-age=0';
+  }, []);
+
+
+  const handleGoogleSignIn = () => {
+    document.cookie = 'LIVESTOCX_OAUTH_INTENT=signup; path=/; max-age=600; samesite=lax';
+    signIn('google', { callbackUrl: '/signup' });
+  };
 
   const submitHandler = async (payload: CreateAccountDTO) => {
     const message = validateSignUpForm(payload, formData.confirmPassword);
@@ -381,6 +415,33 @@ const Signup = () => {
           fullWidth
         >
           Create Account
+        </Button>
+
+        {/* Divider */}
+        <Flex align="center" gap={10}>
+          <Divider style={{ flex: 1 }} />
+          <Text size="xs" fw={600} tt="uppercase" style={{ color: '#999', letterSpacing: '0.1em' }}>
+            Or
+          </Text>
+          <Divider style={{ flex: 1 }} />
+        </Flex>
+
+        {/* Social buttons */}
+        <Button
+          h={50}
+          radius="xl"
+          variant="default"
+          onClick={handleGoogleSignIn}
+          styles={{
+            root: {
+              backgroundColor: '#F4F4F4',
+              border: 'none',
+              fontWeight: 500,
+            },
+          }}
+          leftSection={<Image src="/icons/icon_google.svg" alt="Google" width={20} height={20} />}
+        >
+          Continue with Google
         </Button>
 
         <Flex justify="center" gap={4} mt={10}>
