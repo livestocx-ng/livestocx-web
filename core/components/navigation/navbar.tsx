@@ -30,6 +30,7 @@ import { ChatConversationsButton } from '../buttons/chat_conversations_button';
 import UpdateBusinessProfileDrawer from '../drawers/update_business_profile_drawer';
 import UpdateUserRoleDrawer from '../drawers/update_user_role_drawer';
 import classes from './navbar.module.css';
+import { useRouter } from 'next/navigation';
 
 export function Navbar() {
   const pathname = usePathname();
@@ -39,6 +40,7 @@ export function Navbar() {
   const { refetch: refetchUserListItems } = useFetchUserListItemsQuery();
   const { refetch: reInitializeAuthToken } = useInitializeAuthTokenQuery();
 
+  const router = useRouter();
   const [scroll] = useWindowScroll();
 
   const { authToken, accountInfo, vendorInfo } = useAppContext();
@@ -208,13 +210,17 @@ export function Navbar() {
                 color="orange"
                 radius="xl"
                 size="xs"
-                component={Link}
-                href="/dashboard/products"
+                // component={Link}
+                // href="/dashboard/products"
                 onClick={() => {
-                  if (accountInfo?.role === 'CUSTOMER') {
+                  if(!accountInfo){
+                    return router.push('/signup');
+                  } else if (accountInfo?.role === 'CUSTOMER') {
                     return openUpdateUserRoleDrawer();
                   } else if (vendorInfo?.isUpdated === false) {
                     return openUpdateBusinessProfileDrawer();
+                  }else {
+                    return router.push('/dashboard/products');
                   }
                 }}
               >
