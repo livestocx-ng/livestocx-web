@@ -4,6 +4,7 @@ import {
   IconMessage as Message01Icon,
   IconSpeakerphone as PromotionIcon,
   IconPackage as PackageAddIcon,
+  IconHeartbeat as HeartbeatIcon,
   IconSettings as AccountSetting01Icon,
 } from '@tabler/icons-react';
 import { Divider, Stack } from '@mantine/core';
@@ -25,6 +26,11 @@ export default function DashboardSideNavigation() {
             Icon={PackageAddIcon}
             label="Products"
             path="/dashboard/products"
+          />
+          <DashboardNavigationLink
+            Icon={HeartbeatIcon}
+            label="Animal Records"
+            path="/dashboard/records"
           />
           <DashboardNavigationLink
             Icon={PromotionIcon}
