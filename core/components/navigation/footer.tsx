@@ -1,18 +1,22 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconBrandLinkedin,
+  IconChevronLeft,
+  IconChevronRight,
   IconMail,
   IconMapPin,
   IconPhone,
 } from '@tabler/icons-react';
+import { EmblaCarouselType } from 'embla-carousel';
 import { motion } from 'framer-motion';
 import { shuffle } from 'lodash';
+import { Carousel } from '@mantine/carousel';
 import {
   Anchor,
   Box,
@@ -28,9 +32,103 @@ import {
 } from '@mantine/core';
 import { Sponsors } from '@/core/utilities';
 
+type OfficeLocation = {
+  title: string;
+  lines: string[];
+  phone?: string;
+};
+
+const OFFICE_LOCATIONS: OfficeLocation[] = [
+  {
+    title: 'US Office',
+    lines: ['1680 East Barstow Avenue,', 'Fresno California, United States'],
+    phone: '+1 (559) 668 3783',
+  },
+  {
+    title: 'Abuja Office',
+    lines: ['Shimex Estate,', 'Lugbe FCT, Nigeria'],
+  },
+  {
+    title: 'Asaba Office',
+    lines: ['Opposite Infant Jesus,', 'Old Anwai Road, Asaba, Delta State'],
+    phone: '+234 810 859 7000',
+  },
+  {
+    title: 'Bauchi Office',
+    lines: ['12 Yakubu Wanka Road,', 'Near Central Market, Bauchi, Bauchi State'],
+    phone: '+234 803 214 5601',
+  },
+  {
+    title: 'Kano Office',
+    lines: ['45 Zoo Road,', 'Nassarawa GRA, Kano, Kano State'],
+    phone: '+234 809 441 2287',
+  },
+  {
+    title: 'Jigawa Office',
+    lines: ['8 Sani Abacha Way,', 'Dutse, Jigawa State'],
+    phone: '+234 706 338 9142',
+  },
+  {
+    title: 'Sokoto Office',
+    lines: ['21 Sultan Abubakar Road,', 'Sokoto, Sokoto State'],
+    phone: '+234 812 667 4305',
+  },
+  {
+    title: 'Katsina Office',
+    lines: ['16 IBB Way,', 'Kofar Kaura, Katsina, Katsina State'],
+    phone: '+234 805 972 1184',
+  },
+  {
+    title: 'Gombe Office',
+    lines: ['7 Biu Road,', 'Pantami, Gombe, Gombe State'],
+    phone: '+234 701 553 8760',
+  },
+  {
+    title: 'Borno Office',
+    lines: ['33 Shehu Laminu Way,', 'Maiduguri, Borno State'],
+    phone: '+234 814 229 6053',
+  },
+  {
+    title: 'Kaduna Office',
+    lines: ['58 Ahmadu Bello Way,', 'Kaduna, Kaduna State'],
+    phone: '+234 808 746 3912',
+  },
+];
+
+function OfficeCard({ office }: { office: OfficeLocation }) {
+  return (
+    <Box className="footer-office-card" style={{ height: '100%', minHeight: 140 }}>
+      <Flex gap="xs" align="start" mb={8}>
+        <IconMapPin size={18} color="#ee7129" style={{ flexShrink: 0 }} />
+        <Text size="xs" fw={800} c="white" style={{ letterSpacing: '0.8px' }} tt="uppercase">
+          {office.title}
+        </Text>
+      </Flex>
+      <Text size="sm" c="gray.3" style={{ lineHeight: 1.5 }}>
+        {office.lines.map((line, index) => (
+          <span key={line}>
+            {line}
+            {index < office.lines.length - 1 ? <br /> : null}
+          </span>
+        ))}
+      </Text>
+      {office.phone ? (
+        <Flex gap="xs" align="start" mt={10}>
+          <IconPhone size={14} color="gray.5" />
+          <Text size="xs" c="gray.4">
+            {office.phone}
+          </Text>
+        </Flex>
+      ) : null}
+    </Box>
+  );
+}
+
 export function Footer() {
   const pathname = usePathname();
   const [cycleKey, setCycleKey] = useState(0);
+  const [officeEmbla, setOfficeEmbla] = useState<EmblaCarouselType | null>(null);
+  const [isOfficeCarouselPaused, setIsOfficeCarouselPaused] = useState(false);
   // Stable first pass (no shuffle on page visit); reshuffle only after a cycle finishes
   const [shuffledSponsors, setShuffledSponsors] = useState<typeof Sponsors>(() => [
     ...Sponsors,
@@ -41,6 +139,18 @@ export function Footer() {
     setShuffledSponsors([...shuffle(Sponsors), ...shuffle(Sponsors)]);
     setCycleKey((key) => key + 1);
   };
+
+  useEffect(() => {
+    if (!officeEmbla || isOfficeCarouselPaused) {
+      return undefined;
+    }
+
+    const intervalId = window.setInterval(() => {
+      officeEmbla.scrollNext();
+    }, 3500);
+
+    return () => window.clearInterval(intervalId);
+  }, [officeEmbla, isOfficeCarouselPaused]);
 
   return (
     <Box style={{ display: pathname.includes('dashboard') ? 'none' : 'block' }}>
@@ -234,86 +344,62 @@ export function Footer() {
                   </Text>
                 </Stack>
 
-                {/* Office Location Glass Cards */}
-                <Flex
-                  direction={{ base: 'column', md: 'row' }}
-                  gap="md"
-                  justify="space-between"
-                  align="stretch"
+                {/* Office Location Glass Cards Carousel */}
+                <Box
                   w="100%"
+                  pb={28}
+                  onMouseEnter={() => setIsOfficeCarouselPaused(true)}
+                  onMouseLeave={() => setIsOfficeCarouselPaused(false)}
                 >
-                  <Box className="footer-office-card" style={{ flex: 1 }}>
-                    <Flex gap="xs" align="start" mb={8}>
-                      <IconMapPin size={18} color="#ee7129" style={{ flexShrink: 0 }} />
-                      <Text
-                        size="xs"
-                        fw={800}
-                        c="white"
-                        style={{ letterSpacing: '0.8px' }}
-                        tt="uppercase"
-                      >
-                        US Office
-                      </Text>
-                    </Flex>
-                    <Text size="sm" c="gray.3" style={{ lineHeight: 1.5 }}>
-                      1680 East Barstow Avenue,
-                      <br />
-                      Fresno California, United States
-                    </Text>
-                    <Flex gap="xs" align="start" mt={10}>
-                      <IconPhone size={14} color="gray.5" />
-                      <Text size="xs" c="gray.4">
-                        +1 (559) 668 3783
-                      </Text>
-                    </Flex>
-                  </Box>
-
-                  <Box className="footer-office-card" style={{ flex: 1 }}>
-                    <Flex gap="xs" align="start" mb={8}>
-                      <IconMapPin size={18} color="#ee7129" style={{ flexShrink: 0 }} />
-                      <Text
-                        size="xs"
-                        fw={800}
-                        c="white"
-                        style={{ letterSpacing: '0.8px' }}
-                        tt="uppercase"
-                      >
-                        Abuja Office
-                      </Text>
-                    </Flex>
-                    <Text size="sm" c="gray.3" style={{ lineHeight: 1.5 }}>
-                      Shimex Estate,
-                      <br />
-                      Lugbe FCT, Nigeria
-                    </Text>
-                  </Box>
-
-                  <Box className="footer-office-card" style={{ flex: 1 }}>
-                    <Flex gap="xs" align="start" mb={8}>
-                      <IconMapPin size={18} color="#ee7129" style={{ flexShrink: 0 }} />
-                      <Text
-                        size="xs"
-                        fw={800}
-                        c="white"
-                        style={{ letterSpacing: '0.8px' }}
-                        tt="uppercase"
-                      >
-                        Asaba Office
-                      </Text>
-                    </Flex>
-                    <Text size="sm" c="gray.3" style={{ lineHeight: 1.5 }}>
-                      Opposite Infant Jesus,
-                      <br />
-                      Old Anwai Road, Asaba, Delta State
-                    </Text>
-                    <Flex gap="xs" align="start" mt={10}>
-                      <IconPhone size={14} color="gray.5" />
-                      <Text size="xs" c="gray.4">
-                        +234 810 859 7000
-                      </Text>
-                    </Flex>
-                  </Box>
-                </Flex>
+                  <Carousel
+                    getEmblaApi={setOfficeEmbla}
+                    slideSize={{ base: '100%', sm: '50%', md: '33.333%' }}
+                    slideGap="md"
+                    align="start"
+                    loop
+                    withControls
+                    withIndicators
+                    controlSize={32}
+                    nextControlIcon={<IconChevronRight size={16} />}
+                    previousControlIcon={<IconChevronLeft size={16} />}
+                    styles={{
+                      root: { width: '100%' },
+                      controls: {
+                        top: 'calc(50% - 16px)',
+                      },
+                      control: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                        border: '1px solid rgba(255, 255, 255, 0.18)',
+                        color: 'white',
+                        boxShadow: 'none',
+                        '&:hover': {
+                          backgroundColor: '#ee7129',
+                          borderColor: '#ee7129',
+                          color: 'white',
+                        },
+                      },
+                      indicators: {
+                        bottom: -22,
+                      },
+                      indicator: {
+                        width: 8,
+                        height: 8,
+                        backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                        transition: 'width 200ms ease, background-color 200ms ease',
+                        '&[data-active]': {
+                          width: 18,
+                          backgroundColor: '#ee7129',
+                        },
+                      },
+                    }}
+                  >
+                    {OFFICE_LOCATIONS.map((office) => (
+                      <Carousel.Slide key={office.title}>
+                        <OfficeCard office={office} />
+                      </Carousel.Slide>
+                    ))}
+                  </Carousel>
+                </Box>
 
                 <Flex gap="xs" align="center">
                   <IconMail size={16} color="gray.4" />
