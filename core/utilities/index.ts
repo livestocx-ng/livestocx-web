@@ -82,17 +82,18 @@ export const howItWorksSteps = [
 export const navLinks = [
   // { link: '/signup', label: 'Register' },
   { link: '/business', label: 'Business' },
+  { link: 'https://climateresilience.livestocx.com/', label: 'Mobile Climate' },
+  { link: 'https://landrestoration.livestocx.com/', label: 'Land Restoration' },
   {
     label: 'Solutions',
     links: [
-      { link: 'https://climateresilience.livestocx.com/', label: 'Mobile Climate' },
       { link: '/digital-advisory', label: 'Digital Advisory' },
       { link: '/veterinary-response', label: 'Veterinary Response' },
       { link: '/livestock-outbreak', label: 'Livestock Outbreak' },
     ]
   },
   { link: '/blog', label: 'Blog' },
-  { link: '/about-us', label: 'About' },
+  // { link: '/about-us', label: 'About' },
   // { link: '/contact-us', label: 'Contact' },
 ];
 
