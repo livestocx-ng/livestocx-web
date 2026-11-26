@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
@@ -30,82 +30,206 @@ import {
   Text,
   Title,
 } from '@mantine/core';
-import { Sponsors } from '@/core/utilities';
+import { navLinks, Sponsors } from '@/core/utilities';
 
 type OfficeLocation = {
   title: string;
   lines: string[];
   phone?: string;
+  badge?: string;
 };
 
-const OFFICE_LOCATIONS: OfficeLocation[] = [
-  {
-    title: 'US Office',
-    // lines: ['1680 East Barstow Avenue,', 'Fresno California, United States'],
-    lines: ['Office 118, Woodward Suites,', '10174 Highway 41, Madera CA 93636'],
-    phone: '+1 (559) 668 3783',
-  },
-  {
-    title: 'Abuja Office',
-    lines: ['Shimex Estate,', 'Lugbe FCT, Nigeria'],
-  },
+type FooterNavItem = {
+  link: string;
+  label: string;
+};
+
+const EXPLORE_LINKS: FooterNavItem[] = navLinks
+  .filter((item): item is { link: string; label: string } => Boolean(item.link))
+  .map((item) => ({ link: item.link, label: item.label }));
+
+const SOLUTION_LINKS: FooterNavItem[] =
+  navLinks.find((item) => item.label === 'Solutions' && 'links' in item)?.links ?? [];
+
+const COMPANY_LINKS: FooterNavItem[] = [
+  { link: '/about-us', label: 'About Us' },
+  { link: '/contact-us', label: 'Contact Us' },
+  { link: '#', label: 'FAQs' },
+  { link: '/terms-of-service', label: 'Terms of Service' },
+  { link: '/privacy-policy', label: 'Privacy Policy' },
+];
+
+const ACCOUNT_LINKS: FooterNavItem[] = [
+  { link: '/signin', label: 'Login' },
+  { link: '/signup', label: 'Register' },
+];
+
+function FooterColumnTitle({ children }: { children: ReactNode }) {
+  return (
+    <Title
+      order={6}
+      c="white"
+      style={{
+        letterSpacing: '1px',
+        textTransform: 'uppercase',
+        fontSize: rem(12),
+        fontWeight: 700,
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
+        paddingBottom: 8,
+        marginBottom: 4,
+      }}
+    >
+      {children}
+    </Title>
+  );
+}
+
+function FooterNavLink({ item }: { item: FooterNavItem }) {
+  const isExternal = item.link.startsWith('http');
+
+  if (isExternal) {
+    return (
+      <Anchor
+        href={item.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        size="sm"
+        className="footer-link"
+      >
+        {item.label}
+      </Anchor>
+    );
+  }
+
+  return (
+    <Anchor component={Link} href={item.link} size="sm" className="footer-link">
+      {item.label}
+    </Anchor>
+  );
+}
+
+const US_OFFICE: OfficeLocation = {
+  title: 'US Office',
+  lines: ['Office 118, Woodward Suites,', '10174 Highway 41, Madera CA 93636'],
+  phone: '+1 (559) 668 3783',
+};
+
+const ABUJA_MAIN_OFFICE: OfficeLocation = {
+  title: 'Abuja Office',
+  lines: ['Shimex Estate,', 'Lugbe FCT, Nigeria'],
+  badge: 'Main Nigerian Office',
+};
+
+const BRANCH_OFFICES: OfficeLocation[] = [
   {
     title: 'Asaba Office',
     lines: ['Opposite Infant Jesus,', 'Old Anwai Road, Asaba, Delta State'],
     phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
   {
     title: 'Bauchi Office',
     lines: ['12 Yakubu Wanka Road,', 'Near Central Market, Bauchi, Bauchi State'],
-    phone: '+234 803 214 5601',
+    phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
   {
     title: 'Kano Office',
     lines: ['45 Zoo Road,', 'Nassarawa GRA, Kano, Kano State'],
-    phone: '+234 809 441 2287',
+    phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
   {
     title: 'Jigawa Office',
     lines: ['8 Sani Abacha Way,', 'Dutse, Jigawa State'],
-    phone: '+234 706 338 9142',
+    phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
   {
     title: 'Sokoto Office',
     lines: ['21 Sultan Abubakar Road,', 'Sokoto, Sokoto State'],
-    phone: '+234 812 667 4305',
+    phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
   {
     title: 'Katsina Office',
     lines: ['16 IBB Way,', 'Kofar Kaura, Katsina, Katsina State'],
-    phone: '+234 805 972 1184',
+    phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
   {
     title: 'Gombe Office',
     lines: ['7 Biu Road,', 'Pantami, Gombe, Gombe State'],
     phone: '+234 701 553 8760',
+    badge: 'Branch Office',
   },
   {
     title: 'Borno Office',
     lines: ['33 Shehu Laminu Way,', 'Maiduguri, Borno State'],
-    phone: '+234 814 229 6053',
+    phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
   {
     title: 'Kaduna Office',
     lines: ['58 Ahmadu Bello Way,', 'Kaduna, Kaduna State'],
-    phone: '+234 808 746 3912',
+    phone: '+234 810 859 7000',
+    badge: 'Branch Office',
   },
 ];
 
-function OfficeCard({ office }: { office: OfficeLocation }) {
+function OfficeCard({
+  office,
+  featured = false,
+  compact = false,
+}: {
+  office: OfficeLocation;
+  featured?: boolean;
+  compact?: boolean;
+}) {
   return (
-    <Box className="footer-office-card" style={{ height: '100%', minHeight: 140 }}>
-      <Flex gap="xs" align="start" mb={8}>
-        <IconMapPin size={18} color="#ee7129" style={{ flexShrink: 0 }} />
-        <Text size="xs" fw={800} c="white" style={{ letterSpacing: '0.8px' }} tt="uppercase">
-          {office.title}
-        </Text>
+    <Box
+      className={`footer-office-card${compact ? ' compact' : ''}`}
+      style={{
+        height: '100%',
+        minHeight: compact ? undefined : 120,
+        borderColor: featured ? 'rgba(238, 113, 41, 0.35)' : undefined,
+        background: featured ? 'rgba(238, 113, 41, 0.06)' : undefined,
+      }}
+    >
+      <Flex gap={6} align="start" justify="space-between" mb={compact ? 4 : 8}>
+        <Flex gap={6} align="start">
+          <IconMapPin size={compact ? 14 : 18} color="#ee7129" style={{ flexShrink: 0 }} />
+          <Text
+            size="xs"
+            fw={800}
+            c="white"
+            style={{ letterSpacing: '0.8px', fontSize: compact ? 10 : undefined }}
+            tt="uppercase"
+          >
+            {office.title}
+          </Text>
+        </Flex>
+        {office.badge ? (
+          <Text
+            size="xs"
+            fw={700}
+            c="#ee7129"
+            style={{
+              letterSpacing: '0.4px',
+              whiteSpace: 'nowrap',
+              fontSize: compact ? 9 : undefined,
+            }}
+            tt="uppercase"
+          >
+            {office.badge}
+          </Text>
+        ) : null}
       </Flex>
-      <Text size="sm" c="gray.3" style={{ lineHeight: 1.5 }}>
+      <Text
+        size={compact ? 'xs' : 'sm'}
+        c="gray.3"
+        style={{ lineHeight: compact ? 1.4 : 1.5 }}
+      >
         {office.lines.map((line, index) => (
           <span key={line}>
             {line}
@@ -114,9 +238,9 @@ function OfficeCard({ office }: { office: OfficeLocation }) {
         ))}
       </Text>
       {office.phone ? (
-        <Flex gap="xs" align="start" mt={10}>
-          <IconPhone size={14} color="gray.5" />
-          <Text size="xs" c="gray.4">
+        <Flex gap={6} align="center" mt={compact ? 6 : 10}>
+          <IconPhone size={compact ? 12 : 14} color="gray.5" />
+          <Text size="xs" c="gray.4" style={{ fontSize: compact ? 11 : undefined }}>
             {office.phone}
           </Text>
         </Flex>
@@ -183,18 +307,22 @@ export function Footer() {
           .footer-office-card {
             border: 1px solid rgba(255, 255, 255, 0.08);
             background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 16px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
           }
+
+          .footer-office-card.compact {
+            padding: 10px 12px;
+          }
           
           .footer-office-card:hover {
             border-color: rgba(255, 255, 255, 0.2);
             background: rgba(255, 255, 255, 0.06);
-            transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
           }
           
           .social-icon-btn {
@@ -301,11 +429,10 @@ export function Footer() {
         />
 
         <Container size="xxl">
-          <Grid gutter={{ base: 'xl', sm: 30 }} justify="space-between">
-            {/* Left Section - Company Info and Address Cards */}
-            <Grid.Col span={{ base: 12, lg: 7 }} mb={{ base: 'lg', lg: 0 }}>
-              <Stack gap="lg">
-                {/* Brand Identity Header */}
+          <Stack gap={28}>
+            {/* Top: brand + nav links */}
+            <Grid gutter={{ base: 'xl', sm: 24 }}>
+              <Grid.Col span={{ base: 12, md: 4 }}>
                 <Stack gap="xs">
                   <Flex align="center" gap="sm">
                     <Box
@@ -339,13 +466,154 @@ export function Footer() {
                       Livestocx
                     </Title>
                   </Flex>
-                  <Text size="sm" c="gray.4" style={{ maxWidth: 480, lineHeight: 1.6 }}>
+                  <Text size="sm" c="gray.4" style={{ lineHeight: 1.6, maxWidth: 320, fontStyle: 'italic' }}>
                     The leading digital marketplace for livestock, empowering farmers and building
                     climate resilience.
                   </Text>
                 </Stack>
+              </Grid.Col>
 
-                {/* Office Location Glass Cards Carousel */}
+              <Grid.Col span={{ base: 6, sm: 3, md: 2 }}>
+                <Stack gap="sm">
+                  <FooterColumnTitle>Explore</FooterColumnTitle>
+                  {EXPLORE_LINKS.map((item) => (
+                    <FooterNavLink key={item.label} item={item} />
+                  ))}
+                </Stack>
+              </Grid.Col>
+
+              <Grid.Col span={{ base: 6, sm: 3, md: 2 }}>
+                <Stack gap="sm">
+                  <FooterColumnTitle>Solutions</FooterColumnTitle>
+                  {SOLUTION_LINKS.map((item) => (
+                    <FooterNavLink key={item.label} item={item} />
+                  ))}
+                </Stack>
+              </Grid.Col>
+
+              <Grid.Col span={{ base: 6, sm: 3, md: 2 }}>
+                <Stack gap="sm">
+                  <FooterColumnTitle>Company</FooterColumnTitle>
+                  {COMPANY_LINKS.map((item) => (
+                    <FooterNavLink key={item.label} item={item} />
+                  ))}
+                </Stack>
+              </Grid.Col>
+
+              <Grid.Col span={{ base: 6, sm: 3, md: 2 }}>
+                <Stack gap="sm">
+                  <FooterColumnTitle>Account</FooterColumnTitle>
+                  {ACCOUNT_LINKS.map((item) => (
+                    <FooterNavLink key={item.label} item={item} />
+                  ))}
+                </Stack>
+              </Grid.Col>
+            </Grid>
+
+            {/* Compact US + Abuja cards + contact/social beside Nigerian office */}
+            <Stack gap="sm" w="100%">
+              <Flex
+                direction={{ base: 'column', md: 'row' }}
+                gap="sm"
+                align={{ base: 'stretch', md: 'center' }}
+                justify="space-between"
+                w="100%"
+              >
+                <Flex
+                  direction={{ base: 'column', sm: 'row' }}
+                  gap="sm"
+                  align="stretch"
+                  style={{ flex: 1 }}
+                >
+                  <Box style={{ flex: 1, maxWidth: 320 }}>
+                    <OfficeCard office={US_OFFICE} compact />
+                  </Box>
+                  <Box style={{ flex: 1, maxWidth: 320 }}>
+                    <OfficeCard office={ABUJA_MAIN_OFFICE} featured compact />
+                  </Box>
+                </Flex>
+                <Stack gap="xs" justify="center" style={{ flexShrink: 0, minWidth: 220 }}>
+                  <Flex gap="xs" align="center">
+                    <IconMail size={16} color="gray.4" />
+                    <Anchor
+                      href="mailto:support@livestocx.com"
+                      size="sm"
+                      c="gray.3"
+                      className="footer-link"
+                    >
+                      support@livestocx.com
+                    </Anchor>
+                  </Flex>
+                  <Group gap="xs">
+                    <a
+                      href="https://www.facebook.com/livestocx"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon-btn"
+                      aria-label="Facebook"
+                    >
+                      <IconBrandFacebook size={20} stroke={1.5} />
+                    </a>
+                    <a
+                      href="https://ng.linkedin.com/company/livestocxltd"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon-btn"
+                      aria-label="LinkedIn"
+                    >
+                      <IconBrandLinkedin size={20} stroke={1.5} />
+                    </a>
+                    <a
+                      href="https://instagram.com/livestocx"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="social-icon-btn"
+                      aria-label="Instagram"
+                    >
+                      <IconBrandInstagram size={20} stroke={1.5} />
+                    </a>
+                  </Group>
+                  <Group gap="sm">
+                    <Link
+                      href="https://apps.apple.com/ng/app/livestocx/id6738842775?platform=iphone"
+                      target="_blank"
+                      className="app-store-badge"
+                    >
+                      <Image
+                        src="/icons/icon_appstore_2.svg"
+                        alt="App Store"
+                        w={110}
+                        h="auto"
+                        fit="contain"
+                      />
+                    </Link>
+                    <Link
+                      target="_blank"
+                      href="https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile"
+                      className="app-store-badge"
+                    >
+                      <Image
+                        src="/icons/icon_playstore_2.svg"
+                        alt="Google Play"
+                        w={110}
+                        h="auto"
+                        fit="contain"
+                      />
+                    </Link>
+                  </Group>
+                </Stack>
+              </Flex>
+
+              <Stack gap="xs" w="100%">
+                <Text
+                  size="xs"
+                  fw={700}
+                  c="gray.5"
+                  style={{ letterSpacing: '0.8px' }}
+                  tt="uppercase"
+                >
+                  Branch Offices
+                </Text>
                 <Box
                   w="100%"
                   pb={28}
@@ -354,7 +622,7 @@ export function Footer() {
                 >
                   <Carousel
                     getEmblaApi={setOfficeEmbla}
-                    slideSize={{ base: '100%', sm: '50%', md: '33.333%' }}
+                    slideSize={{ base: '100%', sm: '50%', md: '33.333%', lg: '25%' }}
                     slideGap="md"
                     align="start"
                     loop
@@ -394,184 +662,16 @@ export function Footer() {
                       },
                     }}
                   >
-                    {OFFICE_LOCATIONS.map((office) => (
+                    {BRANCH_OFFICES.map((office) => (
                       <Carousel.Slide key={office.title}>
-                        <OfficeCard office={office} />
+                        <OfficeCard office={office} compact />
                       </Carousel.Slide>
                     ))}
                   </Carousel>
                 </Box>
-
-                <Flex gap="xs" align="center">
-                  <IconMail size={16} color="gray.4" />
-                  <Anchor
-                    href="mailto:support@livestocx.com"
-                    size="sm"
-                    c="gray.3"
-                    className="footer-link"
-                  >
-                    support@livestocx.com
-                  </Anchor>
-                </Flex>
               </Stack>
-            </Grid.Col>
-
-            {/* Right Section - Navigation Links & Social Media */}
-            <Grid.Col span={{ base: 12, lg: 5 }}>
-              <Grid gutter="xl">
-                {/* Helps Column */}
-                <Grid.Col span={{ base: 6, sm: 4 }}>
-                  <Stack gap="sm">
-                    <Title
-                      order={6}
-                      c="white"
-                      style={{
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                        fontSize: rem(12),
-                        fontWeight: 700,
-                        borderBottom: '1px solid rgba(255,255,255,0.1)',
-                        paddingBottom: 8,
-                        marginBottom: 4,
-                      }}
-                    >
-                      Helps
-                    </Title>
-                    <Anchor href="/about-us" size="sm" className="footer-link">
-                      About Us
-                    </Anchor>
-                    <Anchor href="/contact-us" size="sm" className="footer-link">
-                      Contact Us
-                    </Anchor>
-                    <Anchor href="#" size="sm" className="footer-link">
-                      FAQs
-                    </Anchor>
-                    <Anchor href="/terms-of-service" size="sm" className="footer-link">
-                      Terms of Service
-                    </Anchor>
-                    <Anchor href="/privacy-policy" size="sm" className="footer-link">
-                      Privacy Policy
-                    </Anchor>
-                  </Stack>
-                </Grid.Col>
-
-                {/* Other Column */}
-                <Grid.Col span={{ base: 6, sm: 4 }}>
-                  <Stack gap="sm">
-                    <Title
-                      order={6}
-                      c="white"
-                      style={{
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                        fontSize: rem(12),
-                        fontWeight: 700,
-                        borderBottom: '1px solid rgba(255,255,255,0.1)',
-                        paddingBottom: 8,
-                        marginBottom: 4,
-                      }}
-                    >
-                      Other
-                    </Title>
-                    <Anchor href="/signin" size="sm" className="footer-link">
-                      Login
-                    </Anchor>
-                    <Anchor href="/signup" size="sm" className="footer-link">
-                      Register
-                    </Anchor>
-                  </Stack>
-                </Grid.Col>
-
-                {/* Socials & Downloads Column */}
-                <Grid.Col span={{ base: 12, sm: 4 }}>
-                  <Stack gap="md">
-                    <Title
-                      order={6}
-                      c="white"
-                      style={{
-                        letterSpacing: '1px',
-                        textTransform: 'uppercase',
-                        fontSize: rem(12),
-                        fontWeight: 700,
-                        borderBottom: '1px solid rgba(255,255,255,0.1)',
-                        paddingBottom: 8,
-                        marginBottom: 4,
-                      }}
-                    >
-                      Follow Us
-                    </Title>
-                    <Group gap="xs">
-                      <a
-                        href="https://www.facebook.com/livestocx"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon-btn"
-                        aria-label="Facebook"
-                      >
-                        <IconBrandFacebook size={20} stroke={1.5} />
-                      </a>
-                      <a
-                        href="https://ng.linkedin.com/company/livestocxltd"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon-btn"
-                        aria-label="LinkedIn"
-                      >
-                        <IconBrandLinkedin size={20} stroke={1.5} />
-                      </a>
-                      <a
-                        href="https://instagram.com/livestocx"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="social-icon-btn"
-                        aria-label="Instagram"
-                      >
-                        <IconBrandInstagram size={20} stroke={1.5} />
-                      </a>
-                    </Group>
-
-                    <Stack gap="xs" mt="sm">
-                      <Text
-                        size="xs"
-                        fw={600}
-                        c="gray.4"
-                        style={{ letterSpacing: '0.5px' }}
-                        tt="uppercase"
-                      >
-                        Get the App
-                      </Text>
-                      <Link
-                        href="https://apps.apple.com/ng/app/livestocx/id6738842775?platform=iphone"
-                        target="_blank"
-                        className="app-store-badge"
-                      >
-                        <Image
-                          src="/icons/icon_appstore_2.svg"
-                          alt="App Store"
-                          w={125}
-                          h="auto"
-                          fit="contain"
-                        />
-                      </Link>
-                      <Link
-                        target="_blank"
-                        href="https://play.google.com/store/apps/details?id=com.livestocx.livestocx_mobile"
-                        className="app-store-badge"
-                      >
-                        <Image
-                          src="/icons/icon_playstore_2.svg"
-                          alt="Google Play"
-                          w={125}
-                          h="auto"
-                          fit="contain"
-                        />
-                      </Link>
-                    </Stack>
-                  </Stack>
-                </Grid.Col>
-              </Grid>
-            </Grid.Col>
-          </Grid>
+            </Stack>
+          </Stack>
         </Container>
 
         {/* Bottom copyright segment */}
