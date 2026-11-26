@@ -41,7 +41,8 @@ type OfficeLocation = {
 const OFFICE_LOCATIONS: OfficeLocation[] = [
   {
     title: 'US Office',
-    lines: ['1680 East Barstow Avenue,', 'Fresno California, United States'],
+    // lines: ['1680 East Barstow Avenue,', 'Fresno California, United States'],
+    lines: ['Office 118, Woodward Suites,', '10174 Highway 41, Madera CA 93636'],
     phone: '+1 (559) 668 3783',
   },
   {
